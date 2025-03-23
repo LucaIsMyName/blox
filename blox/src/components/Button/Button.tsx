@@ -42,7 +42,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
     return "button";
   };
 
-
   // Disabled classes
   const disabledClasses = disabled || isLoading ? "opacity-60 cursor-not-allowed" : "";
 
@@ -54,27 +53,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
   };
 
   return (
-    <>
-      {asChild ? (
-        <div
-          className={`${baseClasses} ${sizeClasses[size]} ${widthClasses} ${getBorderRadiusClass()} ${disabledClasses} ${className}`}
-          style={customStyle}
-          {...rest}>
-          {leftIcon && <span className="mr-2">{leftIcon}</span>}
-          {children}
-          {rightIcon && <span className="ml-2">{rightIcon}</span>}
-        </div>
-      ) : (
-        <button
-          className={`${baseClasses} ${sizeClasses[size]} ${widthClasses} ${getBorderRadiusClass()} ${disabledClasses} ${className}`}
-          style={customStyle}
-          disabled={disabled || isLoading}
-          {...rest}>
-          {leftIcon && <span className="mr-2">{leftIcon}</span>}
-          {children}
-          {rightIcon && <span className="ml-2">{rightIcon}</span>}
-        </button>
-      )}
-    </>
+    <button
+      className={`${baseClasses} ${sizeClasses[size]} ${widthClasses} ${getBorderRadiusClass()} ${disabledClasses} ${className}`}
+      style={customStyle}
+      disabled={disabled || isLoading}
+      {...rest}>
+      {leftIcon && <span className="mr-2">{leftIcon}</span>}
+      {children}
+      {rightIcon && <span className="ml-2">{rightIcon}</span>}
+    </button>
   );
 };

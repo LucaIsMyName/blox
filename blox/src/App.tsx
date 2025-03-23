@@ -63,7 +63,11 @@ const App: React.FC = () => {
                   <Button variant="warning">Warning</Button>
                   <Button variant="info">Info</Button>
                   <Button variant="light">Light</Button>
-                  <Button asChild variant="dark">Dark</Button>
+                  <Button
+                    asChild
+                    variant="dark">
+                    Dark
+                  </Button>
                 </div>
               </div>
 
@@ -511,7 +515,7 @@ const App: React.FC = () => {
                   items={[
                     {
                       id: "icon1",
-                      label: "Profile",
+                      label: <span className="p-2 pr-4">Profile</span>,
                       icon: (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -534,7 +538,7 @@ const App: React.FC = () => {
                     },
                     {
                       id: "icon2",
-                      label: "Settings",
+                      label:<span className="p-2 pr-4">Settings</span>,
                       icon: (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
