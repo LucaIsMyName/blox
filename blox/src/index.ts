@@ -1,8 +1,18 @@
-// Import and re-export all components
+// src/index.ts
+// Export components
 export * from './components';
 
 // Export types
 export * from './types';
 
-// Import global styles
-import './styles/index.css';
+// Export theme-related utilities (if needed for your headless approach)
+export * from './theme';
+export { ThemeProvider } from './theme/ThemeProvider';
+export { BloxProvider } from './BloxProvider';
+
+// Export utility functions
+export { getComponentConfig, loadConfig } from './utils/configLoader';
+
+// Note: We're not importing CSS directly in this file anymore
+// Users can import it separately if needed:
+// import 'blox/dist/styles.css';

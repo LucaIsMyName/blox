@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ButtonProps } from "./types";
+import { getComponentConfig, injectComponentStyles } from "../../utils/configLoader";
 
-export const Button: React.FC<ButtonProps> = ({ children, variant = "primary", size = "md", isLoading = false, leftIcon, rightIcon, fullWidth = false, rounded = false, className = "", disabled, ...rest }) => {
-  // Base classes
+export const Button: React.FC<ButtonProps> = (props) => {
+  // Load component configuration and merge with props
+  const config = getComponentConfig<ButtonProps>("Button");
+  const { children, variant = config.props.variant || "primary", size = config.props.size || "md", isLoading = config.props.isLoading || false, leftIcon, rightIcon, fullWidth = config.props.fullWidth || false, rounded = config.props.rounded || false, className = "", disabled, ...rest } = props;
+
+  // Inject component-specific styles on mount
+  useEffect(() => {
+    injectComponentStyles("Button");
+  }, []);
+
+  // Base classes using CSS variables
   const baseClasses = "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
 
-  // Size classes
+  // Size classes using CSS variables for spacing and font sizes
   const sizeClasses = {
     xs: "px-2 py-1 text-xs",
     sm: "px-3 py-1.5 text-sm",
@@ -14,30 +24,32 @@ export const Button: React.FC<ButtonProps> = ({ children, variant = "primary", s
     xl: "px-6 py-3 text-xl",
   };
 
-  // Variant classes
-  const variantClasses = {
-    primary: "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500",
-    secondary: "bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500",
-    success: "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500",
-    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
-    warning: "bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500",
-    info: "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500",
-    light: "bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-300",
-    dark: "bg-gray-800 text-white hover:bg-gray-900 focus:ring-gray-700",
-  };
-
   // Width classes
   const widthClasses = fullWidth ? "w-full" : "";
 
-  // Border radius classes
-  const roundedClasses = rounded ? "rounded-full" : "rounded-md";
+  // Border radius classes using CSS variables
+  const getBorderRadiusClass = () => {
+    if (rounded) {
+      return "rounded-full";
+    }
+    return "rounded-none";
+  };
 
   // Disabled classes
   const disabledClasses = disabled || isLoading ? "opacity-60 cursor-not-allowed" : "";
 
+  // Custom styles to apply CSS variables
+  const customStyle = {
+    backgroundColor: `var(--blox-color-${variant}-500, var(--blox-button-bg-color, #0284c7))`,
+    color: "var(--blox-button-text-color, white)",
+    border: "1px solid rgba(0,0,0,0.2)"
+  };
+
   return (
     <button
-      className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${widthClasses} ${roundedClasses} ${disabledClasses} ${className}`}
+      data-blox="button"
+      className={`${baseClasses} ${sizeClasses[size]} ${widthClasses} ${getBorderRadiusClass()} ${disabledClasses} ${className}`}
+      style={customStyle}
       disabled={disabled || isLoading}
       {...rest}>
       {isLoading && (

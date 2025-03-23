@@ -1,10 +1,8 @@
 {
-  "name": "blox",
-  "private": false,
-  "version": "0.0.1",
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "name": "blox-ui-react",
+  "version": "0.0.2",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -20,13 +18,17 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "build:lib": "rollup -c",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build:ts": "tsc --emitDeclarationOnly",
+    "build:js": "rollup -c",
+    "build:lib": "npm run build:ts && npm run build:js",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepublishOnly": "npm run build:lib"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.3",
@@ -40,13 +42,14 @@
     "autoprefixer": "^10.4.21",
     "fs": "^0.0.1-security",
     "postcss": "^8.5.3",
+    "rimraf": "^6.0.1",
     "rollup": "^3.23.0",
     "rollup-plugin-dts": "^5.3.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "tailwindcss": "^3.4.17",
     "tslib": "^2.5.3",
-    "typescript": "^5.0.4",
+    "typescript": "^5.8.2",
     "vite": "^4.3.9"
   },
   "dependencies": {

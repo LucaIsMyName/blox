@@ -1,5 +1,119 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* drawer.css - Example styling for the Drawer component */
 
-/* Optional: Add custom global styles here */
+/*---------------------------------
+DRAWER
+---------------------------------*/
+
+/* Backdrop styling */
+[data-blox="drawer-backdrop"] {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+/* Base drawer styling */
+[data-blox="drawer"] {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: auto;
+}
+
+/* Placement-specific styling */
+[data-blox="drawer"][data-placement="left"] {
+  border-right: 1px solid #e2e8f0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+[data-blox="drawer"][data-placement="right"] {
+  border-left: 1px solid #e2e8f0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+[data-blox="drawer"][data-placement="top"] {
+  border-bottom: 1px solid #e2e8f0;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+[data-blox="drawer"][data-placement="bottom"] {
+  border-top: 1px solid #e2e8f0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+/* When drawer is open (animated) */
+[data-blox="drawer"][data-animated="true"][data-placement="left"].open,
+[data-blox="drawer"][data-animated="true"][data-placement="right"].open,
+[data-blox="drawer"][data-animated="true"][data-placement="top"].open,
+[data-blox="drawer"][data-animated="true"][data-placement="bottom"].open {
+  transform: translate(0);
+}
+
+/* Close button styling */
+[data-blox="drawer-close-btn"] {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 0;
+  border-radius: 9999px;
+}
+
+[data-blox="drawer-close-btn"]:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Variant-specific styling examples */
+[data-blox="drawer"][data-variant="primary"] {
+  border-color: var(--blox-color-primary-200, #bae6fd);
+}
+
+[data-blox="drawer"][data-variant="secondary"] {
+  border-color: var(--blox-color-secondary-200, #e2e8f0);
+}
+
+[data-blox="drawer"][data-variant="success"] {
+  border-color: var(--blox-color-success-200, #bbf7d0);
+}
+
+/*---------------------------------
+TABLE
+---------------------------------*/
+[data-blox="table"] {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+[data-blox="table-head"] th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+[data-blox="table-head"] th[data-sortable="true"] {
+  cursor: pointer;
+}
+[data-blox="table-head"] th[data-sortable="true"]:hover {
+  background-color: #f3f4f6;
+}
+[data-blox="table-head"] th[data-sorted="true"] {
+  background-color: #f3f4f6;
+}
+[data-blox="table-body"] td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+[data-blox="table"] tr:hover td {
+  background-color: #f9fafb;
+}
+[data-center="true"] {
+  text-align: center;
+}
