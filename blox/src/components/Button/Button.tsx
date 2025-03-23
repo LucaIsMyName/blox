@@ -40,9 +40,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
   // Custom styles to apply CSS variables
   const customStyle = {
-    backgroundColor: `var(--blox-color-${variant}-500, var(--blox-button-bg-color, #0284c7))`,
+    backgroundColor: `var(--blox-button-bg-color,var(--blox-color-${variant}-500,  #0284c7))`,
     color: "var(--blox-button-text-color, white)",
-    border: "1px solid rgba(0,0,0,0.2)"
+    border: "1px solid rgba(0,0,0,0.2)",
   };
 
   return (

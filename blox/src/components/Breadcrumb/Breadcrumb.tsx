@@ -41,7 +41,7 @@ const Ellipsis = () => <span>...</span>;
 export const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
   // Load component configuration and merge with props
   const config = getComponentConfig<BreadcrumbProps>("Breadcrumb");
-  const { items, variant = config.props.variant || "primary", separator = config.props.separator || <DefaultSeparator />, showHomeIcon = config.props.showHomeIcon || false, maxItems = config.props.maxItems || 0, className = "", ...rest } = props;
+  const { items, variant = config.props.variant || "", separator = config.props.separator || <DefaultSeparator />, showHomeIcon = config.props.showHomeIcon || false, maxItems = config.props.maxItems || 0, className = "", ...rest } = props;
 
   // Inject component-specific styles on mount
   useEffect(() => {
@@ -88,13 +88,13 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
 
     // Style for the item based on whether it's active
     const itemStyle = {
-      color: isItemActive ? `var(--blox-color-${variant}-700, var(--blox-breadcrumb-active-color, #0369a1))` : `var(--blox-color-${variant}-600, var(--blox-breadcrumb-color, #0284c7))`,
-      fontWeight: isItemActive ? "var(--blox-breadcrumb-active-font-weight, 500)" : "normal",
+      color: isItemActive ? `var(--blox-breadcrumb-active-color, var(--blox-color-${variant}-700,  #000))` : `var(--blox-breadcrumb-color, var(--blox-color-${variant}-600, #000))`,
+      fontWeight: isItemActive ? "var(--blox-breadcrumb-active-font-weight, 400)" : "normal",
     };
 
     // Style for the separator
     const separatorStyle = {
-      color: `var(--blox-color-${variant}-400, var(--blox-breadcrumb-separator-color, #38bdf8))`,
+      color: ` var(--blox-breadcrumb-separator-color, var(--blox-color-${variant}-400, black))`,
     };
 
     return (
@@ -141,8 +141,9 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
 
   return (
     <nav
+      data-blox-breadcrumb
       aria-label="Breadcrumb"
-      className={`blox-breadcrumb ${className}`}
+      className={` ${className}`}
       style={containerStyle}
       {...rest}>
       <ol className="flex flex-wrap items-center">{visibleItems.map((item, index) => renderItem(item, index, index === 0, index === visibleItems.length - 1))}</ol>

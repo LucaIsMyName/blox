@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Accordion, Marquee, Badge, Breadcrumb, Modal, Tabs, Drawer } from "./components";
+import { Button, Accordion, Marquee, Badge, Breadcrumb, Modal, Tabs, Drawer, Dropdown } from "./components";
 import { TableExample } from "./examples/TableExample";
+import { TooltipExample } from "./examples/TooltipExample";
 import { ThemeProvider } from "./theme/ThemeProvider";
 
 const App: React.FC = () => {
@@ -23,10 +24,29 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="min-h-screen bg-gray-50 p-4">
+        <div className=" mx-auto">
           <h1 className="text-3xl font-bold mb-8">Blox Component Library Demo</h1>
-
+          <section className="mb-10">
+            <TooltipExample />
+          </section>
+          <section className="mb-10">
+            <h2 className="text-2xl font-semibold mb-4">Dropdown Component</h2>
+            <Dropdown
+              options={[
+                { label: "Option 1", value: "1" },
+                { label: "My Option 2", value: "2" },
+                { label: "Option 3", value: "3" },
+              ]}
+              value={1}
+              onChange={(e) => e.target.value}
+              placeholder="Select an option"
+              variant="primary"
+              size="md"
+              fullWidth={true}
+              rounded={false}
+            />
+          </section>
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">Button Component</h2>
 
@@ -85,9 +105,10 @@ const App: React.FC = () => {
               <div>
                 <h3 className="text-lg font-medium mb-2">Basic Accordion</h3>
                 <Accordion
+                  className=""
                   items={[
                     {
-                      title: "Section 1",
+                      title: <span className="">Section 1</span>,
                       content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     },
                     {
@@ -107,6 +128,7 @@ const App: React.FC = () => {
                 <Accordion
                   allowMultiple
                   defaultIndex={[0]}
+                  className="border border-gray-200 rounded bg-gray-50"
                   items={[
                     {
                       title: "Section 1",
@@ -125,41 +147,41 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium mb-2">Variants</h3>
+                <h3 className="text-lg font-medium mb-2">Custom Styling</h3>
                 <div className="grid gap-4">
                   <Accordion
-                    variant="primary"
+                    className="border border-blue-200 rounded bg-blue-50 text-blue-800"
                     items={[
                       {
-                        title: "Primary Variant",
-                        content: "This accordion uses the primary variant.",
+                        title: "Blue Styled Accordion",
+                        content: "This accordion uses blue custom styling.",
                       },
                     ]}
                   />
                   <Accordion
-                    variant="secondary"
+                    className="border border-green-200 rounded bg-green-50 text-green-800"
                     items={[
                       {
-                        title: "Secondary Variant",
-                        content: <span className="text-green-500">yolo</span>,
+                        title: "Green Styled Accordion",
+                        content: <span className="text-green-500 font-bold">Custom styled content</span>,
                       },
                     ]}
                   />
                   <Accordion
-                    variant="success"
+                    className="border border-yellow-200 rounded bg-yellow-50 text-yellow-800"
                     items={[
                       {
-                        title: "Success Variant",
-                        content: "This accordion uses the success variant.",
+                        title: "Yellow Styled Accordion",
+                        content: "This accordion uses yellow custom styling.",
                       },
                     ]}
                   />
                   <Accordion
-                    variant="danger"
+                    className="border border-red-200 rounded bg-red-50 text-red-800"
                     items={[
                       {
-                        title: <span className="text-4xl">Danger!!</span>,
-                        content: "This accordion uses the danger variant.",
+                        title: <span className="text-red-500 text-xl font-bold">Red Styled Accordion</span>,
+                        content: "This accordion uses red custom styling.",
                       },
                     ]}
                   />
@@ -167,37 +189,15 @@ const App: React.FC = () => {
               </div>
             </div>
           </section>
-
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">Marquee Component</h2>
 
             <div className="grid gap-6">
               <div>
                 <h3 className="text-lg font-medium mb-2">Basic Marquee</h3>
-                <Marquee>
+                <Marquee className="border border-gray-200 rounded">
                   <span className="px-4">This is a basic marquee that scrolls text from right to left</span>
                 </Marquee>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-medium mb-2">Marquee Variants</h3>
-                <div className="grid gap-4">
-                  <Marquee>
-                    <span className="px-4">Primary variant marquee</span>
-                  </Marquee>
-                  <Marquee variant="primary">
-                    <span className="px-4">Primary variant marquee</span>
-                  </Marquee>
-                  <Marquee variant="secondary">
-                    <span className="px-4">Secondary variant marquee</span>
-                  </Marquee>
-                  <Marquee variant="success">
-                    <span className="px-4">Success variant marquee</span>
-                  </Marquee>
-                  <Marquee variant="danger">
-                    <span className="px-4">Danger variant marquee</span>
-                  </Marquee>
-                </div>
               </div>
 
               <div>
@@ -205,12 +205,14 @@ const App: React.FC = () => {
                 <div className="grid gap-4">
                   <Marquee
                     direction="right"
-                    speed="slow">
+                    speed="slow"
+                    className="border border-gray-200 rounded bg-blue-50">
                     <span className="px-4">Right direction, slow speed</span>
                   </Marquee>
                   <Marquee
                     direction="left"
-                    speed="fast">
+                    speed="fast"
+                    className="border border-gray-200 rounded bg-green-50">
                     <span className="px-4">Left direction, fast speed</span>
                   </Marquee>
                 </div>
@@ -219,10 +221,14 @@ const App: React.FC = () => {
               <div>
                 <h3 className="text-lg font-medium mb-2">Behavior Types</h3>
                 <div className="grid gap-4">
-                  <Marquee behavior="scroll">
+                  <Marquee
+                    behavior="scroll"
+                    className="border border-gray-200 rounded bg-yellow-50">
                     <span className="px-4">Scroll behavior (continuous)</span>
                   </Marquee>
-                  <Marquee behavior="alternate">
+                  <Marquee
+                    behavior="alternate"
+                    className="border border-gray-200 rounded bg-purple-50">
                     <span className="px-4">Alternate behavior (back and forth)</span>
                   </Marquee>
                 </div>
@@ -230,7 +236,7 @@ const App: React.FC = () => {
 
               <div>
                 <h3 className="text-lg font-medium mb-2">With Rich Content</h3>
-                <Marquee>
+                <Marquee className="border border-gray-200 rounded bg-gray-50">
                   <div className="flex items-center gap-4 px-4">
                     <span className="text-xl">🎉</span>
                     <span className="font-bold">Big Announcement!</span>
@@ -242,7 +248,6 @@ const App: React.FC = () => {
               </div>
             </div>
           </section>
-
           {/* Drawer Component Section */}
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">Drawer Component</h2>
@@ -264,17 +269,14 @@ const App: React.FC = () => {
               isOpen={isDrawerOpen}
               onClose={() => setIsDrawerOpen(false)}
               placement={drawerPlacement}
-              minWidth={300}
+              minWidth={200}
               maxWidth="80%"
               minHeight={200}
               maxHeight="50%"
-              contentClassName="bg-white p-4 shadow-lg"
-              backdropClassName="bg-black bg-opacity-50"
+              contentClassName="bg-white w-1/2 shadow-lg"
+              backdropClassName="bg-blue-500 bg-opacity-50"
               // Add direct style overrides to make the drawer visible
-              style={{
-                backgroundColor: "white",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-              }}>
+            >
               <div className="h-full overflow-auto p-4">
                 <h3 className="text-xl font-bold mb-4">{drawerPlacement.charAt(0).toUpperCase() + drawerPlacement.slice(1)} Drawer</h3>
                 <p>This is a drawer that opens from the {drawerPlacement}.</p>
@@ -444,9 +446,9 @@ const App: React.FC = () => {
                 <h3 className="text-lg font-medium mb-2">Basic Tabs</h3>
                 <Tabs
                   items={[
-                    { id: "tab1", label: "Tab 1", content: <p className="p-4 bg-gray-50 rounded">Content for Tab 1</p> },
-                    { id: "tab2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Content for Tab 2</p> },
-                    { id: "tab3", label: "Tab 3", content: <p className="p-4 bg-gray-50 rounded">Content for Tab 3</p> },
+                    { id: "tab1", label: <div className="px-2 inline-block">Tab 1</div>, content: <p className="p-4 bg-gray-50 rounded">Content for Tab 1</p> },
+                    { id: "tab2", label: <div className="px-2 inline-block">Tab 2</div>, content: <p className="p-4 bg-gray-50 rounded">Content for Tab 2</p> },
+                    { id: "tab3", label: <div className="px-2 inline-block">Tab 3</div>, content: <p className="p-4 bg-gray-50 rounded">Content for Tab 3</p> },
                   ]}
                 />
               </div>
@@ -457,32 +459,32 @@ const App: React.FC = () => {
                   <Tabs
                     variantStyle="line"
                     items={[
-                      { id: "line1", label: "Line Style", content: <p className="p-4 bg-gray-50 rounded">Line variant tabs use an underline indicator</p> },
-                      { id: "line2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
+                      { id: "line1", label: <div className="p-2">Line Style</div>, content: <p className="p-4 bg-gray-50 rounded">Line variant tabs use an underline indicator</p> },
+                      { id: "line2", label: <div className="p-2">Tab 2</div>, content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
                     ]}
                   />
 
                   <Tabs
                     variantStyle="enclosed"
                     items={[
-                      { id: "enclosed1", label: "Enclosed Style", content: <p className="p-4 bg-gray-50 rounded">Enclosed variant tabs look like folder tabs</p> },
-                      { id: "enclosed2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
+                      { id: "enclosed1", label: <div className="p-2">Enclosed Style</div>, content: <p className="p-4 bg-gray-50 rounded">Enclosed variant tabs look like folder tabs</p> },
+                      { id: "enclosed2", label: <div className="p-2">Tab 2</div>, content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
                     ]}
                   />
 
                   <Tabs
                     variantStyle="soft-rounded"
                     items={[
-                      { id: "soft1", label: "Soft Rounded", content: <p className="p-4 bg-gray-50 rounded">Soft rounded tabs have gentle rounded corners</p> },
-                      { id: "soft2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
+                      { id: "soft1", label: <div className="p-2">Soft Rounded</div>, content: <p className="">Soft rounded tabs have gentle rounded corners</p> },
+                      { id: "soft2", label: <div className="p-2">Tab 2</div>, content: <p className="">Another tab content</p> },
                     ]}
                   />
 
                   <Tabs
                     variantStyle="pill"
                     items={[
-                      { id: "pill1", label: "Pill Style", content: <p className="p-4 bg-gray-50 rounded">Pill tabs have fully rounded corners</p> },
-                      { id: "pill2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
+                      { id: "pill1", label: <div className="p-2 px-4">Pill Style</div>, content: <p className="p-4 bg-gray-50 rounded">Pill tabs have fully rounded corners</p> },
+                      { id: "pill2", label: <div className="p-2 px-4">Tab 2</div>, content: <p className="p-4 bg-gray-50 rounded">Another tab content</p> },
                     ]}
                   />
                 </div>
@@ -491,11 +493,12 @@ const App: React.FC = () => {
               <div>
                 <h3 className="text-lg font-medium mb-2">Vertical Tabs</h3>
                 <Tabs
+                  className="bg-gray-100"
                   orientation="vertical"
                   items={[
-                    { id: "v1", label: "Tab 1", content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 1</p> },
-                    { id: "v2", label: "Tab 2", content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 2</p> },
-                    { id: "v3", label: "Tab 3", content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 3</p> },
+                    { id: "v1", label: <div className="p-2 min-w-32 text-left px-4">Tab 1</div>, content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 1</p> },
+                    { id: "v2", label: <div className="p-2 min-w-32 text-left px-4">Tab 2</div>, content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 2</p> },
+                    { id: "v3", label: <div className="p-2 min-w-32 text-left px-4">Tab 3</div>, content: <p className="p-4 bg-gray-50 rounded">Content for vertical tab 3</p> },
                   ]}
                 />
               </div>

@@ -18,7 +18,7 @@ const AccordionItem: React.FC<AccordionItemProps & { index: number }> = ({ title
   return (
     <div className="border-b border-gray-200">
       <button
-        className={`flex justify-between w-full py-3 text-left focus:outline-none ${isDisabled ? "opacity-50 cursor-not-allowed" : "focus:ring-2 focus:ring-offset-2"}`}
+        className={`flex justify-between w-full focus:outline-none ${isDisabled ? "opacity-50 cursor-not-allowed" : "focus:ring-2 focus:ring-offset-2"}`}
         onClick={() => !isDisabled && toggleItem(index)}
         disabled={isDisabled}
         aria-expanded={isActive}>
@@ -35,11 +35,7 @@ const AccordionItem: React.FC<AccordionItemProps & { index: number }> = ({ title
           />
         </svg>
       </button>
-      {isActive && (
-        <div className="pt-0 pb-4">
-          <div className="text-base">{content}</div>
-        </div>
-      )}
+      {isActive && <div className="">{content}</div>}
     </div>
   );
 };

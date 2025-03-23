@@ -10,6 +10,12 @@ export interface DrawerProps extends BaseProps {
   isOpen: boolean;
 
   /**
+   * 
+   * 
+   */
+  closeButton?: string;
+
+  /**
    * Callback when the drawer should close
    */
   onClose: () => void;

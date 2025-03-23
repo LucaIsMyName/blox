@@ -1,0 +1,69 @@
+[data-blox-drawer-backdrop] {
+  backdrop-filter: blur(var(--blox-drawer-backdrop-blur, 0px));
+  background-color: var(--blox-drawer-backdrop-color, rgba(0, 0, 0, 0.5));
+  z-index: var(--z-index, 1000);
+}
+
+[data-blox-drawer-content] {
+  position: relative;
+  overflow-y: auto;
+  position: absolute;
+  background-color: var(--blox-drawer-content-bg-color, white);
+}
+
+/* Placement styles */
+[data-blox-drawer-backdrop] [data-blox-drawer-content][data-blox-drawer-placement="right"] {
+  justify-content: flex-end;
+  top: var(--blox-drawer-top, 0);
+  right: var(--blox-drawer-right, 0);
+  bottom: var(--blox-drawer-bottom, 0);
+}
+
+[data-blox-drawer-backdrop] [data-blox-drawer-content][data-blox-drawer-placement="left"] {
+  justify-content: flex-start;
+  top: var(--blox-drawer-top, 0);
+  left: var(--blox-drawer-left, 0);
+  bottom: var(--blox-drawer-bottom, 0);
+}
+
+[data-blox-drawer-backdrop] [data-blox-drawer-content][data-blox-drawer-placement="top"] {
+  align-items: flex-start;
+  top: var(--blox-drawer-top, 0);
+  right: var(--blox-drawer-right, 0);
+  left: var(--blox-drawer-left, 0);
+}
+
+[data-blox-drawer-backdrop] [data-blox-drawer-content][data-blox-drawer-placement="bottom"] {
+  align-items: flex-end;
+  bottom: var(--blox-drawer-bottom, 0);
+  right: var(--blox-drawer-right, 0);
+  bottom: var(--blox-drawer-bottom, 0);
+}
+
+/* Content positioning based on placement */
+[data-blox-drawer-content][data-blox-drawer-placement="left"],
+[data-blox-drawer-content][data-blox-drawer-placement="right"] {
+  height: 100%;
+}
+
+[data-blox-drawer-content][data-blox-drawer-placement="top"],
+[data-blox-drawer-content][data-blox-drawer-placement="bottom"] {
+  width: 100%;
+}
+
+/* Close button */
+[data-blox-drawer-close] {
+  position: absolute;
+  top: var(--blox-spacing-sm, 10px);
+  right: var(--blox-spacing-sm, 10px);
+  width: var(--blox-spacing-lg, 24px);
+  height: var(--blox-spacing-lg, 24px);
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+}

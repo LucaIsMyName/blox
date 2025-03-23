@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { TableProps, TableColumn, SortDirection } from "./types";
 import { getComponentConfig, injectComponentStyles } from "../../utils/configLoader";
+import "./table.css";
 
 const SortIcon = ({ direction }: { direction: SortDirection }) => {
   if (direction === "none") {

@@ -8,4 +8,5 @@ export * from './Modal';
 export * from './Tabs';
 export * from './Drawer';
 export * from './Table';
+export * from './Dropdown';
 // Add more component exports as you create them
