@@ -1,4 +1,4 @@
-import { BaseProps, Size } from '../../types';
+import { BaseProps, Size } from "../../types";
 
 export interface ButtonProps extends BaseProps, React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
@@ -7,4 +7,5 @@ export interface ButtonProps extends BaseProps, React.ButtonHTMLAttributes<HTMLB
   rightIcon?: React.ReactNode;
   fullWidth?: boolean;
   rounded?: boolean;
+  asChild?: boolean;
 }

@@ -5,7 +5,20 @@ import { getComponentConfig, injectComponentStyles } from "../../utils/configLoa
 export const Dropdown: React.FC<DropdownProps> = (props) => {
   // Load component configuration and merge with props
   const config = getComponentConfig<DropdownProps>("Dropdown");
-  const { options = [], placeholder = "Select an option", variant = config.props.variant || "primary", size = config.props.size || "md", fullWidth = config.props.fullWidth || false, rounded = config.props.rounded || false, className = "", disabled, value, onChange, ...rest } = props;
+  const {
+    options = [],
+    placeholder = "Select an option",
+    variant = config.props.variant || "",
+    size = config.props.size || "md",
+    fullWidth = config.props.fullWidth || false,
+    rounded = config.props.rounded || false,
+    className = "",
+    disabled,
+    value,
+    onChange,
+    name, // Extract name directly from props
+    ...rest
+  } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | number | undefined>(value);
@@ -40,11 +53,11 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
   // Size classes using CSS variables for spacing and font sizes
   const sizeClasses = {
-    xs: "px-2 py-1 text-xs",
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-5 py-2.5 text-lg",
-    xl: "px-6 py-3 text-xl",
+    xs: "text-xs",
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+    xl: "text-xl",
   };
 
   // Width classes
@@ -63,9 +76,9 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
   // Custom styles to apply CSS variables
   const customStyle = {
-    backgroundColor: `var(--blox-dropdown-bg-color, var(--blox-color-${variant}-500, #0284c7))`,
-    color: "var(--blox-dropdown-text-color, white)",
-    border: "1px solid var(--blox-dropdown-border-color, rgba(0,0,0,0.2))",
+    backgroundColor: `var(--blox-dropdown-bg-color, var(--blox-color-${variant}-500, transparent))`,
+    color: "var(--blox-dropdown-text-color, black)",
+    border: "var(--blox-dropwdown-border-width, 0px) solid var(--blox-dropdown-border-color, transparent)",
   };
 
   // Handle option selection
@@ -77,7 +90,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
       const syntheticEvent = {
         target: {
           value: option.value,
-          name: rest.name,
+          name, // Use the name prop directly
         },
       } as React.ChangeEvent<HTMLSelectElement>;
       onChange(syntheticEvent);
@@ -134,7 +147,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
         onChange={onChange}
         className="sr-only"
         disabled={disabled}
-        name={rest.name}>
+        name={name}>
         <option
           value=""
           disabled>

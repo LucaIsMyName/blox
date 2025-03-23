@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Accordion, Marquee, Badge, Breadcrumb, Modal, Tabs, Drawer, Dropdown } from "./components";
+import { Button, Accordion, Marquee, Badge, Breadcrumb, Modal, Tabs, Drawer, Dropdown, Toggle, Checkbox, Radio } from "./components";
 import { TableExample } from "./examples/TableExample";
 import { TooltipExample } from "./examples/TooltipExample";
+import { FormControlsExample } from "./examples/FormControlsExample";
 import { ThemeProvider } from "./theme/ThemeProvider";
 
 const App: React.FC = () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-gray-50 p-4">
         <div className=" mx-auto">
           <h1 className="text-3xl font-bold mb-8">Blox Component Library Demo</h1>
+          <FormControlsExample />
           <section className="mb-10">
             <TooltipExample />
           </section>
@@ -41,8 +43,8 @@ const App: React.FC = () => {
               value={1}
               onChange={(e) => e.target.value}
               placeholder="Select an option"
-              variant="primary"
-              size="md"
+              // variant="primary"
+              size="lg"
               fullWidth={true}
               rounded={false}
             />
@@ -61,7 +63,7 @@ const App: React.FC = () => {
                   <Button variant="warning">Warning</Button>
                   <Button variant="info">Info</Button>
                   <Button variant="light">Light</Button>
-                  <Button variant="dark">Dark</Button>
+                  <Button asChild variant="dark">Dark</Button>
                 </div>
               </div>
 

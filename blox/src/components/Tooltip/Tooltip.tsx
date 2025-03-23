@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { TooltipProps } from "./types";
+import { TooltipProps, TooltipPlacement } from "./types";
 
 export const Tooltip: React.FC<TooltipProps> = ({
   content,
@@ -31,8 +31,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const tooltipRef = useRef<HTMLDivElement>(null);
   
   // Timers for delay
-  const showTimeoutRef = useRef<NodeJS.Timeout>();
-  const hideTimeoutRef = useRef<NodeJS.Timeout>();
+  const showTimeoutRef = useRef<NodeJS.Timeout | undefined>();
+  const hideTimeoutRef = useRef<NodeJS.Timeout | undefined>();
   
   // State for position
   const [position, setPosition] = useState({
@@ -55,29 +55,46 @@ export const Tooltip: React.FC<TooltipProps> = ({
     const spaceLeft = triggerRect.left;
 
     // Determine best placement based on available space
-    let finalPlacement = placement;
+    let finalPlacement: TooltipPlacement = placement;
     const primaryPlacement = placement.split('-')[0] as 'top' | 'right' | 'bottom' | 'left';
 
     // Check if preferred placement has enough space, otherwise flip to opposite side
     switch (primaryPlacement) {
       case 'top':
         if (spaceTop < tooltipRect.height + offset && spaceBottom > tooltipRect.height + offset) {
-          finalPlacement = finalPlacement.replace('top', 'bottom') as TooltipProps['placement'];
+          // Convert string replacement to direct assignment to fix TypeScript errors
+          finalPlacement = (placement.includes('start') 
+            ? 'bottom-start' 
+            : placement.includes('end') 
+              ? 'bottom-end' 
+              : 'bottom');
         }
         break;
       case 'right':
         if (spaceRight < tooltipRect.width + offset && spaceLeft > tooltipRect.width + offset) {
-          finalPlacement = finalPlacement.replace('right', 'left') as TooltipProps['placement'];
+          finalPlacement = (placement.includes('start') 
+            ? 'left-start' 
+            : placement.includes('end') 
+              ? 'left-end' 
+              : 'left');
         }
         break;
       case 'bottom':
         if (spaceBottom < tooltipRect.height + offset && spaceTop > tooltipRect.height + offset) {
-          finalPlacement = finalPlacement.replace('bottom', 'top') as TooltipProps['placement'];
+          finalPlacement = (placement.includes('start') 
+            ? 'top-start' 
+            : placement.includes('end') 
+              ? 'top-end' 
+              : 'top');
         }
         break;
       case 'left':
         if (spaceLeft < tooltipRect.width + offset && spaceRight > tooltipRect.width + offset) {
-          finalPlacement = finalPlacement.replace('left', 'right') as TooltipProps['placement'];
+          finalPlacement = (placement.includes('start') 
+            ? 'right-start' 
+            : placement.includes('end') 
+              ? 'right-end' 
+              : 'right');
         }
         break;
     }
@@ -163,7 +180,9 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const handleShow = useCallback(() => {
     if (isDisabled) return;
     
-    clearTimeout(hideTimeoutRef.current);
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
     
     if (!isControlled) {
       if (showDelay) {
@@ -180,7 +199,9 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const handleHide = useCallback(() => {
     if (isDisabled) return;
     
-    clearTimeout(showTimeoutRef.current);
+    if (showTimeoutRef.current) {
+      clearTimeout(showTimeoutRef.current);
+    }
     
     if (!isControlled) {
       if (hideDelay) {
@@ -195,7 +216,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
   // Prevent hiding when interacting with tooltip
   const handleTooltipMouseEnter = useCallback(() => {
-    if (interactive) {
+    if (interactive && hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
     }
   }, [interactive]);
@@ -240,39 +261,48 @@ export const Tooltip: React.FC<TooltipProps> = ({
   // Clear timeouts on unmount
   useEffect(() => {
     return () => {
-      clearTimeout(showTimeoutRef.current);
-      clearTimeout(hideTimeoutRef.current);
+      if (showTimeoutRef.current) clearTimeout(showTimeoutRef.current);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     };
   }, []);
 
   // Create props for trigger element
   const getTriggerProps = () => {
-    const triggerProps: React.HTMLAttributes<HTMLDivElement> = {
-      ref: triggerRef,
+    // Fix the typing with proper attributes
+    const triggerProps: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> = {
       className: `inline-block ${className}`.trim(),
       ...rest,
     };
 
+    // Apply the ref separately to avoid TypeScript errors
+    triggerProps.ref = triggerRef;
+
     if (!isControlled) {
       if (showOnHover) {
+        const originalOnMouseEnter = triggerProps.onMouseEnter;
         triggerProps.onMouseEnter = (e) => {
           handleShow();
-          rest.onMouseEnter?.(e);
+          if (originalOnMouseEnter) originalOnMouseEnter(e);
         };
+        
+        const originalOnMouseLeave = triggerProps.onMouseLeave;
         triggerProps.onMouseLeave = (e) => {
           handleHide();
-          rest.onMouseLeave?.(e);
+          if (originalOnMouseLeave) originalOnMouseLeave(e);
         };
       }
       
       if (showOnFocus) {
+        const originalOnFocus = triggerProps.onFocus;
         triggerProps.onFocus = (e) => {
           handleShow();
-          rest.onFocus?.(e);
+          if (originalOnFocus) originalOnFocus(e);
         };
+        
+        const originalOnBlur = triggerProps.onBlur;
         triggerProps.onBlur = (e) => {
           handleHide();
-          rest.onBlur?.(e);
+          if (originalOnBlur) originalOnBlur(e);
         };
       }
     }

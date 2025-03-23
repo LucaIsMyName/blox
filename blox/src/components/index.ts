@@ -9,4 +9,5 @@ export * from './Tabs';
 export * from './Drawer';
 export * from './Table';
 export * from './Dropdown';
+export * from './FormControls'
 // Add more component exports as you create them

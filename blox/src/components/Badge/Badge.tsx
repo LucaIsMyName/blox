@@ -39,7 +39,7 @@ export const Badge: React.FC<BadgeProps> = (props) => {
   };
 
   return (
-    <span
+    <button
       className={`${baseClasses} ${sizeClasses[size]} ${radiusClass} ${cursorClass} ${className}`}
       style={style}
       onClick={onClick}
@@ -53,6 +53,6 @@ export const Badge: React.FC<BadgeProps> = (props) => {
         />
       )}
       {children}
-    </span>
+    </button>
   );
 };
