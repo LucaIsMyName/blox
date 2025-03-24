@@ -36,7 +36,7 @@ export const TooltipExample: React.FC = () => {
                 </div>
               }
               placement="top"
-              tooltipClassName="animate-fadeIn"
+              tooltipClassName=""
             >
               <Button size="sm">Top</Button>
             </Tooltip>

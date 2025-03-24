@@ -18,7 +18,7 @@ export const FormControlsExample: React.FC = () => {
   };
   
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-0 space-y-8 mb-10">
       <h1 className="text-2xl font-bold mb-6">Form Controls with Internal State</h1>
       
       <div className="space-y-4">

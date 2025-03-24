@@ -326,7 +326,7 @@ Example CSS targeting Blox components:
 ```css
 /* Style the button component */
 [data-blox="button"] {
-  background-color: #3b82f6;
+  background-color: var(--blox-button-bg-color, --blox-color-{variant}-500, #f90f90);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;

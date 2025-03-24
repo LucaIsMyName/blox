@@ -378,7 +378,7 @@ const App: React.FC = () => {
               <div>
                 <h3 className="text-lg font-medium mb-2">Custom Separator</h3>
                 <Breadcrumb
-                  separator=">"
+                  separator={"\\"}
                   items={[
                     { label: "Home", href: "#" },
                     { label: "Category", href: "#" },
