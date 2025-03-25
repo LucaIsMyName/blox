@@ -8,3 +8,4 @@ export { Radio } from './Radio';
 export { Table } from './Table';
 export { Tabs } from './Tabs';
 export { Tooltip } from './Tooltip';
+export { SegmentedControl } from './SegmentedControl';

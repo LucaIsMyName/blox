@@ -1041,4 +1041,53 @@ interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
 
 declare const Tooltip: React$1.FC<TooltipProps>;
 
-export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, Drawer, DrawerPlacement, DrawerProps, Dropdown, DropdownOption, DropdownProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SortDirection, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, Tooltip, TooltipPlacement, TooltipProps };
+interface SegmentedControlProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+    /**
+     * Currently selected value (controlled mode)
+     */
+    value?: string;
+    /**
+     * Default selected value (uncontrolled mode)
+     */
+    defaultValue?: string;
+    /**
+     * Callback when selection changes
+     */
+    onChange?: (value: string) => void;
+    /**
+     * Whether all options can be deselected
+     * @default false
+     */
+    allowDeselect?: boolean;
+    /**
+     * Whether the control is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Children of the segmented control
+     */
+    children: ReactNode;
+}
+interface SegmentItemProps extends HTMLAttributes<HTMLButtonElement> {
+    /**
+     * Value of the segment
+     */
+    value: string;
+    /**
+     * Whether the segment is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Children of the segment
+     */
+    children: ReactNode;
+}
+interface SegmentedControlComposition {
+    Item: React.FC<SegmentItemProps>;
+}
+
+declare const SegmentedControl: React$1.FC<SegmentedControlProps> & SegmentedControlComposition;
+
+export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, Drawer, DrawerPlacement, DrawerProps, Dropdown, DropdownOption, DropdownProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentedControl, SegmentedControlProps, SortDirection, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, Tooltip, TooltipPlacement, TooltipProps };

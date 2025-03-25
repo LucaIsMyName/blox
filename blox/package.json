@@ -1,8 +1,8 @@
 {
   "name": "blox-ui-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A headless UI component library for React",
-  "author": "Your Name",
+  "author": "LucaIsMyName",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
