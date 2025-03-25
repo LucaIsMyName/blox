@@ -1,2 +1,3 @@
-export { Drawer } from './Drawer';
-export type { DrawerProps, DrawerPlacement } from './types';
+// index.ts
+export { default as Drawer } from './Drawer';
+export * from './types';

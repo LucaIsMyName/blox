@@ -1,18 +1,16 @@
-import { BaseProps } from "../../types";
-import React from "react";
-export type DrawerPlacement = "left" | "right" | "top" | "bottom";
-export interface DrawerProps extends BaseProps {
+import { HTMLAttributes, ReactNode } from 'react';
+export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
+export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * The content of the drawer
+     */
+    children: ReactNode;
     /**
      * Whether the drawer is open
      */
     isOpen: boolean;
     /**
-     *
-     *
-     */
-    closeButton?: string;
-    /**
-     * Callback when the drawer should close
+     * Callback function to close the drawer
      */
     onClose: () => void;
     /**
@@ -20,10 +18,6 @@ export interface DrawerProps extends BaseProps {
      * @default 'right'
      */
     placement?: DrawerPlacement;
-    /**
-     * Drawer content
-     */
-    children: React.ReactNode;
     /**
      * Minimum width of the drawer (for left/right placement)
      * @default '250px'
@@ -45,12 +39,7 @@ export interface DrawerProps extends BaseProps {
      */
     maxHeight?: string | number;
     /**
-     * Whether to show a close button
-     * @default true
-     */
-    showCloseButton?: boolean;
-    /**
-     * Whether to close the drawer when pressing the Escape key
+     * Whether to close the drawer when the escape key is pressed
      * @default true
      */
     closeOnEsc?: boolean;
@@ -59,6 +48,19 @@ export interface DrawerProps extends BaseProps {
      * @default true
      */
     closeOnOutsideClick?: boolean;
+    /**
+     * Custom class name for the drawer backdrop
+     */
+    backdropClassName?: string;
+    /**
+     * Custom class name for the drawer content
+     */
+    contentClassName?: string;
+    /**
+     * Custom z-index for the drawer
+     * @default 1000
+     */
+    zIndex?: number;
     /**
      * Whether to trap focus inside the drawer when open
      * @default true
@@ -70,25 +72,17 @@ export interface DrawerProps extends BaseProps {
      */
     usePortal?: boolean;
     /**
-     * Z-index for the drawer
-     * @default 1000
+     * Whether to show a close button
+     * @default true
      */
-    zIndex?: number;
-    /**
-     * Additional class name for the drawer content
-     */
-    contentClassName?: string;
-    /**
-     * Additional class name for the drawer backdrop
-     */
-    backdropClassName?: string;
+    showCloseButton?: boolean;
     /**
      * Whether to animate the drawer
      * @default true
      */
     animated?: boolean;
     /**
-     * Whether to lock body scroll when drawer is open
+     * Whether to block scrolling when the drawer is open
      * @default true
      */
     lockScroll?: boolean;
@@ -99,28 +93,42 @@ export interface DrawerProps extends BaseProps {
         onClick: () => void;
     }) => React.ReactNode;
     /**
+     * Custom close button content
+     */
+    closeButton?: ReactNode;
+    /**
+     * ARIA label for the drawer
+     */
+    "aria-label"?: string;
+    /**
+     * ID of the element that labels the drawer
+     */
+    "aria-labelledby"?: string;
+    /**
+     * ID of the element that describes the drawer
+     */
+    "aria-describedby"?: string;
+    /**
      * Role for the drawer (for accessibility)
      * @default 'dialog'
      */
     role?: string;
-    /**
-     * Aria label for the drawer
-     */
-    "aria-label"?: string;
-    /**
-     * Aria labelledby for the drawer
-     */
-    "aria-labelledby"?: string;
-    /**
-     * Aria describedby for the drawer
-     */
-    "aria-describedby"?: string;
-    /**
-     * ID for the drawer
-     */
-    id?: string;
-    /**
-     * style object for the drawer
-     * */
-    style?: React.CSSProperties;
+}
+export interface DrawerComposition {
+    Header: React.FC<DrawerHeaderProps>;
+    Body: React.FC<DrawerBodyProps>;
+    Footer: React.FC<DrawerFooterProps>;
+    CloseButton: React.FC<DrawerCloseButtonProps>;
+}
+export interface DrawerHeaderProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface DrawerBodyProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface DrawerFooterProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface DrawerCloseButtonProps extends HTMLAttributes<HTMLButtonElement> {
+    onClose?: () => void;
 }

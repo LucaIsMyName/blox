@@ -1,4 +1,4 @@
 import React from "react";
-import { DrawerProps } from "./types";
-import "./Drawer.css";
-export declare const Drawer: React.FC<DrawerProps>;
+import { DrawerProps, DrawerComposition } from "./types";
+declare const Drawer: React.FC<DrawerProps> & DrawerComposition;
+export default Drawer;

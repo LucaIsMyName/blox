@@ -1,192 +1,173 @@
-import React, { useState } from 'react';
-import { Tooltip } from '../components/Tooltip';
-import { Button } from '../components/Button';
+import React, { useState } from "react";
+import { Tooltip } from "../components/Tooltip";
 
 export const TooltipExample: React.FC = () => {
-  const [controlledIsOpen, setControlledIsOpen] = useState(false);
+  const [controlledOpen, setControlledOpen] = useState(false);
 
   return (
-    <div className="">
-      <h2 className="text-2xl font-semibold mb-6">Tooltip Component</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h3 className="text-lg font-medium mb-4">Basic Tooltip</h3>
-          <div className="flex justify-center p-12">
-            <Tooltip 
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  This is a basic tooltip
-                </div>
-              } 
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button>Hover me</Button>
-            </Tooltip>
-          </div>
+    <>
+      <h2>Tooltip Examples</h2>
+      <div className="examples">
+        {/* Basic usage */}
+        <div className="example-item">
+          <Tooltip content="This is a simple tooltip">
+            <button>Hover me</button>
+          </Tooltip>
         </div>
-        
-        <div>
-          <h3 className="text-lg font-medium mb-4">Placement Options</h3>
-          <div className="grid grid-cols-3 gap-4 place-items-center p-12">
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Top tooltip
-                </div>
-              }
-              placement="top"
-              tooltipClassName=""
-            >
-              <Button size="sm">Top</Button>
-            </Tooltip>
-            
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Right tooltip
-                </div>
-              }
-              placement="right"
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button size="sm">Right</Button>
-            </Tooltip>
-            
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Bottom tooltip
-                </div>
-              }
-              placement="bottom"
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button size="sm">Bottom</Button>
-            </Tooltip>
-            
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Left tooltip
-                </div>
-              }
-              placement="left"
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button size="sm">Left</Button>
-            </Tooltip>
-            
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Top-Start tooltip
-                </div>
-              }
-              placement="top-start"
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button size="sm">Top-Start</Button>
-            </Tooltip>
-            
-            <Tooltip
-              content={
-                <div className="bg-gray-800 text-white px-3 py-2 rounded max-w-xs">
-                  Bottom-End tooltip
-                </div>
-              }
-              placement="bottom-end"
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button size="sm">Bottom-End</Button>
-            </Tooltip>
-          </div>
+
+        {/* Different placements */}
+        <div className="example-item">
+          <Tooltip
+            content="Top placement"
+            placement="top">
+            <button>Top</button>
+          </Tooltip>
         </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h3 className="text-lg font-medium mb-4">Custom Styling</h3>
-          <div className="flex justify-center p-8">
-            <Tooltip
-              content={
-                <div className="bg-blue-600 text-white px-3 py-2 rounded shadow-lg max-w-xs">
-                  This tooltip has custom styling
-                </div>
-              }
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button variant="primary">Custom Style</Button>
-            </Tooltip>
-          </div>
+
+        <div className="example-item">
+          <Tooltip
+            content="Right placement"
+            placement="right">
+            <button>Right</button>
+          </Tooltip>
         </div>
-        
-        <div>
-          <h3 className="text-lg font-medium mb-4">Delay and Interactive</h3>
-          <div className="flex justify-center p-8">
-            <Tooltip
-              content={
-                <div className="bg-purple-600 text-white px-3 py-2 rounded shadow-lg max-w-xs">
-                  <p>Interactive tooltip with delay</p>
-                  <button className="mt-2 px-2 py-1 bg-white text-purple-600 rounded text-sm font-medium">
-                    Click me
-                  </button>
-                </div>
-              }
-              showDelay={300}
-              hideDelay={200}
-              interactive={true}
-              tooltipClassName="animate-fadeIn"
-            >
-              <Button variant="secondary">Delayed & Interactive</Button>
-            </Tooltip>
-          </div>
+
+        <div className="example-item">
+          <Tooltip
+            content="Bottom placement"
+            placement="bottom">
+            <button>Bottom</button>
+          </Tooltip>
         </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h3 className="text-lg font-medium mb-4">Controlled Tooltip</h3>
-          <div className="flex justify-center items-center gap-4 p-8">
-            <Button onClick={() => setControlledIsOpen(!controlledIsOpen)}>
-              {controlledIsOpen ? 'Hide Tooltip' : 'Show Tooltip'}
-            </Button>
-            
-            <Tooltip
-              content={
-                <div className="bg-green-600 text-white px-3 py-2 rounded shadow-lg max-w-xs">
-                  This tooltip is controlled programmatically
-                </div>
-              }
-              isOpen={controlledIsOpen}
-              tooltipClassName="animate-fadeIn"
-            >
-              <span className="border border-dashed border-gray-400 p-2 rounded">
-                Controlled Target
-              </span>
-            </Tooltip>
-          </div>
+
+        <div className="example-item">
+          <Tooltip
+            content="Left placement"
+            placement="left">
+            <button>Left</button>
+          </Tooltip>
         </div>
-        
-        <div>
-          <h3 className="text-lg font-medium mb-4">Tooltip Inside Container</h3>
-          <div className="relative h-40 border border-gray-300 rounded overflow-auto p-4">
-            <div className="h-60 flex items-center justify-center">
-              <Tooltip
-                content={
-                  <div className="bg-orange-500 text-white px-3 py-2 rounded shadow-lg max-w-xs">
-                    This tooltip adjusts to stay in viewport even in scrollable containers
-                  </div>
-                }
-                tooltipClassName="animate-fadeIn"
-              >
-                <Button>Scroll to test</Button>
-              </Tooltip>
+
+        {/* Corner placements */}
+        <div className="example-item">
+          <Tooltip
+            content="Top-start placement"
+            placement="top-start">
+            <button>Top-start</button>
+          </Tooltip>
+        </div>
+
+        <div className="example-item">
+          <Tooltip
+            content="Top-end placement"
+            placement="top-end">
+            <button>Top-end</button>
+          </Tooltip>
+        </div>
+
+        {/* With delay */}
+        <div className="example-item">
+          <Tooltip
+            content="Shows after 500ms delay"
+            showDelay={500}>
+            <button>Delayed show</button>
+          </Tooltip>
+        </div>
+
+        <div className="example-item">
+          <Tooltip
+            content="Stays visible for 1000ms after moving mouse away"
+            hideDelay={1000}>
+            <button>Delayed hide</button>
+          </Tooltip>
+        </div>
+
+        {/* Interactive tooltip */}
+        <div className="example-item">
+          <Tooltip
+            content={
+              <div>
+                <p>Interactive tooltip with clickable content</p>
+                <button onClick={() => alert("Clicked inside tooltip!")}>Click me</button>
+              </div>
+            }
+            interactive={true}
+            maxWidth={250}>
+            <button>Interactive tooltip</button>
+          </Tooltip>
+        </div>
+
+        {/* Controlled tooltip */}
+        <div className="example-item">
+          <div>
+            <Tooltip
+              content="This tooltip is controlled programmatically"
+              isOpen={controlledOpen}>
+              <button>Controlled tooltip</button>
+            </Tooltip>
+            <div style={{ marginTop: 10 }}>
+              <button onClick={() => setControlledOpen(!controlledOpen)}>{controlledOpen ? "Hide" : "Show"} tooltip</button>
             </div>
           </div>
         </div>
+
+        {/* With custom styling */}
+        <div className="example-item">
+          <Tooltip
+            content="Custom styled tooltip"
+            tooltipClassName="custom-tooltip"
+            maxWidth={200}>
+            <button>Custom styled</button>
+          </Tooltip>
+        </div>
       </div>
-    </div>
+      {/* CSS for the examples */}
+      <style>{`
+        .examples {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          margin-bottom: 40px;
+        }
+        
+        .example-item {
+          margin-bottom: 16px;
+          min-width: 150px;
+        }
+        
+        button {
+          padding: 8px 12px;
+          border: 1px solid #ccc;
+          background: #f5f5f5;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        
+        /* Custom tooltip styling example */
+        .custom-tooltip {
+          background-color: #4a4a4a;
+          color: green;
+          padding: 8px;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* You can also use CSS custom properties defined by the component */
+        .blox-tooltip {
+          --blox-tooltip-background: white;
+          --blox-tooltip-border: 1px solid #ddd;
+          --blox-tooltip-border-radius: 4px;
+          --blox-tooltip-padding: 8px;
+          --blox-tooltip-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          
+          background: var(--blox-tooltip-background);
+          border: var(--blox-tooltip-border);
+          border-radius: var(--blox-tooltip-border-radius);
+          padding: var(--blox-tooltip-padding);
+          box-shadow: var(--blox-tooltip-box-shadow);
+        }
+      `}</style>
+    </>
   );
 };
 

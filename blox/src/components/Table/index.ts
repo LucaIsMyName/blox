@@ -1,2 +1,3 @@
-export { Table } from "./Table";
-export type { TableProps, TableColumn, SortDirection } from "./types";
+// index.ts
+export { default as Table } from './Table';
+export * from './types';

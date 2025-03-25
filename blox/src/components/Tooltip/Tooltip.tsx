@@ -1,8 +1,9 @@
+// Tooltip.tsx
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { TooltipProps, TooltipPlacement } from "./types";
 
-export const Tooltip: React.FC<TooltipProps> = ({
+const Tooltip: React.FC<TooltipProps> = ({
   content,
   isOpen: controlledIsOpen,
   placement = "bottom",
@@ -17,6 +18,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
   zIndex = 1000,
   isDisabled = false,
   tooltipClassName = "",
+  minWidth,
+  maxWidth,
   className = "",
   children,
   ...rest
@@ -27,12 +30,13 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const isOpen = isControlled ? controlledIsOpen : uncontrolledIsOpen;
 
   // Refs for DOM elements
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const childRef = useRef<HTMLElement | null>(null);
   
   // Timers for delay
-  const showTimeoutRef = useRef<NodeJS.Timeout | undefined>();
-  const hideTimeoutRef = useRef<NodeJS.Timeout | undefined>();
+  const showTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   // State for position
   const [position, setPosition] = useState({
@@ -40,6 +44,13 @@ export const Tooltip: React.FC<TooltipProps> = ({
     y: 0,
     currentPlacement: placement
   });
+
+  // Save a reference to the child element
+  useEffect(() => {
+    if (childRef.current && React.isValidElement(children)) {
+      triggerRef.current = childRef.current;
+    }
+  }, [children]);
 
   // Calculate tooltip position based on trigger element and placement
   const updatePosition = useCallback(() => {
@@ -62,39 +73,38 @@ export const Tooltip: React.FC<TooltipProps> = ({
     switch (primaryPlacement) {
       case 'top':
         if (spaceTop < tooltipRect.height + offset && spaceBottom > tooltipRect.height + offset) {
-          // Convert string replacement to direct assignment to fix TypeScript errors
-          finalPlacement = (placement.includes('start') 
+          finalPlacement = placement.includes('start') 
             ? 'bottom-start' 
             : placement.includes('end') 
               ? 'bottom-end' 
-              : 'bottom');
+              : 'bottom';
         }
         break;
       case 'right':
         if (spaceRight < tooltipRect.width + offset && spaceLeft > tooltipRect.width + offset) {
-          finalPlacement = (placement.includes('start') 
+          finalPlacement = placement.includes('start') 
             ? 'left-start' 
             : placement.includes('end') 
               ? 'left-end' 
-              : 'left');
+              : 'left';
         }
         break;
       case 'bottom':
         if (spaceBottom < tooltipRect.height + offset && spaceTop > tooltipRect.height + offset) {
-          finalPlacement = (placement.includes('start') 
+          finalPlacement = placement.includes('start') 
             ? 'top-start' 
             : placement.includes('end') 
               ? 'top-end' 
-              : 'top');
+              : 'top';
         }
         break;
       case 'left':
         if (spaceLeft < tooltipRect.width + offset && spaceRight > tooltipRect.width + offset) {
-          finalPlacement = (placement.includes('start') 
+          finalPlacement = placement.includes('start') 
             ? 'right-start' 
             : placement.includes('end') 
               ? 'right-end' 
-              : 'right');
+              : 'right';
         }
         break;
     }
@@ -182,13 +192,14 @@ export const Tooltip: React.FC<TooltipProps> = ({
     
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
     }
     
     if (!isControlled) {
       if (showDelay) {
         showTimeoutRef.current = setTimeout(() => {
           setUncontrolledIsOpen(true);
-        }, showDelay);
+        }, showDelay) as unknown as NodeJS.Timeout;
       } else {
         setUncontrolledIsOpen(true);
       }
@@ -201,13 +212,14 @@ export const Tooltip: React.FC<TooltipProps> = ({
     
     if (showTimeoutRef.current) {
       clearTimeout(showTimeoutRef.current);
+      showTimeoutRef.current = null;
     }
     
     if (!isControlled) {
       if (hideDelay) {
         hideTimeoutRef.current = setTimeout(() => {
           setUncontrolledIsOpen(false);
-        }, hideDelay);
+        }, hideDelay) as unknown as NodeJS.Timeout;
       } else {
         setUncontrolledIsOpen(false);
       }
@@ -218,6 +230,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const handleTooltipMouseEnter = useCallback(() => {
     if (interactive && hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
     }
   }, [interactive]);
 
@@ -266,55 +279,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
     };
   }, []);
 
-  // Create props for trigger element
-  const getTriggerProps = () => {
-    // Fix the typing with proper attributes
-    const triggerProps: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> = {
-      className: `inline-block ${className}`.trim(),
-      ...rest,
-    };
-
-    // Apply the ref separately to avoid TypeScript errors
-    triggerProps.ref = triggerRef;
-
-    if (!isControlled) {
-      if (showOnHover) {
-        const originalOnMouseEnter = triggerProps.onMouseEnter;
-        triggerProps.onMouseEnter = (e) => {
-          handleShow();
-          if (originalOnMouseEnter) originalOnMouseEnter(e);
-        };
-        
-        const originalOnMouseLeave = triggerProps.onMouseLeave;
-        triggerProps.onMouseLeave = (e) => {
-          handleHide();
-          if (originalOnMouseLeave) originalOnMouseLeave(e);
-        };
-      }
-      
-      if (showOnFocus) {
-        const originalOnFocus = triggerProps.onFocus;
-        triggerProps.onFocus = (e) => {
-          handleShow();
-          if (originalOnFocus) originalOnFocus(e);
-        };
-        
-        const originalOnBlur = triggerProps.onBlur;
-        triggerProps.onBlur = (e) => {
-          handleHide();
-          if (originalOnBlur) originalOnBlur(e);
-        };
-      }
-    }
-
-    return triggerProps;
-  };
-
-  // Wrap children with tooltip functionality
-  const renderTrigger = () => {
-    return <div {...getTriggerProps()}>{children}</div>;
-  };
-
   // Render tooltip
   const renderTooltip = () => {
     if (!isOpen) return null;
@@ -324,12 +288,19 @@ export const Tooltip: React.FC<TooltipProps> = ({
         ref={tooltipRef}
         role="tooltip"
         id={id}
-        className={`fixed ${tooltipClassName}`}
+        className={`blox-tooltip ${tooltipClassName}`}
         style={{
+          position: 'fixed',
           left: `${position.x}px`,
           top: `${position.y}px`,
           zIndex,
-        }}
+          minWidth: minWidth,
+          maxWidth: maxWidth,
+          '--blox-tooltip-min-width': typeof minWidth === 'number' ? `${minWidth}px` : minWidth,
+          '--blox-tooltip-max-width': typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
+          '--blox-tooltip-offset': `${offset}px`,
+          '--blox-tooltip-placement': position.currentPlacement,
+        } as React.CSSProperties}
         onMouseEnter={handleTooltipMouseEnter}
         onMouseLeave={interactive ? handleHide : undefined}
         data-placement={position.currentPlacement}
@@ -341,10 +312,66 @@ export const Tooltip: React.FC<TooltipProps> = ({
     return createPortal(tooltipContent, document.body);
   };
 
+  // Clone the child element and attach event handlers
+  const childElement = React.Children.only(children);
+  
+  if (!React.isValidElement(childElement)) {
+    console.error('Tooltip children must be a valid React element');
+    return <>{children}</>;
+  }
+  
+  const childProps: React.HTMLAttributes<HTMLElement> = {};
+  
+  if (showOnHover) {
+    childProps.onMouseEnter = (e) => {
+      handleShow();
+      childElement.props.onMouseEnter?.(e);
+    };
+    
+    childProps.onMouseLeave = (e) => {
+      handleHide();
+      childElement.props.onMouseLeave?.(e);
+    };
+  }
+  
+  if (showOnFocus) {
+    childProps.onFocus = (e) => {
+      handleShow();
+      childElement.props.onFocus?.(e);
+    };
+    
+    childProps.onBlur = (e) => {
+      handleHide();
+      childElement.props.onBlur?.(e);
+    };
+  }
+  
+  // Add the ref to the child element
+  const enhancedChild = React.cloneElement(
+    childElement,
+    {
+      ...childProps,
+      ref: (node: HTMLElement) => {
+        // Forward the ref to the child if it has one
+        if (typeof childElement.ref === 'function') {
+          childElement.ref(node);
+        } else if (childElement.ref) {
+          (childElement.ref as React.MutableRefObject<HTMLElement>).current = node;
+        }
+        
+        childRef.current = node;
+        triggerRef.current = node;
+      },
+      className: `${childElement.props.className || ''} ${className}`.trim()
+    }
+  );
+
   return (
     <>
-      {renderTrigger()}
+      {enhancedChild}
       {renderTooltip()}
     </>
   );
 };
+
+export default Tooltip;

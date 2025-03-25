@@ -1,2 +1,3 @@
-export { Modal } from './Modal';
-export type { ModalProps, ModalSize } from './types';
+// index.ts
+export { default as Modal } from './Modal';
+export * from './types';

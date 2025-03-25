@@ -1,3 +1,4 @@
 import React from "react";
-import { DropdownProps } from "./types";
-export declare const Dropdown: React.FC<DropdownProps>;
+import { DropdownProps, DropdownComposition } from "./types";
+declare const Dropdown: React.FC<DropdownProps> & DropdownComposition;
+export default Dropdown;

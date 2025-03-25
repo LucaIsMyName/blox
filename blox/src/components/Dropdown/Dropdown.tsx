@@ -1,166 +1,229 @@
-import React, { useEffect, useState, useRef } from "react";
-import { DropdownProps } from "./types";
-import { getComponentConfig, injectComponentStyles } from "../../utils/configLoader";
+// Dropdown.tsx
+import React, { useRef, useState, useEffect, createContext, useContext } from "react";
+import { createPortal } from "react-dom";
+import { DropdownProps, DropdownTriggerProps, DropdownMenuProps, DropdownItemProps, DropdownContextValue, DropdownComposition } from "./types";
 
-export const Dropdown: React.FC<DropdownProps> = (props) => {
-  // Load component configuration and merge with props
-  const config = getComponentConfig<DropdownProps>("Dropdown");
-  const {
-    options = [],
-    placeholder = "Select an option",
-    variant = config.props.variant || "",
-    size = config.props.size || "md",
-    fullWidth = config.props.fullWidth || false,
-    rounded = config.props.rounded || false,
-    className = "",
-    disabled,
-    value,
-    onChange,
-    name, // Extract name directly from props
-    ...rest
-  } = props;
+// Create context for dropdown state
+const DropdownContext = createContext<DropdownContextValue>({
+  isOpen: false,
+  toggle: () => {},
+  open: () => {},
+  close: () => {},
+  isDisabled: false,
+});
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | number | undefined>(value);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+// Hook to use dropdown context
+const useDropdown = () => {
+  const context = useContext(DropdownContext);
+  if (!context) {
+    throw new Error("useDropdown must be used within a Dropdown component");
+  }
+  return context;
+};
 
-  // Inject component-specific styles on mount
-  useEffect(() => {
-    injectComponentStyles("Dropdown");
-  }, []);
+// Dropdown Trigger Component
+const DropdownTrigger: React.FC<DropdownTriggerProps> = ({ children, disabled, className = "", ...props }) => {
+  const { isOpen, toggle, isDisabled } = useDropdown();
+  const finalDisabled = disabled || isDisabled;
 
-  // Update selected option when value prop changes
-  useEffect(() => {
-    setSelectedOption(value);
-  }, [value]);
+  return (
+    <button
+      type="button"
+      className={`blox-dropdown-trigger ${className}`}
+      onClick={toggle}
+      disabled={finalDisabled}
+      aria-haspopup="true"
+      aria-expanded={isOpen}
+      data-blox-dropdown-trigger=""
+      data-state={isOpen ? "open" : "closed"}
+      data-disabled={finalDisabled ? "true" : "false"}
+      {...props}>
+      {children}
+    </button>
+  );
+};
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
+// Dropdown Menu Component
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ children, className = "", ...props }) => {
+  const { isOpen } = useDropdown();
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  if (!isOpen) return null;
 
-  // Base classes using CSS variables
-  const baseClasses = "inline-flex items-center justify-between transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
+  return (
+    <div
+      className={`blox-dropdown-menu ${className}`}
+      data-blox-dropdown-menu=""
+      data-state={isOpen ? "open" : "closed"}
+      role="menu"
+      {...props}>
+      {children}
+    </div>
+  );
+};
 
-  // Size classes using CSS variables for spacing and font sizes
-  const sizeClasses = {
-    xs: "text-xs",
-    sm: "text-sm",
-    md: "text-base",
-    lg: "text-lg",
-    xl: "text-xl",
-  };
+// Dropdown Item Component
+const DropdownItem: React.FC<DropdownItemProps> = ({ children, value, disabled = false, selected, onSelect, className = "", ...props }) => {
+  const { onValueChange, close, selectedValue } = useDropdown();
+  const isSelected = selected !== undefined ? selected : selectedValue === value;
 
-  // Width classes
-  const widthClasses = fullWidth ? "w-full" : "";
+  const handleClick = () => {
+    if (disabled) return;
 
-  // Border radius classes using CSS variables
-  const getBorderRadiusClass = () => {
-    if (rounded) {
-      return "rounded-full";
+    if (onSelect) {
+      onSelect(value);
     }
-    return "rounded-none";
-  };
 
-  // Disabled classes
-  const disabledClasses = disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer";
-
-  // Custom styles to apply CSS variables
-  const customStyle = {
-    backgroundColor: `var(--blox-dropdown-bg-color, var(--blox-color-${variant}-500, transparent))`,
-    color: "var(--blox-dropdown-text-color, black)",
-    border: "var(--blox-dropwdown-border-width, 0px) solid var(--blox-dropdown-border-color, transparent)",
-  };
-
-  // Handle option selection
-  const handleSelectOption = (option: any) => {
-    setSelectedOption(option.value);
-    setIsOpen(false);
-    if (onChange) {
-      // Create a synthetic event similar to a native select
-      const syntheticEvent = {
-        target: {
-          value: option.value,
-          name, // Use the name prop directly
-        },
-      } as React.ChangeEvent<HTMLSelectElement>;
-      onChange(syntheticEvent);
+    if (onValueChange) {
+      onValueChange(value);
     }
-  };
 
-  // Find the selected option label
-  const getSelectedLabel = () => {
-    const selectedItem = options.find((option) => option.value === selectedOption);
-    return selectedItem ? selectedItem.label : placeholder;
+    close();
   };
 
   return (
     <div
-      ref={dropdownRef}
-      className="relative"
-      data-blox="dropdown">
-      <div
-        className={`${baseClasses} ${sizeClasses[size]} ${widthClasses} ${getBorderRadiusClass()} ${disabledClasses} ${className}`}
-        style={customStyle}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
-        {...rest}>
-        <span>{getSelectedLabel()}</span>
-        <svg
-          className={`ml-2 h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor">
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </div>
-
-      {/* Dropdown List */}
-      {isOpen && !disabled && (
-        <div className="absolute z-10 w-full mt-0 bg-white rounded-none shadow-lg max-h-60 overflow-auto">
-          {options.map((option, index) => (
-            <div
-              key={index}
-              className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${option.value === selectedOption ? "bg-gray-200" : ""}`}
-              onClick={() => handleSelectOption(option)}>
-              {option.label}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Hidden native select for form submission */}
-      <select
-        value={selectedOption}
-        onChange={onChange}
-        className="sr-only"
-        disabled={disabled}
-        name={name}>
-        <option
-          value=""
-          disabled>
-          {placeholder}
-        </option>
-        {options.map((option, index) => (
-          <option
-            key={index}
-            value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      className={`blox-dropdown-item ${className}`}
+      onClick={handleClick}
+      data-blox-dropdown-item=""
+      data-disabled={disabled ? "true" : "false"}
+      data-selected={isSelected ? "true" : "false"}
+      role="menuitem"
+      tabIndex={disabled ? -1 : 0}
+      aria-disabled={disabled}
+      {...props}>
+      {children}
     </div>
   );
 };
+
+// Main Dropdown Component
+const Dropdown: React.FC<DropdownProps> & DropdownComposition = ({ isOpen: controlledIsOpen, onOpenChange, value, onChange, disabled = false, children, placement = "bottom-start", className = "", width, onClickOutside, name, ...props }) => {
+  // For internal state (uncontrolled mode)
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const [internalValue, setInternalValue] = useState<string | number | undefined>(value);
+
+  // Reference to the dropdown container
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Determine if we're in controlled mode
+  const isControlled = controlledIsOpen !== undefined;
+  const isOpen = isControlled ? controlledIsOpen : internalIsOpen;
+
+  // Update internal value when value prop changes
+  useEffect(() => {
+    if (value !== undefined) {
+      setInternalValue(value);
+    }
+  }, [value]);
+
+  // Toggle dropdown
+  const toggle = () => {
+    if (disabled) return;
+
+    const newState = !isOpen;
+
+    if (!isControlled) {
+      setInternalIsOpen(newState);
+    }
+
+    onOpenChange?.(newState);
+  };
+
+  // Open dropdown
+  const open = () => {
+    if (disabled || isOpen) return;
+
+    if (!isControlled) {
+      setInternalIsOpen(true);
+    }
+
+    onOpenChange?.(true);
+  };
+
+  // Close dropdown
+  const close = () => {
+    if (!isOpen) return;
+
+    if (!isControlled) {
+      setInternalIsOpen(false);
+    }
+
+    onOpenChange?.(false);
+  };
+
+  // Handle value change
+  const handleValueChange = (newValue: string | number) => {
+    if (disabled) return;
+
+    if (onChange) {
+      onChange(newValue);
+    } else {
+      setInternalValue(newValue);
+    }
+  };
+
+  // Handle click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) && isOpen) {
+        if (onClickOutside) {
+          onClickOutside();
+        } else {
+          close();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClickOutside]);
+
+  // Context value
+  const contextValue = {
+    isOpen,
+    toggle,
+    open,
+    close,
+    selectedValue: value !== undefined ? value : internalValue,
+    onValueChange: handleValueChange,
+    isDisabled: disabled,
+  };
+
+  // Calculate width style
+  const widthStyle = width ? { width: width === true ? "100%" : width } : {};
+
+  return (
+    <DropdownContext.Provider value={contextValue}>
+      <div
+        ref={dropdownRef}
+        className={`blox-dropdown ${className}`}
+        data-blox-dropdown=""
+        data-state={isOpen ? "open" : "closed"}
+        data-disabled={disabled ? "true" : "false"}
+        data-placement={placement}
+        style={widthStyle}
+        {...props}>
+        {children}
+
+        {/* Hidden input for form submissions */}
+        {name && (
+          <input
+            type="hidden"
+            name={name}
+            value={value !== undefined ? value : internalValue || ""}
+          />
+        )}
+      </div>
+    </DropdownContext.Provider>
+  );
+};
+
+// Attach sub-components
+Dropdown.Trigger = DropdownTrigger;
+Dropdown.Menu = DropdownMenu;
+Dropdown.Item = DropdownItem;
+
+export default Dropdown;

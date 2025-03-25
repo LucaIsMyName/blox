@@ -1,3 +1,4 @@
 import React from "react";
-import { ModalProps } from "./types";
-export declare const Modal: React.FC<ModalProps>;
+import { ModalProps, ModalComposition } from "./types";
+declare const Modal: React.FC<ModalProps> & ModalComposition;
+export default Modal;

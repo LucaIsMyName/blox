@@ -1,2 +1,3 @@
-export { Tabs } from './Tabs';
-export type { TabsProps, TabItem, TabOrientation, TabVariantStyle } from './types';
+// index.ts
+export { default as Tabs } from "./Tabs";
+export * from "./types";

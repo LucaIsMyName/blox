@@ -1,3 +1,4 @@
-import React from "react";
-import { AccordionProps } from "./types";
-export declare const Accordion: React.FC<AccordionProps>;
+import React from 'react';
+import { AccordionProps, AccordionComposition } from './types';
+declare const Accordion: React.FC<AccordionProps> & AccordionComposition;
+export default Accordion;

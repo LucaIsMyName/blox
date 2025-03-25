@@ -1,105 +1,117 @@
-import { BaseProps } from "../../types";
-import React from "react";
+// types.ts
+import { HTMLAttributes, ReactNode } from 'react';
 
-export type TabOrientation = "horizontal" | "vertical";
-export type TabVariantStyle = "line" | "enclosed" | "rounded" | "soft-rounded" | "pill";
+export type TabOrientation = 'horizontal' | 'vertical';
+export type TabVariantStyle = 'line' | 'enclosed' | 'rounded' | 'soft-rounded' | 'pill';
 
-export interface TabItem {
+export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Unique identifier for the tab
-   */
-  id: string;
-
-  /**
-   * Tab label/title
-   */
-  label: React.ReactNode;
-
-  /**
-   * Tab content
-   */
-  content: React.ReactNode;
-
-  /**
-   * Whether the tab is disabled
-   */
-  disabled?: boolean;
-
-  /**
-   * Optional icon to display before the label
-   */
-  icon?: React.ReactNode;
-}
-
-export interface TabsProps extends BaseProps {
-  /**
-   * Array of tab items
-   */
-  items: TabItem[];
-
-  /**
-   * ID of the active tab
+   * The ID of the active tab (controlled mode)
    */
   activeTab?: string;
-
-  /**
-   * Callback when tab is changed
-   */
-  onChange?: (tabId: string) => void;
-
+  
   /**
    * Default active tab ID (uncontrolled mode)
    */
   defaultActiveTab?: string;
-
+  
+  /**
+   * Callback when tab is changed
+   */
+  onChange?: (tabId: string) => void;
+  
   /**
    * Orientation of the tabs
    * @default 'horizontal'
    */
   orientation?: TabOrientation;
-
+  
   /**
-   * Style variant for the tabs
-   * @default 'line'
-   */
-  variantStyle?: TabVariantStyle;
-
-  /**
-   * Whether tabs should take full width
-   * @default false
-   */
-  fullWidth?: boolean;
-
-  /**
-   * Whether to animate the tab indicator
+   * Whether to animate tab transitions
    * @default true
    */
   animated?: boolean;
-
+  
   /**
-   * Additional CSS class for the tab list
+   * Children of the Tabs component
    */
-  tabListClassName?: string;
+  children: ReactNode;
+}
 
+export interface TabListProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Additional CSS class for the tab panels
+   * Children of the TabList component
    */
-  tabPanelClassName?: string;
-
+  children: ReactNode;
+  
   /**
-   * Whether to render the content of all tabs always
-   * When false, only the active tab content is rendered
+   * Orientation of the tabs
+   */
+  orientation?: TabOrientation;
+}
+
+export interface TabProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'> {
+  /**
+   * Tab ID (must be unique within a Tabs component)
+   */
+  id: string;
+  
+  /**
+   * Children of the Tab component
+   */
+  children: ReactNode;
+  
+  /**
+   * Whether the tab is disabled
    * @default false
    */
-  alwaysRenderContent?: boolean;
+  disabled?: boolean;
+}
 
+export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Optional content to display before tab list
+   * Tab ID this panel is associated with
    */
-  leftContent?: React.ReactNode;
+  tabId: string;
+  
+  /**
+   * Children of the TabPanel component
+   */
+  children: ReactNode;
+}
 
+export interface TabPanelsProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Optional content to display after tab list
+   * Children of the TabPanels component
    */
-  rightContent?: React.ReactNode;
+  children: ReactNode;
+}
+
+export interface TabsContextType {
+  /**
+   * ID of the active tab
+   */
+  activeTabId: string;
+  
+  /**
+   * Callback to change the active tab
+   */
+  setActiveTabId: (id: string) => void;
+  
+  /**
+   * Orientation of the tabs
+   */
+  orientation: TabOrientation;
+  
+  /**
+   * Whether animations are enabled
+   */
+  animated: boolean;
+}
+
+export interface TabsComposition {
+  List: React.FC<TabListProps>;
+  Tab: React.FC<TabProps>;
+  Panels: React.FC<TabPanelsProps>;
+  Panel: React.FC<TabPanelProps>;
 }

@@ -1,7 +1,7 @@
-import { BaseProps } from "../../types";
-import React from "react";
+// types.ts
+import { ReactNode, HTMLAttributes, TableHTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from 'react';
 
-export type SortDirection = "asc" | "desc" | "none";
+export type SortDirection = 'asc' | 'desc' | 'none';
 
 export interface TableColumn<T = any> {
   /**
@@ -12,17 +12,17 @@ export interface TableColumn<T = any> {
   /**
    * Header content for the column
    */
-  header: React.ReactNode;
+  header: ReactNode;
 
   /**
    * Function to access the cell data for this column
    */
-  accessor?: (row: T, rowIndex: number) => React.ReactNode;
+  accessor?: (row: T, rowIndex: number) => ReactNode;
 
   /**
    * Cell renderer function
    */
-  cell?: (value: any, row: T, rowIndex: number) => React.ReactNode;
+  cell?: (value: any, row: T, rowIndex: number) => ReactNode;
 
   /**
    * Whether this column is sortable
@@ -44,24 +44,24 @@ export interface TableColumn<T = any> {
   /**
    * Additional props to pass to the header cell
    */
-  headerProps?: React.ThHTMLAttributes<HTMLTableHeaderCellElement>;
+  headerProps?: ThHTMLAttributes<HTMLTableHeaderCellElement>;
 
   /**
    * Additional props to pass to the data cells in this column
    */
-  cellProps?: React.TdHTMLAttributes<HTMLTableDataCellElement>;
+  cellProps?: TdHTMLAttributes<HTMLTableDataCellElement>;
 }
 
-export interface TableProps<T = any> extends BaseProps {
+export interface TableProps<T = any> extends TableHTMLAttributes<HTMLTableElement> {
   /**
    * Data array to be displayed in the table
    */
-  data: T[];
+  data?: T[];
 
   /**
    * Column definitions
    */
-  columns: TableColumn<T>[];
+  columns?: TableColumn<T>[];
 
   /**
    * Key for the currently sorted column
@@ -80,83 +80,6 @@ export interface TableProps<T = any> extends BaseProps {
   onSort?: (columnId: string, direction: SortDirection) => void;
 
   /**
-   * Whether the table has striped rows
-   * @default false
-   */
-  striped?: boolean;
-
-  /**
-   * Whether the table has borders
-   * @default false
-   */
-  bordered?: boolean;
-
-  /**
-   * Whether the table has hover effects
-   * @default false
-   */
-  hover?: boolean;
-
-  /**
-   * Whether the table is compact
-   * @default false
-   */
-  compact?: boolean;
-
-  /**
-   * Whether the table header should stick to the top when scrolling
-   * @default false
-   */
-  stickyHeader?: boolean;
-
-  /**
-   * Whether the table has horizontal scrolling
-   * @default false
-   */
-  horizontalScroll?: boolean;
-
-  /**
-   * Function to determine row class name
-   */
-  getRowClassName?: (row: T, index: number) => string;
-
-  /**
-   * Additional props for the table element
-   */
-  tableProps?: React.TableHTMLAttributes<HTMLTableElement>;
-
-  /**
-   * Additional props for the thead element
-   */
-  theadProps?: React.HTMLAttributes<HTMLTableSectionElement>;
-
-  /**
-   * Additional props for the tbody element
-   */
-  tbodyProps?: React.HTMLAttributes<HTMLTableSectionElement>;
-
-  /**
-   * Whether to show a loading state
-   * @default false
-   */
-  loading?: boolean;
-
-  /**
-   * Content to display when there is no data
-   */
-  emptyContent?: React.ReactNode;
-
-  /**
-   * Content to display while loading
-   */
-  loadingContent?: React.ReactNode;
-
-  /**
-   * Component for rendering the table container
-   */
-  containerComponent?: React.ComponentType<React.HTMLAttributes<HTMLDivElement>>;
-
-  /**
    * Whether to automatically generate row keys using the row index
    * @default true
    */
@@ -168,13 +91,189 @@ export interface TableProps<T = any> extends BaseProps {
   getRowKey?: (row: T, index: number) => string | number;
 
   /**
-   * Custom table caption (for accessibility)
+   * Function to determine row class name
    */
-  caption?: React.ReactNode;
+  getRowClassName?: (row: T, index: number) => string;
 
   /**
-   * Whether to show the table caption
-   * @default true
+   * Children of the table (when using the compositional API)
    */
-  showCaption?: boolean;
+  children?: ReactNode;
+}
+
+export interface TableHeaderProps extends HTMLAttributes<HTMLTableSectionElement> {
+  /**
+   * Children of the table header
+   */
+  children?: ReactNode;
+}
+
+export interface TableBodyProps extends HTMLAttributes<HTMLTableSectionElement> {
+  /**
+   * Children of the table body
+   */
+  children?: ReactNode;
+}
+
+export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
+  /**
+   * Children of the table row
+   */
+  children?: ReactNode;
+}
+
+export interface TableHeaderCellProps extends ThHTMLAttributes<HTMLTableHeaderCellElement> {
+  /**
+   * Children of the table header cell
+   */
+  children?: ReactNode;
+  
+  /**
+   * Column ID for sorting
+   */
+  columnId?: string;
+  
+  /**
+   * Whether this column is sortable
+   */
+  sortable?: boolean;
+  
+  /**
+   * Whether this column is currently sorted
+   */
+  sorted?: boolean;
+  
+  /**
+   * Current sort direction for this column
+   */
+  sortDirection?: SortDirection;
+  
+  /**
+   * Handler for sort changes
+   */
+  onSort?: (columnId: string) => void;
+  
+  /**
+   * Whether this column should be centered
+   */
+  center?: boolean;
+  
+  /**
+   * Column width
+   */
+  width?: string;
+}
+
+export interface TableCellProps extends TdHTMLAttributes<HTMLTableDataCellElement> {
+  /**
+   * Children of the table cell
+   */
+  children?: ReactNode;
+  
+  /**
+   * Column ID (for data attributes)
+   */
+  columnId?: string;
+  
+  /**
+   * Whether this cell should be centered
+   */
+  center?: boolean;
+}
+
+export interface TableCaptionProps extends HTMLAttributes<HTMLTableCaptionElement> {
+  /**
+   * Children of the table caption
+   */
+  children?: ReactNode;
+}
+
+export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Children of the table container
+   */
+  children?: ReactNode;
+  
+  /**
+   * Whether the container should enable horizontal scrolling
+   */
+  horizontalScroll?: boolean;
+}
+
+export interface TableEmptyStateProps extends HTMLAttributes<HTMLTableRowElement> {
+  /**
+   * Content to display when table has no data
+   */
+  children?: ReactNode;
+  
+  /**
+   * Number of columns to span
+   */
+  colSpan?: number;
+}
+
+export interface TableLoadingStateProps extends HTMLAttributes<HTMLTableRowElement> {
+  /**
+   * Content to display while table is loading
+   */
+  children?: ReactNode;
+  
+  /**
+   * Number of columns to span
+   */
+  colSpan?: number;
+}
+
+export interface TableContextValue<T = any> {
+  /**
+   * Data array to be displayed
+   */
+  data: T[];
+  
+  /**
+   * Column definitions
+   */
+  columns: TableColumn<T>[];
+  
+  /**
+   * Key for the currently sorted column
+   */
+  sortColumn?: string;
+  
+  /**
+   * Current sort direction
+   */
+  sortDirection?: SortDirection;
+  
+  /**
+   * Handler for sort changes
+   */
+  onSort?: (columnId: string, direction: SortDirection) => void;
+  
+  /**
+   * Function to generate a key for each row
+   */
+  getRowKey?: (row: T, index: number) => string | number;
+  
+  /**
+   * Whether to automatically generate row keys
+   */
+  autoGenerateRowKey: boolean;
+  
+  /**
+   * Function to determine row class name
+   */
+  getRowClassName?: (row: T, index: number) => string;
+}
+
+export interface TableComposition {
+  Header: React.FC<TableHeaderProps>;
+  Body: React.FC<TableBodyProps>;
+  Row: React.FC<TableRowProps>;
+  HeaderCell: React.FC<TableHeaderCellProps>;
+  Cell: React.FC<TableCellProps>;
+  Caption: React.FC<TableCaptionProps>;
+  Container: React.FC<TableContainerProps>;
+  Empty: React.FC<TableEmptyStateProps>;
+  Loading: React.FC<TableLoadingStateProps>;
 }

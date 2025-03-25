@@ -1,208 +1,315 @@
-import React, { useEffect } from "react";
-import { TableProps, TableColumn, SortDirection } from "./types";
-import { getComponentConfig, injectComponentStyles } from "../../utils/configLoader";
-import "./Table.css";
+// Table.tsx
+import React, { createContext, useContext, useCallback, useMemo } from "react";
+import { TableProps, TableHeaderProps, TableBodyProps, TableRowProps, TableHeaderCellProps, TableCellProps, TableCaptionProps, TableContainerProps, TableEmptyStateProps, TableLoadingStateProps, TableContextValue, TableColumn, SortDirection, TableComposition } from "./types";
 
-const SortIcon = ({ direction }: { direction: SortDirection }) => {
-  if (direction === "none") {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round">
-        <path d="M7 10l5 5 5-5" />
-      </svg>
-    );
-  } else if (direction === "asc") {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round">
-        <path d="M18 15l-6-6-6 6" />
-      </svg>
-    );
-  } else {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round">
-        <path d="M6 9l6 6 6-6" />
-      </svg>
-    );
+// Create context for table state
+const TableContext = createContext<TableContextValue<any>>({
+  data: [],
+  columns: [],
+  autoGenerateRowKey: true,
+});
+
+// Hook to use table context
+const useTable = () => {
+  const context = useContext(TableContext);
+  if (!context) {
+    throw new Error("useTable must be used within a Table component");
   }
+  return context;
 };
 
-export const Table = <T extends Record<string, any>>(props: TableProps<T>) => {
-  // Load component configuration and merge with props
-  const config = getComponentConfig<TableProps<T>>("Table");
+// Table Container Component
+const TableContainer: React.FC<TableContainerProps> = ({ children, horizontalScroll = false, className = "", ...props }) => {
+  return (
+    <div
+      className={`blox-table-container ${className}`}
+      data-blox-table-container=""
+      data-horizontal-scroll={horizontalScroll}
+      style={{
+        overflowX: horizontalScroll ? "auto" : undefined,
+        width: "100%",
+      }}
+      {...props}>
+      {children}
+    </div>
+  );
+};
 
-  const { data = [], columns, sortColumn, sortDirection = "none", onSort, striped = config.props.striped || false, bordered = config.props.bordered || false, hover = config.props.hover || false, compact = config.props.compact || false, stickyHeader = config.props.stickyHeader || false, horizontalScroll = config.props.horizontalScroll || false, getRowClassName, tableProps, theadProps, tbodyProps, loading = config.props.loading || false, emptyContent = "No data available", loadingContent = "Loading...", containerComponent: Container = "div", autoGenerateRowKey = true, getRowKey, caption, showCaption = true, variant = config.props.variant || "primary", className = "", ...rest } = props;
+// Table Caption Component
+const TableCaption: React.FC<TableCaptionProps> = ({ children, className = "", ...props }) => {
+  return (
+    <caption
+      className={`blox-table-caption ${className}`}
+      data-blox-table-caption=""
+      {...props}>
+      {children}
+    </caption>
+  );
+};
 
-  // Inject component-specific styles on mount
-  useEffect(() => {
-    injectComponentStyles("Table");
-  }, []);
+// Table Header Component
+const TableHeader: React.FC<TableHeaderProps> = ({ children, className = "", ...props }) => {
+  return (
+    <thead
+      className={`blox-table-header ${className}`}
+      data-blox-table-header=""
+      {...props}>
+      {children}
+    </thead>
+  );
+};
 
-  // Handle column sorting
-  const handleSort = (column: TableColumn<T>) => {
-    if (!column.sortable || !onSort) return;
+// Table Body Component
+const TableBody: React.FC<TableBodyProps> = ({ children, className = "", ...props }) => {
+  return (
+    <tbody
+      className={`blox-table-body ${className}`}
+      data-blox-table-body=""
+      {...props}>
+      {children}
+    </tbody>
+  );
+};
 
-    let newDirection: SortDirection = "asc";
+// Table Row Component
+const TableRow: React.FC<TableRowProps> = ({ children, className = "", ...props }) => {
+  return (
+    <tr
+      className={`blox-table-row ${className}`}
+      data-blox-table-row=""
+      {...props}>
+      {children}
+    </tr>
+  );
+};
 
-    if (column.id === sortColumn) {
-      if (sortDirection === "asc") {
-        newDirection = "desc";
-      } else if (sortDirection === "desc") {
-        newDirection = "none";
+// Table Header Cell Component
+const TableHeaderCell: React.FC<TableHeaderCellProps> = ({ children, columnId, sortable = false, sorted = false, sortDirection = "none", onSort, center = false, width, className = "", style, ...props }) => {
+  // Internal props for the context version
+  const table = useContext(TableContext);
+
+  // Determine if this column is sorted (when used within Table)
+  const isSorted = sorted || (columnId && table.sortColumn === columnId);
+  const effectiveSortDirection = isSorted ? sortDirection || table.sortDirection || "none" : "none";
+
+  // Handle sort click
+  const handleSortClick = useCallback(() => {
+    if (!sortable) return;
+
+    if (onSort && columnId) {
+      onSort(columnId);
+    } else if (table.onSort && columnId) {
+      let newDirection: SortDirection = "asc";
+
+      if (columnId === table.sortColumn) {
+        if (table.sortDirection === "asc") {
+          newDirection = "desc";
+        } else if (table.sortDirection === "desc") {
+          newDirection = "none";
+        }
       }
+
+      table.onSort(columnId, newDirection);
     }
+  }, [sortable, onSort, columnId, table]);
 
-    onSort(column.id, newDirection);
-  };
+  return (
+    <th
+      className={`blox-table-header-cell ${className}`}
+      data-blox-table-header-cell=""
+      data-sortable={sortable}
+      data-sorted={isSorted}
+      data-sort-direction={effectiveSortDirection}
+      data-center={center}
+      onClick={sortable ? handleSortClick : undefined}
+      style={{
+        ...(width ? { width } : {}),
+        ...(center ? { textAlign: "center" } : {}),
+        cursor: sortable ? "pointer" : undefined,
+        ...style,
+      }}
+      {...props}>
+      {children}
+      {sortable && (
+        <span
+          className="blox-table-sort-icon"
+          data-blox-table-sort-icon="">
+          {effectiveSortDirection === "asc" && "▲"}
+          {effectiveSortDirection === "desc" && "▼"}
+          {effectiveSortDirection === "none" && "⇅"}
+        </span>
+      )}
+    </th>
+  );
+};
 
-  // Render header cell
-  const renderHeaderCell = (column: TableColumn<T>, index: number) => {
-    const isSorted = column.id === sortColumn;
-    const currentDirection = isSorted ? sortDirection : "none";
+// Table Cell Component
+const TableCell: React.FC<TableCellProps> = ({ children, columnId, center = false, className = "", style, ...props }) => {
+  return (
+    <td
+      className={`blox-table-cell ${className}`}
+      data-blox-table-cell=""
+      data-column-id={columnId}
+      data-center={center}
+      style={{
+        ...(center ? { textAlign: "center" } : {}),
+        ...style,
+      }}
+      {...props}>
+      {children}
+    </td>
+  );
+};
 
-    return (
-      <th
-        key={column.id}
-        style={{ width: column.width }}
-        onClick={() => column.sortable && handleSort(column)}
-        data-sortable={column.sortable}
-        data-sorted={isSorted}
-        data-sort-direction={currentDirection}
-        data-center={column.center}
-        {...column.headerProps}>
-        <div className="flex items-center justify-between">
-          <span>{column.header}</span>
-          {column.sortable && (
-            <span className="ml-1">
-              <SortIcon direction={currentDirection} />
-            </span>
-          )}
-        </div>
-      </th>
-    );
-  };
+// Table Empty State Component
+const TableEmpty: React.FC<TableEmptyStateProps> = ({ children = "No data available", colSpan, className = "", ...props }) => {
+  const table = useContext(TableContext);
+  const effectiveColSpan = colSpan || table.columns.length || 1;
 
-  // Render cell content
-  const getCellContent = (row: T, column: TableColumn<T>, rowIndex: number) => {
-    if (column.cell) {
-      const accessorValue = column.accessor ? column.accessor(row, rowIndex) : row[column.id];
-      return column.cell(accessorValue, row, rowIndex);
-    } else if (column.accessor) {
-      return column.accessor(row, rowIndex);
-    } else {
-      return row[column.id];
-    }
-  };
+  return (
+    <tr
+      className={`blox-table-empty ${className}`}
+      data-blox-table-empty=""
+      {...props}>
+      <td
+        colSpan={effectiveColSpan}
+        className="blox-table-empty-cell"
+        data-blox-table-empty-cell=""
+        style={{ textAlign: "center", padding: "1rem" }}>
+        {children}
+      </td>
+    </tr>
+  );
+};
 
-  // Render row
-  const renderRow = (row: T, rowIndex: number) => {
-    const rowKey = getRowKey ? getRowKey(row, rowIndex) : autoGenerateRowKey ? `row-${rowIndex}` : undefined;
+// Table Loading State Component
+const TableLoading: React.FC<TableLoadingStateProps> = ({ children = "Loading...", colSpan, className = "", ...props }) => {
+  const table = useContext(TableContext);
+  const effectiveColSpan = colSpan || table.columns.length || 1;
 
-    const rowClassName = getRowClassName ? getRowClassName(row, rowIndex) : "";
+  return (
+    <tr
+      className={`blox-table-loading ${className}`}
+      data-blox-table-loading=""
+      {...props}>
+      <td
+        colSpan={effectiveColSpan}
+        className="blox-table-loading-cell"
+        data-blox-table-loading-cell=""
+        style={{ textAlign: "center", padding: "1rem" }}>
+        {children}
+      </td>
+    </tr>
+  );
+};
 
-    return (
-      <tr
-        key={rowKey}
-        className={rowClassName}
-        data-row-index={rowIndex}>
-        {columns.map((column, colIndex) => (
-          <td
-            key={`${rowKey}-${column.id}`}
-            data-column-id={column.id}
-            data-center={column.center}
-            {...column.cellProps}>
-            {getCellContent(row, column, rowIndex)}
-          </td>
-        ))}
-      </tr>
-    );
-  };
+// Main Table Component
+const Table = <T extends Record<string, any> = any>({ data = [], columns = [], sortColumn, sortDirection = "none", onSort, autoGenerateRowKey = true, getRowKey, getRowClassName, children, className = "", ...props }: TableProps<T> & { children?: React.ReactNode }) => {
+  // Context value
+  const contextValue = useMemo(
+    () => ({
+      data,
+      columns,
+      sortColumn,
+      sortDirection,
+      onSort,
+      autoGenerateRowKey,
+      getRowKey,
+      getRowClassName,
+    }),
+    [data, columns, sortColumn, sortDirection, onSort, autoGenerateRowKey, getRowKey, getRowClassName]
+  );
 
-  // Render content based on loading and data state
+  // Render function for compositional usage vs. declarative
   const renderContent = () => {
-    if (loading) {
-      return (
-        <tr>
-          <td
-            colSpan={columns.length}
-            data-loading="true">
-            {loadingContent}
-          </td>
-        </tr>
-      );
+    // If children are provided, use compositional pattern
+    if (children) {
+      return children;
     }
 
-    if (data.length === 0) {
-      return (
-        <tr>
-          <td
-            colSpan={columns.length}
-            data-empty="true">
-            {emptyContent}
-          </td>
-        </tr>
-      );
-    }
+    // Otherwise, use declarative pattern with columns and data
+    return (
+      <>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHeaderCell
+                key={column.id}
+                columnId={column.id}
+                sortable={column.sortable}
+                center={column.center}
+                width={column.width}
+                {...column.headerProps}>
+                {column.header}
+              </TableHeaderCell>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.length === 0 ? (
+            <TableEmpty colSpan={columns.length} />
+          ) : (
+            data.map((row, rowIndex) => {
+              const rowKey = getRowKey ? getRowKey(row, rowIndex) : autoGenerateRowKey ? `row-${rowIndex}` : undefined;
 
-    return data.map(renderRow);
+              const rowClassName = getRowClassName ? getRowClassName(row, rowIndex) : "";
+
+              return (
+                <TableRow
+                  key={rowKey}
+                  className={rowClassName}>
+                  {columns.map((column) => {
+                    // Get cell content
+                    let cellContent;
+                    if (column.cell) {
+                      const value = column.accessor ? column.accessor(row, rowIndex) : row[column.id];
+                      cellContent = column.cell(value, row, rowIndex);
+                    } else if (column.accessor) {
+                      cellContent = column.accessor(row, rowIndex);
+                    } else {
+                      cellContent = row[column.id];
+                    }
+
+                    return (
+                      <TableCell
+                        key={`${rowKey}-${column.id}`}
+                        columnId={column.id}
+                        center={column.center}
+                        {...column.cellProps}>
+                        {cellContent}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })
+          )}
+        </TableBody>
+      </>
+    );
   };
 
   return (
-    <Container
-      data-blox="table-container"
-      data-horizontal-scroll={horizontalScroll}
-      {...rest}>
+    <TableContext.Provider value={contextValue}>
       <table
-        data-blox="table"
-        data-variant={variant}
-        data-striped={striped}
-        data-bordered={bordered}
-        data-hover={hover}
-        data-compact={compact}
-        data-loading={loading}
-        data-empty={data.length === 0}
-        className={className}
-        {...tableProps}>
-        {caption && showCaption && <caption>{caption}</caption>}
-
-        <thead
-          data-blox="table-head"
-          data-sticky={stickyHeader}
-          {...theadProps}>
-          <tr>{columns.map(renderHeaderCell)}</tr>
-        </thead>
-
-        <tbody
-          data-blox="table-body"
-          {...tbodyProps}>
-          {renderContent()}
-        </tbody>
+        className={`blox-table ${className}`}
+        data-blox-table=""
+        {...props}>
+        {renderContent()}
       </table>
-    </Container>
+    </TableContext.Provider>
   );
 };
+
+// Attach sub-components
+Table.Container = TableContainer;
+Table.Caption = TableCaption;
+Table.Header = TableHeader;
+Table.Body = TableBody;
+Table.Row = TableRow;
+Table.HeaderCell = TableHeaderCell;
+Table.Cell = TableCell;
+Table.Empty = TableEmpty;
+Table.Loading = TableLoading;
+
+export default Table;

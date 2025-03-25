@@ -1,76 +1,97 @@
-import { BaseProps } from '../../types';
-import React from 'react';
-export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
-export interface ModalProps extends BaseProps {
+import { HTMLAttributes, ReactNode } from 'react';
+export type ModalSize = 'small' | 'medium' | 'large' | 'full';
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
     /**
-     * Whether the modal is open/visible
+     * The content of the modal
+     */
+    children: ReactNode;
+    /**
+     * Whether the modal is open
      */
     isOpen: boolean;
     /**
-     * Callback when the modal should close
+     * Callback function to close the modal
      */
     onClose: () => void;
     /**
-     * Modal title
-     */
-    title?: React.ReactNode;
-    /**
-     * Modal content
-     */
-    children: React.ReactNode;
-    /**
-     * Modal footer content
-     */
-    footer?: React.ReactNode;
-    /**
      * Size of the modal
-     * @default 'md'
+     * @default 'medium'
      */
     size?: ModalSize;
     /**
-     * Whether to close the modal when clicking the overlay
-     * @default true
-     */
-    closeOnOverlayClick?: boolean;
-    /**
-     * Whether to close the modal when pressing the Escape key
+     * Whether to close the modal when the escape key is pressed
      * @default true
      */
     closeOnEsc?: boolean;
     /**
-     * Whether to show a close button in the header
+     * Whether to close the modal when clicking on the overlay
      * @default true
      */
-    showCloseButton?: boolean;
+    closeOnOverlayClick?: boolean;
+    /**
+     * Custom class name for the overlay
+     */
+    overlayClassName?: string;
+    /**
+     * Custom class name for the modal content
+     */
+    contentClassName?: string;
+    /**
+     * ID of the element that labels the modal
+     */
+    ariaLabelledby?: string;
+    /**
+     * ID of the element that describes the modal
+     */
+    ariaDescribedby?: string;
+    /**
+     * Custom z-index for the modal
+     * @default 1050
+     */
+    zIndex?: number;
     /**
      * Whether to center the modal vertically
      * @default true
      */
-    centered?: boolean;
+    isCentered?: boolean;
     /**
-     * Custom z-index for the modal
-     */
-    zIndex?: number;
-    /**
-     * Additional class name for the overlay
-     */
-    overlayClassName?: string;
-    /**
-     * Additional class name for the modal content
-     */
-    contentClassName?: string;
-    /**
-     * Whether the modal should be rendered with a slide-in animation
+     * Whether to block scrolling when the modal is open
      * @default true
      */
-    animated?: boolean;
+    blockScroll?: boolean;
     /**
-     * Whether to lock body scroll when modal is open
+     * Whether to show a close button
      * @default true
      */
-    lockScroll?: boolean;
+    showCloseButton?: boolean;
     /**
-     * ID for the modal for accessibility purposes
+     * Initial element to focus when the modal opens
      */
-    id?: string;
+    initialFocusRef?: React.RefObject<HTMLElement>;
+    /**
+     * Footer content of the modal
+     */
+    footer?: ReactNode;
+}
+export interface ModalComposition {
+    Content: React.FC<ModalContentProps>;
+    Header: React.FC<ModalHeaderProps>;
+    Body: React.FC<ModalBodyProps>;
+    Footer: React.FC<ModalFooterProps>;
+    CloseButton: React.FC<ModalCloseButtonProps>;
+}
+export interface ModalContentProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface ModalHeaderProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface ModalBodyProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface ModalFooterProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface ModalCloseButtonProps extends HTMLAttributes<HTMLButtonElement> {
+    onClose?: () => void;
 }

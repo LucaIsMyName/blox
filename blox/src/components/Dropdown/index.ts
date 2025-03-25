@@ -1,2 +1,3 @@
-export { Dropdown } from './Dropdown';
-export type { DropdownProps, DropdownOption } from './types';
+// index.ts
+export { default as Dropdown } from './Dropdown';
+export * from './types';

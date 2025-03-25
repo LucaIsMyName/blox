@@ -1,247 +1,164 @@
-import React, { useEffect, useState, useRef } from "react";
-import { TabsProps, TabItem } from "./types";
-import { getComponentConfig, injectComponentStyles } from "../../utils/configLoader";
+// Tabs.tsx
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { TabsProps, TabListProps, TabProps, TabPanelsProps, TabPanelProps, TabsContextType, TabsComposition } from "./types";
 
-export const Tabs: React.FC<TabsProps> = (props) => {
-  // Load component configuration and merge with props
-  const config = getComponentConfig<TabsProps>("Tabs");
-  const { items, activeTab, onChange, defaultActiveTab, variant = config.props.variant || "", orientation = config.props.orientation || "horizontal", variantStyle = config.props.variantStyle || "line", fullWidth = config.props.fullWidth || false, animated = config.props.animated !== undefined ? config.props.animated : true, tabListClassName = "", tabPanelClassName = "", alwaysRenderContent = config.props.alwaysRenderContent || false, leftContent, rightContent, className = "", ...rest } = props;
+// Create context for tabs state
+const TabsContext = createContext<TabsContextType>({
+  activeTabId: "",
+  setActiveTabId: () => {},
+  orientation: "horizontal",
+  animated: true,
+});
 
-  // State for selected tab (uncontrolled mode)
-  const [selectedTab, setSelectedTab] = useState<string>(activeTab || defaultActiveTab || (items.length > 0 ? items[0].id : ""));
+// Hook to use tabs context
+const useTabs = () => {
+  const context = useContext(TabsContext);
+  if (!context) {
+    throw new Error("Tabs compound components must be used within a Tabs component");
+  }
+  return context;
+};
 
-  // Indicator element ref for line and enclosed variants
-  const indicatorRef = useRef<HTMLDivElement>(null);
-  const tabsRef = useRef<{ [key: string]: HTMLButtonElement | null }>({});
-
-  // Inject component-specific styles on mount
-  useEffect(() => {
-    injectComponentStyles("Tabs");
-  }, []);
-
-  // Update selected tab when activeTab prop changes (controlled mode)
-  useEffect(() => {
-    if (activeTab !== undefined) {
-      setSelectedTab(activeTab);
-    }
-  }, [activeTab]);
-
-  // Update indicator position when selectedTab changes
-  useEffect(() => {
-    if ((variantStyle === "line" || variantStyle === "enclosed") && indicatorRef.current) {
-      const activeTabElement = tabsRef.current[selectedTab];
-      if (activeTabElement) {
-        if (orientation === "horizontal") {
-          indicatorRef.current.style.left = `${activeTabElement.offsetLeft}px`;
-          indicatorRef.current.style.width = `${activeTabElement.offsetWidth}px`;
-          indicatorRef.current.style.top = "";
-          indicatorRef.current.style.height = "";
-        } else {
-          indicatorRef.current.style.top = `${activeTabElement.offsetTop}px`;
-          indicatorRef.current.style.height = `${activeTabElement.offsetHeight}px`;
-          indicatorRef.current.style.left = "";
-          indicatorRef.current.style.width = "";
-        }
-      }
-    }
-  }, [selectedTab, orientation, variantStyle, items]);
-
-  // Tab change handler
-  const handleTabChange = (tabId: string) => {
-    if (onChange) {
-      onChange(tabId);
-    }
-    if (activeTab === undefined) {
-      setSelectedTab(tabId);
-    }
-  };
-
-  // Get the active tab content
-  const activeTabContent = items.find((item) => item.id === selectedTab)?.content;
-
-  // Base classes
-  const baseClasses = "";
-
-  // Orientation classes
-  const orientationClasses = {
-    horizontal: "",
-    vertical: "flex",
-  };
-
-  // Variant style for the container
-  const getContainerStyle = () => {
-    return {
-      backgroundColor: `var(--blox-tabs-bg-color, transparent)`,
-    };
-  };
-
-  // Tab list style based on orientation and variant
-  const getTabListStyle = () => {
-    const style: React.CSSProperties = {
-      borderColor: `var(--blox-tabs-border-color, var(--blox-color-${variant}-200,  #000))`,
-    };
-
-    if (orientation === "horizontal") {
-      if (variantStyle === "enclosed") {
-        style.borderBottom = `0 solid ${style.borderColor}`;
-      } else if (variantStyle === "line") {
-        style.borderBottom = `0 solid ${style.borderColor}`;
-      }
-    } else {
-      if (variantStyle === "enclosed") {
-        style.borderRight = `0 solid ${style.borderColor}`;
-      } else if (variantStyle === "line") {
-        style.borderRight = `0 solid ${style.borderColor}`;
-      }
-    }
-
-    return style;
-  };
-
-  // Get style for a specific tab
-  const getTabStyle = (item: TabItem) => {
-    const isActive = item.id === selectedTab;
-    const isDisabled = item.disabled;
-
-    // Base style
-    const style: React.CSSProperties = {
-      color: isActive ? ` var(--blox-tabs-active-color, var(--blox-color-${variant}-700,#000))` : isDisabled ? `var(--blox-tabs-disabled-color, #000)` : `var(--blox-color-${variant}-600, var(--blox-tabs-color, #000))`,
-      cursor: isDisabled ? "not-allowed" : "pointer",
-    };
-
-    // Add variant-specific styles
-    if (variantStyle === "enclosed" && isActive) {
-      style.backgroundColor = `var(--blox-tabs-active-bg, white)`;
-      if (orientation === "horizontal") {
-        style.borderColor = `var(--blox-tabs-border-color, var(--blox-color-${variant}-200,  #000))`;
-        style.borderWidth = "var(--blox-border-width, 1px)";
-        style.marginBottom = "-1px";
-      } else {
-        style.borderColor = `var(--blox-tabs-border-color, var(--blox-color-${variant}-200,  #000))`;
-        style.borderWidth = "var(--blox-border-width, 1px)";
-        style.marginRight = "-1px";
-      }
-    } else if (variantStyle === "soft-rounded" || variantStyle === "pill") {
-      if (isActive) {
-        style.backgroundColor = `var(--blox-tabs-soft-active-bg, var(--blox-color-${variant}-100,  #e9e9e9))`;
-      }
-    } else if (variantStyle === "rounded") {
-      style.border = `1px solid ${isActive ? `var(--blox-tabs-rounded-active-border, var(--blox-color-${variant}-400,  #000))` : "transparent"}`;
-      if (isActive) {
-        style.backgroundColor = `var(--blox-tabs-rounded-active-bg, white)`;
-      }
-    }
-
-    return style;
-  };
-
-  // Get style for the indicator
-  const getIndicatorStyle = () => {
-    return {
-      backgroundColor: `var(--blox-tabs-indicator-color, var(--blox-color-${variant}-500, #000))`,
-      transition: animated ? "all 0.2s ease-in-out" : "none",
-    };
-  };
-
-  // Render each tab button
-  const renderTab = (item: TabItem, index: number) => {
-    const isActive = item.id === selectedTab;
-    const isDisabled = item.disabled;
-
-    // Tab classes based on variant style
-    let tabClasses = "flex items-center outline-none focus:ring-2 focus:ring-offset-2";
-
-    if (variantStyle === "rounded") {
-      tabClasses += " rounded-sm";
-    } else if (variantStyle === "soft-rounded") {
-      tabClasses += " rounded-md";
-    } else if (variantStyle === "pill") {
-      tabClasses += " rounded-full";
-    }
-
-    if (fullWidth && orientation === "horizontal") {
-      tabClasses += " flex-1 justify-center";
-    }
-
-    return (
-      <button
-        key={item.id}
-        id={`tab-${item.id}`}
-        role="tab"
-        aria-selected={isActive}
-        aria-controls={`tabpanel-${item.id}`}
-        tabIndex={isActive ? 0 : -1}
-        disabled={isDisabled}
-        onClick={() => !isDisabled && handleTabChange(item.id)}
-        className={tabClasses}
-        style={getTabStyle(item)}
-        ref={(el) => (tabsRef.current[item.id] = el)}>
-        {item.icon && <span className="mr-2">{item.icon}</span>}
-        {item.label}
-      </button>
-    );
-  };
-
-  // Render the tab indicator for line and enclosed variants
-  const renderIndicator = () => {
-    if (variantStyle !== "line" && variantStyle !== "enclosed") return null;
-
-    const indicatorClasses = orientation === "horizontal" ? "absolute bottom-0 h-0.5" : "absolute left-0 w-0.5";
-
-    return (
-      <div
-        ref={indicatorRef}
-        className={indicatorClasses}
-        style={getIndicatorStyle()}
-      />
-    );
-  };
-
-  // Render tab panels
-  const renderTabPanels = () => {
-    return (
-      <div className={`blox-tab-panels ${tabPanelClassName}`}>
-        {alwaysRenderContent ? (
-          items.map((item) => (
-            <div
-              key={item.id}
-              id={`tabpanel-${item.id}`}
-              role="tabpanel"
-              aria-labelledby={`tab-${item.id}`}
-              hidden={item.id !== selectedTab}
-              className={item.id === selectedTab ? "block" : "hidden"}>
-              {item.content}
-            </div>
-          ))
-        ) : (
-          <div
-            id={`tabpanel-${selectedTab}`}
-            role="tabpanel"
-            aria-labelledby={`tab-${selectedTab}`}>
-            {activeTabContent}
-          </div>
-        )}
-      </div>
-    );
-  };
+// TabList Component
+const TabList: React.FC<TabListProps> = ({ children, orientation, className = "", ...props }) => {
+  const { orientation: contextOrientation } = useTabs();
+  const finalOrientation = orientation || contextOrientation;
 
   return (
     <div
-      className={`${baseClasses} ${orientationClasses[orientation]} ${className}`}
-      style={getContainerStyle()}
-      {...rest}>
-      <div
-        className={`blox-tab-list relative ${orientation === "horizontal" ? "flex" : "flex-col"} ${tabListClassName}`}
-        role="tablist"
-        aria-orientation={orientation}
-        style={getTabListStyle()}>
-        {leftContent && <div className="flex items-center mr-2">{leftContent}</div>}
-        {items.map(renderTab)}
-        {rightContent && <div className="flex items-center ml-2">{rightContent}</div>}
-        {renderIndicator()}
-      </div>
-
-      <div className={orientation === "horizontal" ? "pt-4" : "pl-4"}>{renderTabPanels()}</div>
+      className={`blox-tab-list ${className}`}
+      role="tablist"
+      aria-orientation={finalOrientation}
+      data-blox-tab-list=""
+      data-orientation={finalOrientation}
+      {...props}>
+      {children}
     </div>
   );
 };
+
+// Tab Component
+const Tab: React.FC<TabProps> = ({ id, children, disabled = false, className = "", ...props }) => {
+  const { activeTabId, setActiveTabId } = useTabs();
+  const isActive = activeTabId === id;
+
+  const handleClick = () => {
+    if (!disabled) {
+      setActiveTabId(id);
+    }
+  };
+
+  return (
+    <button
+      id={`blox-tab-${id}`}
+      role="tab"
+      aria-selected={isActive}
+      aria-controls={`blox-tabpanel-${id}`}
+      tabIndex={isActive ? 0 : -1}
+      disabled={disabled}
+      onClick={handleClick}
+      className={`blox-tab ${className}`}
+      data-blox-tab=""
+      data-state={isActive ? "active" : "inactive"}
+      data-disabled={disabled ? "true" : "false"}
+      {...props}>
+      {children}
+    </button>
+  );
+};
+
+// TabPanels Component
+const TabPanels: React.FC<TabPanelsProps> = ({ children, className = "", ...props }) => {
+  return (
+    <div
+      className={`blox-tab-panels ${className}`}
+      data-blox-tab-panels=""
+      {...props}>
+      {children}
+    </div>
+  );
+};
+
+// TabPanel Component
+const TabPanel: React.FC<TabPanelProps> = ({ tabId, children, className = "", ...props }) => {
+  const { activeTabId, animated } = useTabs();
+  const isActive = activeTabId === tabId;
+
+  if (!isActive) return null;
+
+  return (
+    <div
+      id={`blox-tabpanel-${tabId}`}
+      role="tabpanel"
+      aria-labelledby={`blox-tab-${tabId}`}
+      className={`blox-tab-panel ${className}`}
+      data-blox-tab-panel=""
+      data-state={isActive ? "active" : "inactive"}
+      data-animated={animated ? "true" : "false"}
+      {...props}>
+      {children}
+    </div>
+  );
+};
+
+// Main Tabs Component
+const Tabs: React.FC<TabsProps> & TabsComposition = ({ activeTab, defaultActiveTab, onChange, orientation = "horizontal", animated = true, children, className = "", ...props }) => {
+  // For internal state (uncontrolled mode)
+  const [internalActiveTabId, setInternalActiveTabId] = useState<string>(() => {
+    // Try to find the first tab id from children if no default or active tab is provided
+    if (defaultActiveTab) return defaultActiveTab;
+
+    // This is just a fallback, preferably the user should provide defaultActiveTab
+    return "";
+  });
+
+  // Determine if we're in controlled mode
+  const isControlled = activeTab !== undefined;
+  const activeTabId = isControlled ? activeTab : internalActiveTabId;
+
+  // Handler for tab changes
+  const handleTabChange = (tabId: string) => {
+    if (!isControlled) {
+      setInternalActiveTabId(tabId);
+    }
+
+    if (onChange) {
+      onChange(tabId);
+    }
+  };
+
+  // Update internal active tab when activeTab prop changes (controlled mode)
+  useEffect(() => {
+    if (activeTab !== undefined) {
+      setInternalActiveTabId(activeTab);
+    }
+  }, [activeTab]);
+
+  // Context value
+  const contextValue = {
+    activeTabId,
+    setActiveTabId: handleTabChange,
+    orientation,
+    animated,
+  };
+
+  return (
+    <TabsContext.Provider value={contextValue}>
+      <div
+        className={`blox-tabs ${className}`}
+        data-blox-tabs=""
+        data-orientation={orientation}
+        {...props}>
+        {children}
+      </div>
+    </TabsContext.Provider>
+  );
+};
+
+// Attach sub-components
+Tabs.List = TabList;
+Tabs.Tab = Tab;
+Tabs.Panels = TabPanels;
+Tabs.Panel = TabPanel;
+
+export default Tabs;

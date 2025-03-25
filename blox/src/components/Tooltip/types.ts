@@ -1,81 +1,95 @@
-import { BaseProps } from "../../types";
-import React from "react";
+// types.ts
+import { HTMLAttributes, ReactNode } from 'react';
 
 export type TooltipPlacement = 
-  | "top" 
-  | "top-start" 
-  | "top-end" 
-  | "right" 
-  | "right-start" 
-  | "right-end" 
-  | "bottom" 
-  | "bottom-start" 
-  | "bottom-end" 
-  | "left" 
-  | "left-start" 
-  | "left-end";
+  | 'top' 
+  | 'top-start' 
+  | 'top-end' 
+  | 'right' 
+  | 'right-start' 
+  | 'right-end' 
+  | 'bottom' 
+  | 'bottom-start' 
+  | 'bottom-end' 
+  | 'left' 
+  | 'left-start' 
+  | 'left-end';
 
-export interface TooltipProps extends BaseProps {
+export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Content to display in the tooltip
+   * The content to be shown inside the tooltip
    */
-  content: React.ReactNode;
+  content: ReactNode;
   
   /**
-   * Whether the tooltip is open
-   * @default false
+   * The element that triggers the tooltip
    */
-  isOpen?: boolean;
+  children: ReactNode;
   
   /**
-   * Preferred placement of the tooltip
-   * @default "bottom"
+   * The placement of the tooltip relative to the trigger element
+   * @default 'bottom'
    */
   placement?: TooltipPlacement;
   
   /**
-   * Space between tooltip and trigger (in pixels)
+   * Minimum width of the tooltip
+   */
+  minWidth?: number | string;
+  
+  /**
+   * Maximum width of the tooltip
+   */
+  maxWidth?: number | string;
+  
+  /**
+   * The distance between the tooltip and the trigger element (in pixels)
    * @default 8
    */
   offset?: number;
   
   /**
-   * Delay before showing the tooltip (in ms)
+   * Delay before showing the tooltip (in milliseconds)
    * @default 0
    */
   showDelay?: number;
   
   /**
-   * Delay before hiding the tooltip (in ms)
+   * Delay before hiding the tooltip (in milliseconds)
    * @default 0
    */
   hideDelay?: number;
   
   /**
-   * Whether to show the tooltip on hover
+   * Whether the tooltip should be shown on hover
    * @default true
    */
   showOnHover?: boolean;
   
   /**
-   * Whether to show the tooltip on focus
+   * Whether the tooltip should be shown on focus
    * @default true
    */
   showOnFocus?: boolean;
   
   /**
-   * ID used for accessibility
+   * Controlled open state of the tooltip
+   */
+  isOpen?: boolean;
+  
+  /**
+   * ID for accessibility
    */
   id?: string;
   
   /**
-   * Whether to close when pressing escape
+   * Whether to close the tooltip when pressing escape
    * @default true
    */
   closeOnEsc?: boolean;
   
   /**
-   * Whether to make the tooltip interactive (can hover over tooltip)
+   * Whether the tooltip should remain open when hovering over it
    * @default false
    */
   interactive?: boolean;
@@ -87,18 +101,13 @@ export interface TooltipProps extends BaseProps {
   zIndex?: number;
   
   /**
-   * Whether to disable the tooltip
+   * Whether the tooltip is disabled
    * @default false
    */
   isDisabled?: boolean;
   
   /**
-   * Additional class name for the tooltip content
+   * Additional className for the tooltip element
    */
   tooltipClassName?: string;
-  
-  /**
-   * Trigger/children to show the tooltip on
-   */
-  children: React.ReactNode;
 }
