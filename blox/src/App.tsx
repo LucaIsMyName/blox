@@ -12,6 +12,7 @@ import { DropdownExample } from "./examples/DropdownExample";
 import { TableExample } from "./examples/TableExample";
 import { TabsExample } from "./examples/TabsExample";
 import { MarqueeExample } from "./examples/MarqueeExample";
+import { SegmentedControlExample } from "./examples/SegmentedControlExample";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
       </BlockLayout>
       <BlockLayout title="Marquees">
         <MarqueeExample />
+      </BlockLayout>
+      <BlockLayout title="Marquees">
+        <SegmentedControlExample />
       </BlockLayout>
     </div>
   );

@@ -1,5 +1,25 @@
-// Export components
-export * from './components';
+// Export individual components
+export { Accordion } from './components/Accordion';
+export { Checkbox } from './components/Checkbox';
+export { Drawer } from './components/Drawer';
+export { Dropdown } from './components/Dropdown';
+export { Marquee } from './components/Marquee';
+export { Modal } from './components/Modal';
+export { Radio } from './components/Radio';
+export { Table } from './components/Table';
+export { Tabs } from './components/Tabs';
+export { Tooltip } from './components/Tooltip';
+export { SegmentedControl } from './components/SegmentedControl';
 
-// Export types
-export * from './types';
+// Export component types
+export type { AccordionProps, AccordionItemProps } from './components/Accordion/types';
+export type { CheckboxProps } from './components/Checkbox/types';
+export type { DrawerProps, DrawerPlacement } from './components/Drawer/types';
+export type { DropdownProps, DropdownOption } from './components/Dropdown/types';
+export type { MarqueeProps, MarqueeDirection, MarqueeSpeed, MarqueeBehavior } from './components/Marquee/types';
+export type { ModalProps, ModalSize } from './components/Modal/types';
+export type { RadioProps, RadioGroupProps } from './components/Radio/types';
+export type { TableProps, TableColumn, SortDirection } from './components/Table/types';
+export type { TabsProps, TabOrientation, TabVariantStyle } from './components/Tabs/types';
+export type { TooltipProps, TooltipPlacement } from './components/Tooltip/types';
+export type { SegmentedControlProps } from './components/SegmentedControl/types';

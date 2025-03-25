@@ -1,13 +1,12 @@
-import { BaseProps } from '../../types';
-import React from 'react';
-export type MarqueeDirection = 'left' | 'right' | 'up' | 'down';
-export type MarqueeSpeed = 'slow' | 'normal' | 'fast';
-export type MarqueeBehavior = 'scroll' | 'slide' | 'alternate';
-export interface MarqueeProps extends BaseProps {
+import { HTMLAttributes, ReactNode } from "react";
+export type MarqueeDirection = "left" | "right" | "up" | "down";
+export type MarqueeSpeed = "slow" | "normal" | "fast";
+export type MarqueeBehavior = "scroll" | "slide" | "alternate";
+export interface MarqueeProps extends HTMLAttributes<HTMLDivElement> {
     /**
      * Content to be displayed inside the marquee
      */
-    children: React.ReactNode;
+    children: ReactNode;
     /**
      * Direction of the marquee animation
      * @default 'left'

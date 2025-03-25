@@ -1,2 +1,2 @@
-export { Marquee } from './Marquee';
-export type { MarqueeProps, MarqueeDirection, MarqueeSpeed, MarqueeBehavior } from './types';
+export { default as Marquee } from './Marquee';
+export * from './types';
