@@ -11,6 +11,7 @@ import { RadioExample } from "./examples/RadioExample";
 import { DropdownExample } from "./examples/DropdownExample";
 import { TableExample } from "./examples/TableExample";
 import { TabsExample } from "./examples/TabsExample";
+import { MarqueeExample } from "./examples/MarqueeExample";
 
 function App() {
   return (
@@ -40,8 +41,11 @@ function App() {
       <BlockLayout title="Dropdowns">
         <TableExample />
       </BlockLayout>
-      <BlockLayout title="Dropdowns">
+      <BlockLayout title="Tabs">
         <TabsExample />
+      </BlockLayout>
+      <BlockLayout title="Marquees">
+        <MarqueeExample />
       </BlockLayout>
     </div>
   );

@@ -9,5 +9,6 @@ export * from './Dropdown';
 export * from './Tooltip';
 export * from './Checkbox';
 export * from './Radio';
+export * from './Tabs';
 
 // Add more component exports as you create them

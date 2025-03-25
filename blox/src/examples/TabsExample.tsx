@@ -7,191 +7,182 @@ export const TabsExample: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("home");
 
   return (
-    <div className="tabs-examples">
-      <h2>Tabs Examples</h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-6">Tabs Examples</h2>
 
-      <div className="example-section">
-        <h3>Basic Tabs (Uncontrolled)</h3>
+      <div className="mb-10">
+        <h3 className="text-xl font-semibold mb-3">Basic Tabs (Uncontrolled)</h3>
         <Tabs
           defaultActiveTab="home"
-          className="basic-tabs">
-          <Tabs.List className="basic-tab-list">
+          className="flex flex-col">
+          <Tabs.List className="flex border-b border-gray-200">
             <Tabs.Tab
               id="home"
-              className="basic-tab">
+              className="px-4 py-2 border-b-2 border-transparent font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600">
               Home
             </Tabs.Tab>
             <Tabs.Tab
               id="profile"
-              className="basic-tab">
+              className="px-4 py-2 border-b-2 border-transparent font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600">
               Profile
             </Tabs.Tab>
             <Tabs.Tab
               id="settings"
-              className="basic-tab">
+              className="px-4 py-2 border-b-2 border-transparent font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600">
               Settings
             </Tabs.Tab>
             <Tabs.Tab
               id="disabled"
               disabled
-              className="basic-tab">
+              className="px-4 py-2 border-b-2 border-transparent font-medium text-sm opacity-50 cursor-not-allowed">
               Disabled
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panels className="basic-tab-panels">
-            <Tabs.Panel
-              tabId="home"
-              className="basic-tab-panel">
-              <h4>Home Content</h4>
-              <p>This is the home tab content.</p>
+          <Tabs.Panels className="py-4">
+            <Tabs.Panel tabId="home">
+              <h4 className="text-lg font-medium mb-2">Home Content</h4>
+              <p className="text-gray-600">This is the home tab content.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="profile"
-              className="basic-tab-panel">
-              <h4>Profile Content</h4>
-              <p>This is the profile tab content.</p>
+            <Tabs.Panel tabId="profile">
+              <h4 className="text-lg font-medium mb-2">Profile Content</h4>
+              <p className="text-gray-600">This is the profile tab content.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="settings"
-              className="basic-tab-panel">
-              <h4>Settings Content</h4>
-              <p>This is the settings tab content.</p>
+            <Tabs.Panel tabId="settings">
+              <h4 className="text-lg font-medium mb-2">Settings Content</h4>
+              <p className="text-gray-600">This is the settings tab content.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="disabled"
-              className="basic-tab-panel">
-              <h4>Disabled Content</h4>
-              <p>This content should not be visible because the tab is disabled.</p>
+            <Tabs.Panel tabId="disabled">
+              <h4 className="text-lg font-medium mb-2">Disabled Content</h4>
+              <p className="text-gray-600">This content should not be visible because the tab is disabled.</p>
             </Tabs.Panel>
           </Tabs.Panels>
         </Tabs>
       </div>
 
-      <div className="example-section">
-        <h3>Controlled Tabs</h3>
-        <div className="current-selection">
+      <div className="mb-10">
+        <h3 className="text-xl font-semibold mb-3">Controlled Tabs</h3>
+        <div className="mb-3">
           Active Tab: <strong>{activeTab}</strong>
         </div>
 
-        <div className="control-buttons">
-          <button onClick={() => setActiveTab("home")}>Switch to Home</button>
-          <button onClick={() => setActiveTab("profile")}>Switch to Profile</button>
-          <button onClick={() => setActiveTab("settings")}>Switch to Settings</button>
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => setActiveTab("home")}
+            className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm hover:bg-gray-200">
+            Switch to Home
+          </button>
+          <button
+            onClick={() => setActiveTab("profile")}
+            className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm hover:bg-gray-200">
+            Switch to Profile
+          </button>
+          <button
+            onClick={() => setActiveTab("settings")}
+            className="px-3 py-1 bg-gray-100 border border-gray-300 rounded text-sm hover:bg-gray-200">
+            Switch to Settings
+          </button>
         </div>
 
         <Tabs
           activeTab={activeTab}
           onChange={setActiveTab}
-          className="controlled-tabs">
-          <Tabs.List className="controlled-tab-list">
+          className="flex flex-col border border-gray-200 rounded-md overflow-hidden">
+          <Tabs.List className="flex bg-gray-50 border-b border-gray-200">
             <Tabs.Tab
               id="home"
-              className="controlled-tab">
+              className="px-4 py-3 font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-[inset_0_-2px_0_#3b82f6]">
               Home
             </Tabs.Tab>
             <Tabs.Tab
               id="profile"
-              className="controlled-tab">
+              className="px-4 py-3 font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-[inset_0_-2px_0_#3b82f6]">
               Profile
             </Tabs.Tab>
             <Tabs.Tab
               id="settings"
-              className="controlled-tab">
+              className="px-4 py-3 font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-[inset_0_-2px_0_#3b82f6]">
               Settings
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panels className="controlled-tab-panels">
-            <Tabs.Panel
-              tabId="home"
-              className="controlled-tab-panel">
-              <h4>Home Content</h4>
-              <p>This content is controlled programmatically.</p>
+          <Tabs.Panels className="p-4">
+            <Tabs.Panel tabId="home">
+              <h4 className="text-lg font-medium mb-2">Home Content</h4>
+              <p className="text-gray-600">This content is controlled programmatically.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="profile"
-              className="controlled-tab-panel">
-              <h4>Profile Content</h4>
-              <p>Profile content is controlled programmatically.</p>
+            <Tabs.Panel tabId="profile">
+              <h4 className="text-lg font-medium mb-2">Profile Content</h4>
+              <p className="text-gray-600">Profile content is controlled programmatically.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="settings"
-              className="controlled-tab-panel">
-              <h4>Settings Content</h4>
-              <p>Settings content is controlled programmatically.</p>
+            <Tabs.Panel tabId="settings">
+              <h4 className="text-lg font-medium mb-2">Settings Content</h4>
+              <p className="text-gray-600">Settings content is controlled programmatically.</p>
             </Tabs.Panel>
           </Tabs.Panels>
         </Tabs>
       </div>
 
-      <div className="example-section">
-        <h3>Vertical Tabs</h3>
+      <div className="mb-10">
+        <h3 className="text-xl font-semibold mb-3">Vertical Tabs</h3>
         <Tabs
           orientation="vertical"
           defaultActiveTab="user"
-          className="vertical-tabs">
-          <Tabs.List className="vertical-tab-list">
+          className="flex border border-gray-200 rounded-md overflow-hidden">
+          <Tabs.List className="flex flex-col bg-gray-50 border-r border-gray-200 min-w-[160px]">
             <Tabs.Tab
               id="user"
-              className="vertical-tab">
+              className="px-4 py-3 text-left border-r-2 border-transparent font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:border-r-blue-500">
               User Settings
             </Tabs.Tab>
             <Tabs.Tab
               id="account"
-              className="vertical-tab">
+              className="px-4 py-3 text-left border-r-2 border-transparent font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:border-r-blue-500">
               Account
             </Tabs.Tab>
             <Tabs.Tab
               id="security"
-              className="vertical-tab">
+              className="px-4 py-3 text-left border-r-2 border-transparent font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:border-r-blue-500">
               Security
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panels className="vertical-tab-panels">
-            <Tabs.Panel
-              tabId="user"
-              className="vertical-tab-panel">
-              <h4>User Settings</h4>
-              <p>Manage your user settings here.</p>
+          <Tabs.Panels className="flex-1 p-4">
+            <Tabs.Panel tabId="user">
+              <h4 className="text-lg font-medium mb-2">User Settings</h4>
+              <p className="text-gray-600">Manage your user settings here.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="account"
-              className="vertical-tab-panel">
-              <h4>Account Settings</h4>
-              <p>Manage your account settings here.</p>
+            <Tabs.Panel tabId="account">
+              <h4 className="text-lg font-medium mb-2">Account Settings</h4>
+              <p className="text-gray-600">Manage your account settings here.</p>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="security"
-              className="vertical-tab-panel">
-              <h4>Security Settings</h4>
-              <p>Manage your security settings here.</p>
+            <Tabs.Panel tabId="security">
+              <h4 className="text-lg font-medium mb-2">Security Settings</h4>
+              <p className="text-gray-600">Manage your security settings here.</p>
             </Tabs.Panel>
           </Tabs.Panels>
         </Tabs>
       </div>
 
-      <div className="example-section">
-        <h3>Custom Styled Tabs</h3>
+      <div className="mb-10">
+        <h3 className="text-xl font-semibold mb-3">Custom Styled Tabs</h3>
         <Tabs
           defaultActiveTab="tab1"
-          className="custom-tabs">
-          <Tabs.List className="custom-tab-list">
+          className="flex flex-col rounded-lg overflow-hidden shadow-lg">
+          <Tabs.List className="flex bg-purple-900 p-1">
             <Tabs.Tab
               id="tab1"
-              className="custom-tab">
+              className="flex items-center gap-2 px-4 py-3 text-white/70 rounded transition-all mx-1 hover:bg-white/10 hover:text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <svg
+                className="w-4 h-4"
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -205,11 +196,10 @@ export const TabsExample: React.FC = () => {
             </Tabs.Tab>
             <Tabs.Tab
               id="tab2"
-              className="custom-tab">
+              className="flex items-center gap-2 px-4 py-3 text-white/70 rounded transition-all mx-1 hover:bg-white/10 hover:text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <svg
+                className="w-4 h-4"
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -226,11 +216,10 @@ export const TabsExample: React.FC = () => {
             </Tabs.Tab>
             <Tabs.Tab
               id="tab3"
-              className="custom-tab">
+              className="flex items-center gap-2 px-4 py-3 text-white/70 rounded transition-all mx-1 hover:bg-white/10 hover:text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">
               <svg
+                className="w-4 h-4"
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -247,80 +236,90 @@ export const TabsExample: React.FC = () => {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panels className="custom-tab-panels">
-            <Tabs.Panel
-              tabId="tab1"
-              className="custom-tab-panel">
-              <h4>Dashboard</h4>
-              <p>Welcome to your dashboard! Here are some key metrics:</p>
-              <div className="custom-panel-content">
-                <div className="metric-card">
-                  <h5>Users</h5>
-                  <p className="metric">1,254</p>
+          <Tabs.Panels className="p-6 bg-white">
+            <Tabs.Panel tabId="tab1">
+              <h4 className="text-lg font-medium mb-2">Dashboard</h4>
+              <p className="text-gray-600 mb-4">Welcome to your dashboard! Here are some key metrics:</p>
+              <div className="flex flex-wrap gap-4 mb-4">
+                <div className="bg-gray-50 rounded-lg p-4 shadow-sm flex-1 min-w-[120px] text-center">
+                  <h5 className="text-gray-600 font-medium mb-2">Users</h5>
+                  <p className="text-xl font-semibold text-purple-900">1,254</p>
                 </div>
-                <div className="metric-card">
-                  <h5>Revenue</h5>
-                  <p className="metric">$12,543</p>
+                <div className="bg-gray-50 rounded-lg p-4 shadow-sm flex-1 min-w-[120px] text-center">
+                  <h5 className="text-gray-600 font-medium mb-2">Revenue</h5>
+                  <p className="text-xl font-semibold text-purple-900">$12,543</p>
                 </div>
-                <div className="metric-card">
-                  <h5>Conversion</h5>
-                  <p className="metric">5.28%</p>
+                <div className="bg-gray-50 rounded-lg p-4 shadow-sm flex-1 min-w-[120px] text-center">
+                  <h5 className="text-gray-600 font-medium mb-2">Conversion</h5>
+                  <p className="text-xl font-semibold text-purple-900">5.28%</p>
                 </div>
               </div>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="tab2"
-              className="custom-tab-panel">
-              <h4>Profile Information</h4>
-              <p>Manage your profile settings here.</p>
-              <div className="profile-form">
-                <div className="form-group">
-                  <label>Name</label>
+            <Tabs.Panel tabId="tab2">
+              <h4 className="text-lg font-medium mb-2">Profile Information</h4>
+              <p className="text-gray-600 mb-4">Manage your profile settings here.</p>
+              <div className="max-w-md">
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                   <input
                     type="text"
                     defaultValue="John Doe"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Email</label>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                   <input
                     type="email"
                     defaultValue="john@example.com"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500"
                   />
                 </div>
-                <button className="save-button">Save Changes</button>
+                <button className="bg-purple-900 text-white px-4 py-2 rounded-md hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">Save Changes</button>
               </div>
             </Tabs.Panel>
 
-            <Tabs.Panel
-              tabId="tab3"
-              className="custom-tab-panel">
-              <h4>Application Settings</h4>
-              <p>Configure your application settings.</p>
-              <div className="settings-options">
-                <div className="setting-option">
-                  <label>
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                    />
-                    <span>Enable notifications</span>
+            <Tabs.Panel tabId="tab3">
+              <h4 className="text-lg font-medium mb-2">Application Settings</h4>
+              <p className="text-gray-600 mb-4">Configure your application settings.</p>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="notifications"
+                    defaultChecked
+                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                  />
+                  <label
+                    htmlFor="notifications"
+                    className="ml-2 block text-sm text-gray-700">
+                    Enable notifications
                   </label>
                 </div>
-                <div className="setting-option">
-                  <label>
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                    />
-                    <span>Dark mode</span>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="darkmode"
+                    defaultChecked
+                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                  />
+                  <label
+                    htmlFor="darkmode"
+                    className="ml-2 block text-sm text-gray-700">
+                    Dark mode
                   </label>
                 </div>
-                <div className="setting-option">
-                  <label>
-                    <input type="checkbox" />
-                    <span>Auto-save changes</span>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="autosave"
+                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                  />
+                  <label
+                    htmlFor="autosave"
+                    className="ml-2 block text-sm text-gray-700">
+                    Auto-save changes
                   </label>
                 </div>
               </div>
@@ -328,293 +327,6 @@ export const TabsExample: React.FC = () => {
           </Tabs.Panels>
         </Tabs>
       </div>
-
-      {/* Styles for the examples */}
-      <style>{`
-        /* Styles for the tabs examples */
-        .tabs-examples {
-          margin: 20px 0;
-          font-family: system-ui, -apple-system, sans-serif;
-        }
-        
-        .example-section {
-          margin-bottom: 40px;
-        }
-        
-        .example-section h3 {
-          margin-bottom: 8px;
-        }
-        
-        .current-selection {
-          margin-bottom: 12px;
-        }
-        
-        .control-buttons {
-          margin-bottom: 16px;
-          display: flex;
-          gap: 8px;
-        }
-        
-        .control-buttons button {
-          padding: 6px 12px;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-        
-        .control-buttons button:hover {
-          background-color: #e0e0e0;
-        }
-        
-        /* Basic tabs styling */
-        .basic-tabs {
-          display: flex;
-          flex-direction: column;
-        }
-        
-        .basic-tab-list {
-          display: flex;
-          border-bottom: 2px solid #e9ecef;
-        }
-        
-        .basic-tab {
-          padding: 8px 16px;
-          background: none;
-          border: none;
-          border-bottom: 2px solid transparent;
-          margin-bottom: -2px;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 500;
-        }
-        
-        .basic-tab:focus {
-          outline: none;
-          box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
-        }
-        
-        .basic-tab[data-state="active"] {
-          border-bottom-color: #4299e1;
-          color: #4299e1;
-        }
-        
-        .basic-tab[data-disabled="true"] {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-        
-        .basic-tab-panels {
-          padding: 16px 0;
-        }
-        
-        .basic-tab-panel h4 {
-          margin-top: 0;
-          margin-bottom: 8px;
-        }
-        
-        /* Controlled tabs styling */
-        .controlled-tabs {
-          display: flex;
-          flex-direction: column;
-          border: 1px solid #e9ecef;
-          border-radius: 4px;
-          overflow: hidden;
-        }
-        
-        .controlled-tab-list {
-          display: flex;
-          background-color: #f8f9fa;
-          border-bottom: 1px solid #e9ecef;
-        }
-        
-        .controlled-tab {
-          padding: 12px 16px;
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-weight: 500;
-          color: #495057;
-        }
-        
-        .controlled-tab[data-state="active"] {
-          background-color: white;
-          color: #228be6;
-          box-shadow: inset 0 -2px 0 #228be6;
-        }
-        
-        .controlled-tab-panels {
-          padding: 16px;
-        }
-        
-        /* Vertical tabs styling */
-        .vertical-tabs {
-          display: flex;
-          border: 1px solid #e9ecef;
-          border-radius: 4px;
-          overflow: hidden;
-        }
-        
-        .vertical-tab-list {
-          display: flex;
-          flex-direction: column;
-          background-color: #f8f9fa;
-          border-right: 1px solid #e9ecef;
-          min-width: 160px;
-        }
-        
-        .vertical-tab {
-          padding: 12px 16px;
-          text-align: left;
-          background: none;
-          border: none;
-          border-right: 2px solid transparent;
-          cursor: pointer;
-          font-weight: 500;
-        }
-        
-        .vertical-tab[data-state="active"] {
-          background-color: white;
-          color: #228be6;
-          border-right-color: #228be6;
-        }
-        
-        .vertical-tab-panels {
-          flex: 1;
-          padding: 16px;
-        }
-        
-        /* Custom styled tabs */
-        .custom-tabs {
-          display: flex;
-          flex-direction: column;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .custom-tab-list {
-          display: flex;
-          background-color: #4a148c;
-          padding: 4px;
-        }
-        
-        .custom-tab {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 12px 16px;
-          background: none;
-          border: none;
-          color: rgba(255, 255, 255, 0.7);
-          border-radius: 4px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          margin: 0 4px;
-        }
-        
-        .custom-tab:hover {
-          color: rgba(255, 255, 255, 0.9);
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .custom-tab[data-state="active"] {
-          background-color: rgba(255, 255, 255, 0.2);
-          color: white;
-        }
-        
-        .custom-tab svg {
-          stroke-width: 2;
-        }
-        
-        .custom-tab-panels {
-          padding: 24px;
-          background-color: white;
-        }
-        
-        .custom-panel-content {
-          display: flex;
-          gap: 16px;
-          margin-top: 16px;
-        }
-        
-        .metric-card {
-          background-color: #f9f9f9;
-          border-radius: 8px;
-          padding: 16px;
-          min-width: 120px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-          text-align: center;
-        }
-        
-        .metric-card h5 {
-          margin-top: 0;
-          margin-bottom: 8px;
-          color: #666;
-          font-weight: 500;
-        }
-        
-        .metric-card .metric {
-          font-size: 20px;
-          font-weight: 600;
-          color: #4a148c;
-          margin: 0;
-        }
-        
-        .profile-form {
-          margin-top: 16px;
-          max-width: 400px;
-        }
-        
-        .form-group {
-          margin-bottom: 16px;
-        }
-        
-        .form-group label {
-          display: block;
-          margin-bottom: 6px;
-          font-weight: 500;
-        }
-        
-        .form-group input {
-          width: 100%;
-          padding: 8px 12px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-        }
-        
-        .save-button {
-          background-color: #4a148c;
-          color: white;
-          border: none;
-          padding: 10px 16px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: 500;
-        }
-        
-        .save-button:hover {
-          background-color: #6a1b9a;
-        }
-        
-        .settings-options {
-          margin-top: 16px;
-        }
-        
-        .setting-option {
-          margin-bottom: 12px;
-        }
-        
-        .setting-option label {
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-        }
-        
-        .setting-option input {
-          margin-right: 8px;
-        }
-      `}</style>
     </div>
   );
 };

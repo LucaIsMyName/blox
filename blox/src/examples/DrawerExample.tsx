@@ -10,47 +10,60 @@ export const DrawerExample: React.FC = () => {
   const [isCustomOpen, setIsCustomOpen] = useState(false);
 
   return (
-    <div className="drawer-examples">
-      <h2>Drawer Examples</h2>
-      <div className="examples-container">
+    <div className="my-5">
+      <h2 className="text-2xl font-bold mb-6">Drawer Examples</h2>
+      <div className="flex flex-col gap-4">
         {/* Right Drawer Example */}
-        <div className="example-item">
-          <button onClick={() => setIsRightOpen(true)}>Open Right Drawer</button>
+        <div className="mb-4">
+          <button
+            onClick={() => setIsRightOpen(true)}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+            Open Right Drawer
+          </button>
           <Drawer
             isOpen={isRightOpen}
             onClose={() => setIsRightOpen(false)}
             placement="right">
-            <Drawer.Header>
-              <h3>Right Drawer</h3>
+            <Drawer.Header className="p-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium">Right Drawer</h3>
             </Drawer.Header>
-            <Drawer.Body>
-              <p>This is a drawer that slides in from the right side.</p>
+            <Drawer.Body className="p-4">
+              <p className="mb-3">This is a drawer that slides in from the right side.</p>
               <p>Drawers are great for navigation menus, filters, or settings panels.</p>
             </Drawer.Body>
-            <Drawer.Footer>
-              <button onClick={() => setIsRightOpen(false)}>Close</button>
+            <Drawer.Footer className="p-4 border-t border-gray-200 flex justify-end">
+              <button
+                onClick={() => setIsRightOpen(false)}
+                className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+                Close
+              </button>
             </Drawer.Footer>
           </Drawer>
         </div>
 
         {/* Left Drawer Example */}
-        <div className="example-item">
-          <button onClick={() => setIsLeftOpen(true)}>Open Left Drawer</button>
+        <div className="mb-4">
+          <button
+            onClick={() => setIsLeftOpen(true)}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+            Open Left Drawer
+          </button>
           <Drawer
             isOpen={isLeftOpen}
             onClose={() => setIsLeftOpen(false)}
             placement="left">
-            <Drawer.Header>
-              <h3>Left Drawer</h3>
+            <Drawer.Header className="p-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium">Left Drawer</h3>
             </Drawer.Header>
-            <Drawer.Body>
-              <p>This drawer slides in from the left side.</p>
-              <p>Left drawers are commonly used for navigation menus in applications.</p>
-              <nav>
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>
+            <Drawer.Body className="p-4">
+              <p className="mb-3">This drawer slides in from the left side.</p>
+              <p className="mb-3">Left drawers are commonly used for navigation menus in applications.</p>
+              <nav className="mt-6">
+                <ul className="list-none p-0">
+                  <li className="mb-3">
                     <a
                       href="#"
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsLeftOpen(false);
@@ -58,9 +71,10 @@ export const DrawerExample: React.FC = () => {
                       Home
                     </a>
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <a
                       href="#"
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsLeftOpen(false);
@@ -68,9 +82,10 @@ export const DrawerExample: React.FC = () => {
                       Dashboard
                     </a>
                   </li>
-                  <li>
+                  <li className="mb-3">
                     <a
                       href="#"
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsLeftOpen(false);
@@ -81,6 +96,7 @@ export const DrawerExample: React.FC = () => {
                   <li>
                     <a
                       href="#"
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsLeftOpen(false);
@@ -95,71 +111,85 @@ export const DrawerExample: React.FC = () => {
         </div>
 
         {/* Top Drawer Example */}
-        <div className="example-item">
-          <button onClick={() => setIsTopOpen(true)}>Open Top Drawer</button>
+        <div className="mb-4">
+          <button
+            onClick={() => setIsTopOpen(true)}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+            Open Top Drawer
+          </button>
           <Drawer
             isOpen={isTopOpen}
             onClose={() => setIsTopOpen(false)}
             placement="top"
             minHeight="200px">
-            <Drawer.Header>
-              <h3>Top Drawer</h3>
+            <Drawer.Header className="p-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium">Top Drawer</h3>
             </Drawer.Header>
-            <Drawer.Body>
-              <p>This drawer slides in from the top of the screen.</p>
+            <Drawer.Body className="p-4">
+              <p className="mb-3">This drawer slides in from the top of the screen.</p>
               <p>Top drawers can be used for notifications, alerts, or search interfaces.</p>
             </Drawer.Body>
-            <Drawer.Footer>
-              <button onClick={() => setIsTopOpen(false)}>Close</button>
+            <Drawer.Footer className="p-4 border-t border-gray-200 flex justify-end">
+              <button
+                onClick={() => setIsTopOpen(false)}
+                className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+                Close
+              </button>
             </Drawer.Footer>
           </Drawer>
         </div>
 
         {/* Bottom Drawer Example */}
-        <div className="example-item">
-          <button onClick={() => setIsBottomOpen(true)}>Open Bottom Drawer</button>
+        <div className="mb-4">
+          <button
+            onClick={() => setIsBottomOpen(true)}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+            Open Bottom Drawer
+          </button>
           <Drawer
             isOpen={isBottomOpen}
             onClose={() => setIsBottomOpen(false)}
             placement="bottom"
             minHeight="200px">
-            <Drawer.Header>
-              <h3>Bottom Drawer</h3>
+            <Drawer.Header className="p-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium">Bottom Drawer</h3>
             </Drawer.Header>
-            <Drawer.Body>
-              <p>This drawer slides in from the bottom of the screen.</p>
+            <Drawer.Body className="p-4">
+              <p className="mb-3">This drawer slides in from the bottom of the screen.</p>
               <p>Bottom drawers are often used for mobile interfaces, action sheets, or additional controls.</p>
             </Drawer.Body>
-            <Drawer.Footer>
-              <button onClick={() => setIsBottomOpen(false)}>Close</button>
+            <Drawer.Footer className="p-4 border-t border-gray-200 flex justify-end">
+              <button
+                onClick={() => setIsBottomOpen(false)}
+                className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+                Close
+              </button>
             </Drawer.Footer>
           </Drawer>
         </div>
 
         {/* Custom Styled Drawer Example */}
-        <div className="example-item">
-          <button onClick={() => setIsCustomOpen(true)}>Open Custom Styled Drawer</button>
+        <div className="mb-4">
+          <button
+            onClick={() => setIsCustomOpen(true)}
+            className="px-4 py-2 bg-gray-100 border border-gray-300 rounded hover:bg-gray-200 transition-colors">
+            Open Custom Styled Drawer
+          </button>
           <Drawer
             isOpen={isCustomOpen}
             onClose={() => setIsCustomOpen(false)}
             placement="right"
-            contentClassName="custom-drawer"
-            closeButton={<span>✕</span>}>
-            <div style={{ padding: "20px" }}>
-              <h3>Custom Drawer</h3>
-              <p>This drawer uses custom styling with CSS variables.</p>
-              <p>You can customize the appearance of the drawer using CSS variables or by adding your own class names.</p>
+            backdropClassName="bg-purple-900/20 backdrop-blur-sm"
+            contentClassName="w-[350px] bg-purple-50 shadow-lg border-l border-purple-200"
+            closeButton={<span className="text-xl text-gray-600 hover:text-gray-800">✕</span>}>
+            <div className="p-5">
+              <h3 className="text-lg font-medium mb-4">Custom Drawer</h3>
+              <p className="mb-3">This drawer uses custom styling with Tailwind classes.</p>
+              <p className="mb-5">You can customize the appearance of the drawer using Tailwind utility classes.</p>
               <div>
                 <button
                   onClick={() => setIsCustomOpen(false)}
-                  style={{
-                    marginTop: "20px",
-                    backgroundColor: "#6200ee",
-                    color: "white",
-                    border: "none",
-                    padding: "8px 16px",
-                    borderRadius: "4px",
-                  }}>
+                  className="mt-5 px-4 py-2 bg-purple-600 text-white rounded border-none hover:bg-purple-700 transition-colors">
                   Close Drawer
                 </button>
               </div>
@@ -168,86 +198,12 @@ export const DrawerExample: React.FC = () => {
         </div>
       </div>
 
-      {/* Styles for the examples */}
-      <style>{`
-        .drawer-examples {
-          margin: 20px 0;
-        }
-        
-        .examples-container {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-        
-        .example-item {
-          margin-bottom: 16px;
-        }
-        
-        button {
-          padding: 8px 16px;
-          background-color: #f0f0f0;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-        
-        button:hover {
-          background-color: #e0e0e0;
-        }
-        
-        /* Custom drawer styling */
-        .custom-drawer {
-          --blox-drawer-content-bg-color: #f9f6fd;
-          --blox-drawer-backdrop-color: rgba(98, 0, 238, 0.2);
-          --blox-drawer-backdrop-blur: 2px;
-          width: 350px;
-          box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-          border-left: 1px solid #e0e0e0;
-        }
-        
-        /* Example of global drawer styling */
-        :root {
-          --blox-drawer-content-bg-color: white;
-          --blox-drawer-backdrop-color: rgba(0, 0, 0, 0.5);
-          --blox-drawer-backdrop-blur: 0px;
-        }
-        
-        [data-blox-drawer-header] {
-          padding: 16px;
-          border-bottom: 1px solid #eee;
-        }
-        
-        [data-blox-drawer-body] {
-          padding: 16px;
-        }
-        
-        [data-blox-drawer-footer] {
-          padding: 16px;
-          border-top: 1px solid #eee;
-          display: flex;
-          justify-content: flex-end;
-        }
-        
+      {/* Add global styles for drawer components */}
+      <style
+        jsx
+        global>{`
         [data-blox-drawer-close] {
-          position: absolute;
-          top: 12px;
-          right: 12px;
-          background: transparent;
-          border: none;
-          font-size: 20px;
-          cursor: pointer;
-          color: #666;
-          width: 30px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-        }
-        
-        [data-blox-drawer-close]:hover {
-          background-color: #f0f0f0;
+          @apply absolute top-3 right-3 bg-transparent border-none text-lg cursor-pointer text-gray-600 w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100;
         }
       `}</style>
     </div>
