@@ -1,7 +1,5 @@
-
-
-import React, { useState } from 'react';
-import { Checkbox } from '../components/Checkbox';
+import React, { useState } from "react";
+import { Checkbox } from "../components/Checkbox";
 
 /**
  * @file `@/examples/CheckboxExample.tsx`
@@ -11,34 +9,32 @@ export const CheckboxExample: React.FC = () => {
   // For controlled checkbox example
   const [isChecked, setIsChecked] = useState(true);
   const [indeterminate, setIndeterminate] = useState(false);
-  
+
   // For multiple checkboxes in a group
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(['option1']);
-  
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(["option1"]);
+
   const handleOptionChange = (option: string, checked: boolean) => {
     if (checked) {
-      setSelectedOptions(prev => [...prev, option]);
+      setSelectedOptions((prev) => [...prev, option]);
     } else {
-      setSelectedOptions(prev => prev.filter(item => item !== option));
+      setSelectedOptions((prev) => prev.filter((item) => item !== option));
     }
   };
 
   return (
     <div className="checkbox-examples">
       <h2>Checkbox Examples</h2>
-      
+
       <div className="example-section">
         <h3>Basic Checkbox</h3>
-        <Checkbox 
-          label="Accept terms and conditions" 
-        />
+        <Checkbox label="Accept terms and conditions" />
       </div>
-      
+
       <div className="example-section">
         <h3>Controlled Checkbox</h3>
         <div className="control-group">
-          <Checkbox 
-            label="Controlled checkbox" 
+          <Checkbox
+            label="Controlled checkbox"
             checked={isChecked}
             onChange={(checked) => setIsChecked(checked)}
           />
@@ -48,30 +44,30 @@ export const CheckboxExample: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="example-section">
         <h3>Disabled Checkbox</h3>
-        <Checkbox 
-          label="Disabled checkbox" 
+        <Checkbox
+          label="Disabled checkbox"
           disabled
         />
-        <Checkbox 
-          label="Disabled checked checkbox" 
+        <Checkbox
+          label="Disabled checked checkbox"
           checked={true}
           disabled
         />
       </div>
-      
+
       <div className="example-section">
         <h3>Indeterminate Checkbox</h3>
         <div className="control-group">
-          <Checkbox 
-            label="Parent checkbox (indeterminate)" 
+          <Checkbox
+            label="Parent checkbox (indeterminate)"
             checked={selectedOptions.length === 3}
             indeterminate={indeterminate}
             onChange={(checked) => {
               if (checked) {
-                setSelectedOptions(['option1', 'option2', 'option3']);
+                setSelectedOptions(["option1", "option2", "option3"]);
               } else {
                 setSelectedOptions([]);
               }
@@ -79,69 +75,69 @@ export const CheckboxExample: React.FC = () => {
             }}
           />
           <div className="checkbox-group">
-            <Checkbox 
-              label="Option 1" 
-              checked={selectedOptions.includes('option1')}
+            <Checkbox
+              label="Option 1"
+              checked={selectedOptions.includes("option1")}
               onChange={(checked) => {
-                handleOptionChange('option1', checked);
+                handleOptionChange("option1", checked);
                 setIndeterminate(selectedOptions.length > 0 && selectedOptions.length < 3);
               }}
             />
-            <Checkbox 
-              label="Option 2" 
-              checked={selectedOptions.includes('option2')}
+            <Checkbox
+              label="Option 2"
+              checked={selectedOptions.includes("option2")}
               onChange={(checked) => {
-                handleOptionChange('option2', checked);
+                handleOptionChange("option2", checked);
                 setIndeterminate(selectedOptions.length > 0 && selectedOptions.length < 3);
               }}
             />
-            <Checkbox 
-              label="Option 3" 
-              checked={selectedOptions.includes('option3')}
+            <Checkbox
+              label="Option 3"
+              checked={selectedOptions.includes("option3")}
               onChange={(checked) => {
-                handleOptionChange('option3', checked);
+                handleOptionChange("option3", checked);
                 setIndeterminate(selectedOptions.length > 0 && selectedOptions.length < 3);
               }}
             />
           </div>
         </div>
       </div>
-      
+
       <div className="example-section">
         <h3>Label Positions</h3>
         <div className="label-positions">
-          <Checkbox 
-            label="Label on right (default)" 
+          <Checkbox
+            label="Label on right (default)"
             labelPosition="right"
           />
-          <Checkbox 
-            label="Label on left" 
+          <Checkbox
+            label="Label on left"
             labelPosition="left"
           />
         </div>
       </div>
-      
+
       <div className="example-section">
         <h3>Error and Helper Text</h3>
-        <Checkbox 
-          label="Checkbox with helper text" 
+        <Checkbox
+          label="Checkbox with helper text"
           helperText="This is some helpful information about this checkbox."
         />
-        <Checkbox 
-          label="Checkbox with error" 
+        <Checkbox
+          label="Checkbox with error"
           hasError={true}
           errorMessage="This field is required."
         />
       </div>
-      
+
       <div className="example-section">
         <h3>Custom Styled Checkbox</h3>
-        <Checkbox 
-          label="Custom styled checkbox" 
+        <Checkbox
+          label="Custom styled checkbox"
           className="custom-checkbox"
         />
       </div>
-      
+
       {/* Styles for the examples */}
       <style>{`
         .checkbox-examples {
