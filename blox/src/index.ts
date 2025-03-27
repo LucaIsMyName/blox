@@ -8,6 +8,7 @@ export { Modal } from "./components/Modal";
 export { Radio } from "./components/Radio";
 export { Table } from "./components/Table";
 export { Tabs } from "./components/Tabs";
+export { Toggle } from "./components/Toggle";
 export { Tooltip } from "./components/Tooltip";
 export { SegmentedControl } from "./components/SegmentedControl";
 export { DragDrop } from "./components/DragDrop";
@@ -31,3 +32,4 @@ export type { Coordinates, DragItem, DragStartEvent, DragMoveEvent, DragEndEvent
 export type { SwitchProps } from "./components/Switch/types";
 export type { ContextMenuProps } from "./components/ContextMenu/types";
 export type { SliderProps, SliderRange, ThumbPosition, SliderTrackProps, SliderRangeProps, SliderMarkProps, SliderContextValue, SliderComposition } from "./components/Slider/types";
+export type { ToggleProps } from "./components/Toggle/types";

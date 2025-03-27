@@ -1,5 +1,5 @@
 import * as React$1 from 'react';
-import React__default, { HTMLAttributes, ReactNode, InputHTMLAttributes, ThHTMLAttributes, TdHTMLAttributes, TableHTMLAttributes, RefObject } from 'react';
+import React__default, { HTMLAttributes, ReactNode, InputHTMLAttributes, ThHTMLAttributes, TdHTMLAttributes, TableHTMLAttributes, ButtonHTMLAttributes, RefObject } from 'react';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
 interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
@@ -958,6 +958,90 @@ interface TabsComposition {
 
 declare const Tabs: React__default.FC<TabsProps> & TabsComposition;
 
+interface ToggleProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
+    /**
+     * Whether the toggle is pressed/active
+     */
+    pressed?: boolean;
+    /**
+     * Default pressed state for uncontrolled usage
+     */
+    defaultPressed?: boolean;
+    /**
+     * Callback for when the toggle is pressed
+     */
+    onChange?: (pressed: boolean, event: React.MouseEvent<HTMLButtonElement>) => void;
+    /**
+     * Value of the toggle, used within a toggle group
+     */
+    value?: string;
+    /**
+     * Whether the toggle is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Custom class name for the toggle button
+     */
+    className?: string;
+    /**
+     * Children of the toggle
+     */
+    children?: ReactNode;
+}
+interface ToggleGroupProps {
+    /**
+     * Children of the toggle group, should be Toggle components
+     */
+    children?: ReactNode;
+    /**
+     * Type of selection allowed in the group
+     * @default 'single'
+     */
+    type?: 'single' | 'multiple';
+    /**
+     * Value(s) of the selected toggle(s)
+     */
+    value?: string | string[];
+    /**
+     * Default value(s) for uncontrolled usage
+     */
+    defaultValue?: string | string[];
+    /**
+     * Callback for when the selection changes
+     */
+    onChange?: (value: string | string[]) => void;
+    /**
+     * Whether toggles can be deselected in single selection mode
+     * @default false
+     */
+    allowDeselect?: boolean;
+    /**
+     * Whether the toggle group is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Custom class name for the toggle group container
+     */
+    className?: string;
+    /**
+     * Layout direction of the toggle group
+     * @default 'horizontal'
+     */
+    orientation?: 'horizontal' | 'vertical';
+    /**
+     * Spacing between toggle items
+     * @default 'normal'
+     */
+    spacing?: 'none' | 'compact' | 'normal' | 'loose';
+}
+interface ToggleComposition {
+    Group: React.FC<ToggleGroupProps>;
+}
+
+declare const Toggle: React__default.FC<ToggleProps> & ToggleComposition;
+
 type TooltipPlacement = 'top' | 'top-start' | 'top-end' | 'right' | 'right-start' | 'right-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end';
 interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
     /**
@@ -1667,4 +1751,4 @@ interface SliderComposition {
  */
 declare const Slider: React__default.FC<SliderProps> & SliderComposition;
 
-export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, ContextMenu, ContextMenuProps, Coordinates, DragContextValue, DragDrop, DragDropProviderProps, DragEndEvent, DragHandleProps, DragItem, DragMoveEvent, DragOverlayProps, DragStartEvent, DraggableProps, DraggableRenderProps, Drawer, DrawerPlacement, DrawerProps, DropTargetInfo, Dropdown, DropdownOption, DropdownProps, DroppableProps, DroppableRenderProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentItemProps, SegmentedControl, SegmentedControlComposition, SegmentedControlContextType, SegmentedControlProps, Slider, SliderComposition, SliderContextValue, SliderMarkProps, SliderProps, SliderRange, SliderRangeProps, SliderTrackProps, SortDirection, SortableItemInfo, SortableItemProps, SortableItemRenderProps, SortableProps, Switch, SwitchProps, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, ThumbPosition, Tooltip, TooltipPlacement, TooltipProps };
+export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, ContextMenu, ContextMenuProps, Coordinates, DragContextValue, DragDrop, DragDropProviderProps, DragEndEvent, DragHandleProps, DragItem, DragMoveEvent, DragOverlayProps, DragStartEvent, DraggableProps, DraggableRenderProps, Drawer, DrawerPlacement, DrawerProps, DropTargetInfo, Dropdown, DropdownOption, DropdownProps, DroppableProps, DroppableRenderProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentItemProps, SegmentedControl, SegmentedControlComposition, SegmentedControlContextType, SegmentedControlProps, Slider, SliderComposition, SliderContextValue, SliderMarkProps, SliderProps, SliderRange, SliderRangeProps, SliderTrackProps, SortDirection, SortableItemInfo, SortableItemProps, SortableItemRenderProps, SortableProps, Switch, SwitchProps, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, ThumbPosition, Toggle, ToggleProps, Tooltip, TooltipPlacement, TooltipProps };

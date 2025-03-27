@@ -14,7 +14,7 @@ pnpm add blox-ui-react
 
 ## Dependencies
 
-Blox need `react` and `react-dom` to work
+Blox needs `react` and `react-dom` to work
 
 ## Features
 
