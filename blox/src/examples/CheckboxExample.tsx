@@ -1,7 +1,12 @@
-// CheckboxExample.tsx
+
+
 import React, { useState } from 'react';
 import { Checkbox } from '../components/Checkbox';
 
+/**
+ * @file `@/examples/CheckboxExample.tsx`
+ * @description Examples of using the Checkbox component
+ */
 export const CheckboxExample: React.FC = () => {
   // For controlled checkbox example
   const [isChecked, setIsChecked] = useState(true);

@@ -1,8 +1,9 @@
-// Example usage in App.tsx
+/**
+ * This the internal Test App
+ * we are testing the `./examples/*` folder
+ */
 import {scan} from "react-scan"
-import React, { useState } from "react";
 import { BloxLayout } from "./app/BloxLayout";
-
 import { TooltipExample } from "./examples/TooltipExample";
 import { ModalExample } from "./examples/ModalExample";
 import { DrawerExample } from "./examples/DrawerExample";
