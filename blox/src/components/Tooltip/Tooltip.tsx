@@ -2,28 +2,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { TooltipProps, TooltipPlacement } from "./types";
+import { STYLES } from "@/styles/STYLES";
 
-const Tooltip: React.FC<TooltipProps> = ({
-  content,
-  isOpen: controlledIsOpen,
-  placement = "bottom",
-  offset = 8,
-  showDelay = 0,
-  hideDelay = 0,
-  showOnHover = true,
-  showOnFocus = true,
-  id,
-  closeOnEsc = true,
-  interactive = false,
-  zIndex = 1000,
-  isDisabled = false,
-  tooltipClassName = "",
-  minWidth,
-  maxWidth,
-  className = "",
-  children,
-  ...rest
-}) => {
+const Tooltip: React.FC<TooltipProps> = ({ content, isOpen: controlledIsOpen, placement = "bottom", offset = 8, showDelay = 0, hideDelay = 0, showOnHover = true, showOnFocus = true, id, closeOnEsc = true, interactive = false, zIndex = 1000, isDisabled = false, tooltipClassName = "", minWidth, maxWidth, className = "", children, ...rest }) => {
   // For controlled/uncontrolled usage
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
   const isControlled = controlledIsOpen !== undefined;
@@ -33,16 +14,16 @@ const Tooltip: React.FC<TooltipProps> = ({
   const triggerRef = useRef<HTMLElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const childRef = useRef<HTMLElement | null>(null);
-  
+
   // Timers for delay
   const showTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // State for position
   const [position, setPosition] = useState({
     x: 0,
     y: 0,
-    currentPlacement: placement
+    currentPlacement: placement,
   });
 
   // Save a reference to the child element
@@ -67,44 +48,28 @@ const Tooltip: React.FC<TooltipProps> = ({
 
     // Determine best placement based on available space
     let finalPlacement: TooltipPlacement = placement;
-    const primaryPlacement = placement.split('-')[0] as 'top' | 'right' | 'bottom' | 'left';
+    const primaryPlacement = placement.split("-")[0] as "top" | "right" | "bottom" | "left";
 
     // Check if preferred placement has enough space, otherwise flip to opposite side
     switch (primaryPlacement) {
-      case 'top':
+      case "top":
         if (spaceTop < tooltipRect.height + offset && spaceBottom > tooltipRect.height + offset) {
-          finalPlacement = placement.includes('start') 
-            ? 'bottom-start' 
-            : placement.includes('end') 
-              ? 'bottom-end' 
-              : 'bottom';
+          finalPlacement = placement.includes("start") ? "bottom-start" : placement.includes("end") ? "bottom-end" : "bottom";
         }
         break;
-      case 'right':
+      case "right":
         if (spaceRight < tooltipRect.width + offset && spaceLeft > tooltipRect.width + offset) {
-          finalPlacement = placement.includes('start') 
-            ? 'left-start' 
-            : placement.includes('end') 
-              ? 'left-end' 
-              : 'left';
+          finalPlacement = placement.includes("start") ? "left-start" : placement.includes("end") ? "left-end" : "left";
         }
         break;
-      case 'bottom':
+      case "bottom":
         if (spaceBottom < tooltipRect.height + offset && spaceTop > tooltipRect.height + offset) {
-          finalPlacement = placement.includes('start') 
-            ? 'top-start' 
-            : placement.includes('end') 
-              ? 'top-end' 
-              : 'top';
+          finalPlacement = placement.includes("start") ? "top-start" : placement.includes("end") ? "top-end" : "top";
         }
         break;
-      case 'left':
+      case "left":
         if (spaceLeft < tooltipRect.width + offset && spaceRight > tooltipRect.width + offset) {
-          finalPlacement = placement.includes('start') 
-            ? 'right-start' 
-            : placement.includes('end') 
-              ? 'right-end' 
-              : 'right';
+          finalPlacement = placement.includes("start") ? "right-start" : placement.includes("end") ? "right-end" : "right";
         }
         break;
     }
@@ -114,51 +79,51 @@ const Tooltip: React.FC<TooltipProps> = ({
     let y = 0;
 
     switch (finalPlacement) {
-      case 'top':
+      case "top":
         x = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
         y = triggerRect.top - tooltipRect.height - offset;
         break;
-      case 'top-start':
+      case "top-start":
         x = triggerRect.left;
         y = triggerRect.top - tooltipRect.height - offset;
         break;
-      case 'top-end':
+      case "top-end":
         x = triggerRect.right - tooltipRect.width;
         y = triggerRect.top - tooltipRect.height - offset;
         break;
-      case 'right':
+      case "right":
         x = triggerRect.right + offset;
         y = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2;
         break;
-      case 'right-start':
+      case "right-start":
         x = triggerRect.right + offset;
         y = triggerRect.top;
         break;
-      case 'right-end':
+      case "right-end":
         x = triggerRect.right + offset;
         y = triggerRect.bottom - tooltipRect.height;
         break;
-      case 'bottom':
+      case "bottom":
         x = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
         y = triggerRect.bottom + offset;
         break;
-      case 'bottom-start':
+      case "bottom-start":
         x = triggerRect.left;
         y = triggerRect.bottom + offset;
         break;
-      case 'bottom-end':
+      case "bottom-end":
         x = triggerRect.right - tooltipRect.width;
         y = triggerRect.bottom + offset;
         break;
-      case 'left':
+      case "left":
         x = triggerRect.left - tooltipRect.width - offset;
         y = triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2;
         break;
-      case 'left-start':
+      case "left-start":
         x = triggerRect.left - tooltipRect.width - offset;
         y = triggerRect.top;
         break;
-      case 'left-end':
+      case "left-end":
         x = triggerRect.left - tooltipRect.width - offset;
         y = triggerRect.bottom - tooltipRect.height;
         break;
@@ -182,19 +147,19 @@ const Tooltip: React.FC<TooltipProps> = ({
     setPosition({
       x,
       y,
-      currentPlacement: finalPlacement
+      currentPlacement: finalPlacement,
     });
   }, [isOpen, placement, offset]);
 
   // Handle showing the tooltip
   const handleShow = useCallback(() => {
     if (isDisabled) return;
-    
+
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
       hideTimeoutRef.current = null;
     }
-    
+
     if (!isControlled) {
       if (showDelay) {
         showTimeoutRef.current = setTimeout(() => {
@@ -209,12 +174,12 @@ const Tooltip: React.FC<TooltipProps> = ({
   // Handle hiding the tooltip
   const handleHide = useCallback(() => {
     if (isDisabled) return;
-    
+
     if (showTimeoutRef.current) {
       clearTimeout(showTimeoutRef.current);
       showTimeoutRef.current = null;
     }
-    
+
     if (!isControlled) {
       if (hideDelay) {
         hideTimeoutRef.current = setTimeout(() => {
@@ -239,14 +204,14 @@ const Tooltip: React.FC<TooltipProps> = ({
     if (!isOpen || !closeOnEsc) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         handleHide();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, closeOnEsc, handleHide]);
 
@@ -256,18 +221,18 @@ const Tooltip: React.FC<TooltipProps> = ({
 
     // Update position immediately
     updatePosition();
-    
+
     // And then after a short delay to ensure content is fully rendered
     const delayedUpdate = setTimeout(updatePosition, 10);
 
     // Update on resize
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
-    
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
     return () => {
       clearTimeout(delayedUpdate);
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [isOpen, updatePosition]);
 
@@ -289,22 +254,23 @@ const Tooltip: React.FC<TooltipProps> = ({
         role="tooltip"
         id={id}
         className={`blox-tooltip ${tooltipClassName}`}
-        style={{
-          position: 'fixed',
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          zIndex,
-          minWidth: minWidth,
-          maxWidth: maxWidth,
-          '--blox-tooltip-min-width': typeof minWidth === 'number' ? `${minWidth}px` : minWidth,
-          '--blox-tooltip-max-width': typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
-          '--blox-tooltip-offset': `${offset}px`,
-          '--blox-tooltip-placement': position.currentPlacement,
-        } as React.CSSProperties}
+        style={
+          {
+            position: "fixed",
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+            zIndex,
+            minWidth: minWidth,
+            maxWidth: maxWidth,
+            "--blox-tooltip-min-width": typeof minWidth === "number" ? `${minWidth}px` : minWidth,
+            "--blox-tooltip-max-width": typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth,
+            "--blox-tooltip-offset": `${offset || STYLES.Tooltip.offset}px`,
+            "--blox-tooltip-placement": position.currentPlacement,
+          } as React.CSSProperties
+        }
         onMouseEnter={handleTooltipMouseEnter}
         onMouseLeave={interactive ? handleHide : undefined}
-        data-placement={position.currentPlacement}
-      >
+        data-placement={position.currentPlacement}>
         {content}
       </div>
     );
@@ -314,57 +280,54 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   // Clone the child element and attach event handlers
   const childElement = React.Children.only(children);
-  
+
   if (!React.isValidElement(childElement)) {
-    console.error('Tooltip children must be a valid React element');
+    console.error("Tooltip children must be a valid React element");
     return <>{children}</>;
   }
-  
+
   const childProps: React.HTMLAttributes<HTMLElement> = {};
-  
+
   if (showOnHover) {
     childProps.onMouseEnter = (e) => {
       handleShow();
       childElement.props.onMouseEnter?.(e);
     };
-    
+
     childProps.onMouseLeave = (e) => {
       handleHide();
       childElement.props.onMouseLeave?.(e);
     };
   }
-  
+
   if (showOnFocus) {
     childProps.onFocus = (e) => {
       handleShow();
       childElement.props.onFocus?.(e);
     };
-    
+
     childProps.onBlur = (e) => {
       handleHide();
       childElement.props.onBlur?.(e);
     };
   }
-  
+
   // Add the ref to the child element
-  const enhancedChild = React.cloneElement(
-    childElement,
-    {
-      ...childProps,
-      ref: (node: HTMLElement) => {
-        // Forward the ref to the child if it has one
-        if (typeof childElement.ref === 'function') {
-          childElement.ref(node);
-        } else if (childElement.ref) {
-          (childElement.ref as React.MutableRefObject<HTMLElement>).current = node;
-        }
-        
-        childRef.current = node;
-        triggerRef.current = node;
-      },
-      className: `${childElement.props.className || ''} ${className}`.trim()
-    }
-  );
+  const enhancedChild = React.cloneElement(childElement, {
+    ...childProps,
+    ref: (node: HTMLElement) => {
+      // Forward the ref to the child if it has one
+      if (typeof childElement.ref === "function") {
+        childElement.ref(node);
+      } else if (childElement.ref) {
+        (childElement.ref as React.MutableRefObject<HTMLElement>).current = node;
+      }
+
+      childRef.current = node;
+      triggerRef.current = node;
+    },
+    className: `${childElement.props.className || ""} ${className}`.trim(),
+  });
 
   return (
     <>

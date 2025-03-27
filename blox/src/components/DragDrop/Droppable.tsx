@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { DroppableProps, DroppableRenderProps } from "./types";
 import { useDragDrop } from "./DragDropContext";
+import { STYLES } from "@/styles/STYLES";
 
 export const Droppable: React.FC<DroppableProps> = ({
   id,
@@ -117,8 +118,8 @@ export const Droppable: React.FC<DroppableProps> = ({
         // Add visual feedback when dragging over
         ...(isOver() &&
           canDrop() && {
-            outline: "2px dashed rgba(0, 0, 0, 0.2)",
-            backgroundColor: "rgba(0, 0, 255, 0.05)",
+            outline: `var(--blox-dragdrop-droppable-oultine, ${STYLES.DragDrop.droppable.outline})`,
+            backgroundColor: `var(--blox-dragdrop-droppable-bg-color, ${STYLES.DragDrop.droppable.bgColor})`,
           }),
       }}
       {...props}>

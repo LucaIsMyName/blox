@@ -13,6 +13,7 @@ export { SegmentedControl } from "./components/SegmentedControl";
 export { DragDrop } from "./components/DragDrop";
 export { Switch } from "./components/Switch";
 export { ContextMenu } from "./components/ContextMenu";
+export { Slider } from "./components/Slider";
 
 // Export component types
 export type { AccordionProps, AccordionItemProps } from "./components/Accordion/types";
@@ -25,7 +26,8 @@ export type { RadioProps, RadioGroupProps } from "./components/Radio/types";
 export type { TableProps, TableColumn, SortDirection } from "./components/Table/types";
 export type { TabsProps, TabOrientation, TabVariantStyle } from "./components/Tabs/types";
 export type { TooltipProps, TooltipPlacement } from "./components/Tooltip/types";
-export type { SegmentedControlProps } from "./components/SegmentedControl/types";
+export type { SegmentedControlProps, SegmentedControlComposition, SegmentedControlContextType, SegmentItemProps } from "./components/SegmentedControl/types";
 export type { Coordinates, DragItem, DragStartEvent, DragMoveEvent, DragEndEvent, DropTargetInfo, SortableItemInfo, DragContextValue, DragDropProviderProps, DraggableProps, DraggableRenderProps, DragHandleProps, DroppableProps, DroppableRenderProps, DragOverlayProps, SortableProps, SortableItemProps, SortableItemRenderProps } from "./components/DragDrop/types";
 export type { SwitchProps } from "./components/Switch/types";
 export type { ContextMenuProps } from "./components/ContextMenu/types";
+export type { SliderProps, SliderRange, ThumbPosition, SliderTrackProps, SliderRangeProps, SliderMarkProps, SliderContextValue, SliderComposition } from "./components/Slider/types";

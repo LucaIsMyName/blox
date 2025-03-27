@@ -12,6 +12,10 @@ yarn add blox-ui-react
 pnpm add blox-ui-react
 ```
 
+## Dependencies
+
+Blox need `react` and `react-dom` to work
+
 ## Features
 
 - 🎨 **Fully headless** - No styling opinions, complete visual freedom

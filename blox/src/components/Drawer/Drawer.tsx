@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { DrawerProps, DrawerComposition } from "./types";
+import { STYLES } from "@/styles/STYLES";
 
 // Sub-components
 const DrawerHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = "", ...props }) => (
@@ -43,29 +44,7 @@ const DrawerCloseButton: React.FC<{
     aria-label="Close drawer"
     data-blox-drawer-close=""
     {...props}>
-    {children || (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round">
-        <line
-          x1="18"
-          y1="6"
-          x2="6"
-          y2="18"></line>
-        <line
-          x1="6"
-          y1="6"
-          x2="18"
-          y2="18"></line>
-      </svg>
-    )}
+    {children || "×"}
   </button>
 );
 
@@ -150,33 +129,33 @@ const Drawer: React.FC<DrawerProps> & DrawerComposition = ({ children, isOpen, o
     const baseStyles: React.CSSProperties = {
       ...style,
       position: "absolute",
-      backgroundColor: "var(--blox-drawer-content-bg-color, white)",
+      backgroundColor: `var(--blox-drawer-content-bg-color, ${STYLES.Drawer.contentBgColor})`,
     };
 
     // Add size constraints based on placement
     if (placement === "left" || placement === "right") {
-      baseStyles.top = "var(--blox-drawer-top, 0)";
-      baseStyles.bottom = "var(--blox-drawer-bottom, 0)";
+      baseStyles.top = `var(--blox-drawer-top, ${STYLES.Drawer.top})`;
+      baseStyles.bottom = `var(--blox-drawer-bottom, ${STYLES.Drawer.bottom})`;
       baseStyles.minWidth = minWidth;
       baseStyles.maxWidth = maxWidth;
-      baseStyles.height = "100%";
+      baseStyles.height = `100%`;
 
-      if (placement === "left") {
-        baseStyles.left = "var(--blox-drawer-left, 0)";
+      if (placement === `left`) {
+        baseStyles.left = `var(--blox-drawer-left, ${STYLES.Drawer.left})`;
       } else {
-        baseStyles.right = "var(--blox-drawer-right, 0)";
+        baseStyles.right = `var(--blox-drawer-right, ${STYLES.Drawer.right})`;
       }
     } else {
-      baseStyles.left = "var(--blox-drawer-left, 0)";
-      baseStyles.right = "var(--blox-drawer-right, 0)";
+      baseStyles.left = `var(--blox-drawer-left, ${STYLES.Drawer.left})`;
+      baseStyles.right = `var(--blox-drawer-right, ${STYLES.Drawer.right})`;
       baseStyles.minHeight = minHeight;
       baseStyles.maxHeight = maxHeight;
-      baseStyles.width = "100%";
+      baseStyles.width = `100%`;
 
-      if (placement === "top") {
-        baseStyles.top = "var(--blox-drawer-top, 0)";
+      if (placement === `top`) {
+        baseStyles.top = `var(--blox-drawer-top, ${STYLES.Drawer.top})`;
       } else {
-        baseStyles.bottom = "var(--blox-drawer-bottom, 0)";
+        baseStyles.bottom = `var(--blox-drawer-bottom, ${STYLES.Drawer.bottom})`;
       }
     }
 
@@ -199,8 +178,8 @@ const Drawer: React.FC<DrawerProps> & DrawerComposition = ({ children, isOpen, o
         bottom: 0,
         display: "flex",
         zIndex: zIndex,
-        backdropFilter: "var(--blox-drawer-backdrop-blur, 0px)",
-        backgroundColor: "var(--blox-drawer-backdrop-color, rgba(0, 0, 0, 0.5))",
+        backdropFilter: `var(--blox-drawer-backdrop-blur, ${STYLES.Drawer.backdropBlur})`,
+        backgroundColor: `var(--blox-drawer-backdrop-color, ${STYLES.Drawer.backdropColor})`,
       }}>
       <div
         ref={drawerRef}

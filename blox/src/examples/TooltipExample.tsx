@@ -10,7 +10,9 @@ export const TooltipExample: React.FC = () => {
       <div className="examples">
         {/* Basic usage */}
         <div className="example-item">
-          <Tooltip content="This is a simple tooltip">
+          <Tooltip
+            className=""
+            content={<div className="p-8">Logo</div>}>
             <button>Hover me</button>
           </Tooltip>
         </div>
@@ -153,12 +155,14 @@ export const TooltipExample: React.FC = () => {
         }
         
         /* You can also use CSS custom properties defined by the component */
+        
         .blox-tooltip {
+         
           --blox-tooltip-background: white;
           --blox-tooltip-border: 1px solid #ddd;
-          --blox-tooltip-border-radius: 4px;
-          --blox-tooltip-padding: 8px;
-          --blox-tooltip-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          --blox-tooltip-border-radius: 0px;
+          --blox-tooltip-padding: 0px;
+          --blox-tooltip-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
           
           background: var(--blox-tooltip-background);
           border: var(--blox-tooltip-border);

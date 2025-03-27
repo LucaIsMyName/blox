@@ -1,14 +1,6 @@
 // Accordion.tsx
-import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
-import { 
-  AccordionProps, 
-  AccordionContextType, 
-  AccordionItemProps, 
-  AccordionButtonProps, 
-  AccordionPanelProps,
-  AccordionItemContextType,
-  AccordionComposition
-} from './types';
+import React, { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { AccordionProps, AccordionContextType, AccordionItemProps, AccordionButtonProps, AccordionPanelProps, AccordionItemContextType, AccordionComposition } from "./types";
 
 // Create context for accordion state
 const AccordionContext = createContext<AccordionContextType>({
@@ -29,7 +21,7 @@ const AccordionItemContext = createContext<AccordionItemContextType>({
 const useAccordion = () => {
   const context = useContext(AccordionContext);
   if (!context) {
-    throw new Error('useAccordion must be used within an Accordion component');
+    throw new Error("useAccordion must be used within an Accordion component");
   }
   return context;
 };
@@ -38,46 +30,42 @@ const useAccordion = () => {
 const useAccordionItem = () => {
   const context = useContext(AccordionItemContext);
   if (!context) {
-    throw new Error('useAccordionItem must be used within an AccordionItem component');
+    throw new Error("useAccordionItem must be used within an AccordionItem component");
   }
   return context;
 };
 
 // Accordion Item Component
-const AccordionItem: React.FC<AccordionItemProps> = ({ 
-  children, 
-  isDisabled = false, 
-  index: providedIndex,
-  className = '',
-  ...props 
-}) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ children, isDisabled = false, index: providedIndex, className = "", ...props }) => {
   const { activeIndices, toggleItem, isItemActive } = useAccordion();
-  
+
   // If index is not provided, we'll warn but not throw
   const index = providedIndex ?? -1;
   if (index === -1) {
-    console.warn('AccordionItem: index prop is required for proper functioning');
+    console.warn("AccordionItem: index prop is required for proper functioning");
   }
-  
+
   const isActive = isItemActive(index);
-  
+
   // Context value for this item
-  const itemContextValue = useMemo(() => ({
-    isActive,
-    isDisabled,
-    index,
-    toggleItem: () => toggleItem(index),
-  }), [isActive, isDisabled, index, toggleItem]);
-  
+  const itemContextValue = useMemo(
+    () => ({
+      isActive,
+      isDisabled,
+      index,
+      toggleItem: () => toggleItem(index),
+    }),
+    [isActive, isDisabled, index, toggleItem]
+  );
+
   return (
     <AccordionItemContext.Provider value={itemContextValue}>
-      <div 
+      <div
         className={`blox-accordion-item ${className}`}
         data-blox-accordion-item=""
-        data-active={isActive ? 'true' : 'false'}
-        data-disabled={isDisabled ? 'true' : 'false'}
-        {...props}
-      >
+        data-active={isActive ? "true" : "false"}
+        data-disabled={isDisabled ? "true" : "false"}
+        {...props}>
         {children}
       </div>
     </AccordionItemContext.Provider>
@@ -85,13 +73,9 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 };
 
 // Accordion Button Component
-const AccordionButton: React.FC<AccordionButtonProps> = ({ 
-  children, 
-  className = '',
-  ...props 
-}) => {
+const AccordionButton: React.FC<AccordionButtonProps> = ({ children, className = "", ...props }) => {
   const { isActive, isDisabled, toggleItem } = useAccordionItem();
-  
+
   return (
     <button
       className={`blox-accordion-button ${className}`}
@@ -99,102 +83,92 @@ const AccordionButton: React.FC<AccordionButtonProps> = ({
       disabled={isDisabled}
       aria-expanded={isActive}
       data-blox-accordion-button=""
-      data-active={isActive ? 'true' : 'false'}
-      data-disabled={isDisabled ? 'true' : 'false'}
+      data-active={isActive ? "true" : "false"}
+      data-disabled={isDisabled ? "true" : "false"}
       type="button"
-      {...props}
-    >
+      {...props}>
       {children}
     </button>
   );
 };
 
 // Accordion Panel Component
-const AccordionPanel: React.FC<AccordionPanelProps> = ({ 
-  children, 
-  className = '',
-  ...props 
-}) => {
+const AccordionPanel: React.FC<AccordionPanelProps> = ({ children, className = "", ...props }) => {
   const { isActive } = useAccordionItem();
-  
+
   if (!isActive) return null;
-  
+
   return (
-    <div 
+    <div
       className={`blox-accordion-panel ${className}`}
       data-blox-accordion-panel=""
-      {...props}
-    >
+      {...props}>
       {children}
     </div>
   );
 };
 
 // Main Accordion Component
-const Accordion: React.FC<AccordionProps> & AccordionComposition = ({ 
-  children, 
-  allowMultiple = false, 
-  defaultIndex = [], 
-  activeIndices: controlledActiveIndices,
-  onChange,
-  className = '',
-  ...props 
-}) => {
+const Accordion: React.FC<AccordionProps> & AccordionComposition = ({ children, allowMultiple = false, defaultIndex = [], activeIndices: controlledActiveIndices, onChange, className = "", ...props }) => {
   // Convert single defaultIndex to array
   const initialIndices = useMemo(() => {
-    if (typeof defaultIndex === 'number') {
+    if (typeof defaultIndex === "number") {
       return [defaultIndex];
     }
     return defaultIndex as number[];
   }, [defaultIndex]);
-  
+
   // State for active indices (for uncontrolled usage)
   const [internalActiveIndices, setInternalActiveIndices] = useState<number[]>(initialIndices);
-  
+
   // Determine if we're controlled or not
   const isControlled = controlledActiveIndices !== undefined;
   const activeIndices = isControlled ? controlledActiveIndices : internalActiveIndices;
-  
+
   // Toggle accordion item
-  const toggleItem = useCallback((index: number) => {
-    const updatedIndices = activeIndices.includes(index)
-      ? activeIndices.filter((i) => i !== index)
-      : allowMultiple 
-        ? [...activeIndices, index] 
-        : [index];
-    
-    // Update internal state for uncontrolled usage
-    if (!isControlled) {
-      setInternalActiveIndices(updatedIndices);
-    }
-    
-    // Call onChange callback
-    onChange?.(updatedIndices);
-  }, [activeIndices, allowMultiple, isControlled, onChange]);
-  
+  const toggleItem = useCallback(
+    (index: number) => {
+      const updatedIndices = activeIndices.includes(index) ? activeIndices.filter((i) => i !== index) : allowMultiple ? [...activeIndices, index] : [index];
+
+      // Update internal state for uncontrolled usage
+      if (!isControlled) {
+        setInternalActiveIndices(updatedIndices);
+      }
+
+      // Call onChange callback
+      onChange?.(updatedIndices);
+    },
+    [activeIndices, allowMultiple, isControlled, onChange]
+  );
+
   // Check if an item is active
-  const isItemActive = useCallback((index: number) => {
-    return activeIndices.includes(index);
-  }, [activeIndices]);
-  
+  const isItemActive = useCallback(
+    (index: number) => {
+      return activeIndices.includes(index);
+    },
+    [activeIndices]
+  );
+
   // Context value
-  const contextValue = useMemo(() => ({
-    activeIndices,
-    toggleItem,
-    isItemActive,
-  }), [activeIndices, toggleItem, isItemActive]);
-  
+  const contextValue = useMemo(
+    () => ({
+      activeIndices,
+      toggleItem,
+      isItemActive,
+    }),
+    [activeIndices, toggleItem, isItemActive]
+  );
+
   return (
     <AccordionContext.Provider value={contextValue}>
-      <div 
+      <div
         className={`blox-accordion ${className}`}
         data-blox-accordion=""
-        data-allow-multiple={allowMultiple ? 'true' : 'false'}
-        {...props}
-      >
+        data-allow-multiple={allowMultiple ? "true" : "false"}
+        {...props}>
         {React.Children.map(children, (child, index) => {
           if (!React.isValidElement(child)) return child;
-          
+
           // Auto-inject index if not provided
           return React.cloneElement(child as React.ReactElement<AccordionItemProps>, {
             index: (child as React.ReactElement<AccordionItemProps>).props.index ?? index,

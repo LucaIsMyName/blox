@@ -1,6 +1,7 @@
 // Slider.tsx
 import React, { useState, useRef, useEffect, useCallback, createContext, useContext, useMemo } from "react";
 import { SliderProps, SliderTrackProps, SliderRangeProps, SliderThumbProps, SliderMarkProps, SliderContextValue, ThumbPosition, SliderRange, SliderComposition } from "./types";
+import { STYLES } from "../../styles/STYLES";
 
 // Create context for the slider
 const SliderContext = createContext<SliderContextValue | null>(null);
@@ -14,6 +15,9 @@ const useSlider = () => {
   return context;
 };
 
+/**
+ * @description Slider component for selecting a range of values. *Experimental component*
+ */
 // Slider component
 const Slider: React.FC<SliderProps> & SliderComposition = ({ value, defaultValue = 0, onChange, onDragStart, onDragEnd, min = 0, max = 100, step = 1, disabled = false, orientation = "horizontal", className = "", inverted = false, showMarks = false, marks, label, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, children, ...props }) => {
   // Reference to the root element
@@ -319,12 +323,12 @@ const Slider: React.FC<SliderProps> & SliderComposition = ({ value, defaultValue
   // Custom render function using render props
   const renderContent = () => {
     if (typeof children === "function") {
-      return children(contextValue);
+      return <div style={{ position: "relative" }}>{children(contextValue)}</div>;
     }
 
     return (
       children || (
-        <>
+        <div style={{ position: "relative" }}>
           <SliderTrack
             onPointerDown={handleTrackPointerDown}
             onPointerMove={handleTrackPointerMove}
@@ -367,7 +371,7 @@ const Slider: React.FC<SliderProps> & SliderComposition = ({ value, defaultValue
                 ))}
             </>
           )}
-        </>
+        </div>
       )
     );
   };
@@ -497,10 +501,10 @@ const SliderTrack: React.FC<SliderTrackProps> = ({ children, className = "", onP
       onPointerUp={handlePointerUp}
       style={{
         position: "relative",
-        width: orientation === "horizontal" ? "100%" : "var(--blox-slider-thickness, 4px)",
-        height: orientation === "horizontal" ? "var(--blox-slider-thickness, 4px)" : "100%",
-        borderRadius: "var(--blox-slider-border-radius, 9999px)",
-        backgroundColor: "var(--blox-slider-track-color, #e5e7eb)",
+        width: orientation === "horizontal" ? "100%" : `var(--blox-slider-thickness, ${STYLES.Slider.thickness})`,
+        height: orientation === "horizontal" ? `var(--blox-slider-thickness, ${STYLES.Slider.thickness})` : `100%`,
+        borderRadius: `var(--blox-slider-border-radius, ${STYLES.Slider.borderRadius})`,
+        backgroundColor: `var(--blox-slider-track-color, ${STYLES.Slider.track.color})`,
         ...props.style,
       }}
       {...props}>
@@ -523,8 +527,8 @@ const SliderRangeComponent: React.FC<SliderRangeProps> = ({ index = 0, children,
   // Determine range style based on orientation
   const rangeStyle: React.CSSProperties = {
     // position: "absolute", // Keep this
-    borderRadius: "var(--blox-slider-border-radius, 9999px)",
-    backgroundColor: "var(--blox-slider-range-color, #3b82f6)",
+    borderRadius: `var(--blox-slider-border-radius, ${STYLES.Slider.borderRadius})`,
+    backgroundColor: `var(--blox-slider-range-color, ${STYLES.Slider.range.color})`,
   };
 
   if (orientation === "horizontal") {
@@ -580,14 +584,14 @@ const SliderThumb: React.FC<SliderThumbProps> = ({ index = 0, children, classNam
 
   // Determine thumb style based on orientation
   const thumbStyle: React.CSSProperties = {
-    position: "absolute",
-    transform: "translate(-50%, -50%)",
-    width: "var(--blox-slider-thumb-size, 16px)",
-    height: "var(--blox-slider-thumb-size, 16px)",
-    borderRadius: "var(--blox-slider-thumb-radius, 9999px)",
-    backgroundColor: "var(--blox-slider-thumb-color, #3b82f6)",
-    boxShadow: "var(--blox-slider-thumb-shadow, 0 1px 3px rgba(0,0,0,0.1))",
-    cursor: disabled ? "not-allowed" : "grab",
+    position: `absolute`,
+    transform: `translate(-50%, -50%)`,
+    width: `var(--blox-slider-thumb-size, ${STYLES.Slider.thumb.size})`,
+    height: `var(--blox-slider-thumb-size, ${STYLES.Slider.thumb.size})`,
+    borderRadius: `var(--blox-slider-thumb-radius, ${STYLES.Slider.thumb.radius})`,
+    backgroundColor: `var(--blox-slider-thumb-color, ${STYLES.Slider.thumb.color})`,
+    boxShadow: `var(--blox-slider-thumb-shadow, ${STYLES.Slider.thumb.shadow})`,
+    cursor: disabled ? `not-allowed` : `grab`,
     // Add grab cursor when dragging
     ...(isDragging && { cursor: disabled ? "not-allowed" : "grabbing" }),
   };
@@ -644,14 +648,14 @@ const SliderMark: React.FC<SliderMarkProps> = ({ value, children, className = ""
 
   if (orientation === "horizontal") {
     markStyle.left = `${positionPercent}%`;
-    markStyle.top = "100%";
-    markStyle.transform = "translateX(-50%)";
-    markStyle.marginTop = "var(--blox-slider-mark-spacing, 8px)";
+    markStyle.top = `100%`;
+    markStyle.transform = `translateX(-50%)`;
+    markStyle.marginTop = `var(--blox-slider-mark-spacing, ${STYLES.Slider.mark.spacing})`;
   } else {
     markStyle.bottom = `${positionPercent}%`;
-    markStyle.left = "100%";
-    markStyle.transform = "translateY(50%)";
-    markStyle.marginLeft = "var(--blox-slider-mark-spacing, 8px)";
+    markStyle.left = `100%`;
+    markStyle.transform = `translateY(50%)`;
+    markStyle.marginLeft = `var(--blox-slider-mark-spacing, ${STYLES.Slider.mark.spacing})`;
   }
 
   return (
@@ -685,9 +689,9 @@ const SliderMark: React.FC<SliderMarkProps> = ({ value, children, className = ""
           className="blox-slider-mark-label"
           data-blox-slider-mark-label=""
           style={{
-            fontSize: "var(--blox-slider-mark-font-size, 12px)",
-            marginTop: orientation === "horizontal" ? "var(--blox-slider-mark-label-spacing, 4px)" : 0,
-            marginLeft: orientation === "vertical" ? "var(--blox-slider-mark-label-spacing, 4px)" : 0,
+            fontSize: `var(--blox-slider-mark-font-size, ${STYLES.Slider.mark.fontSize})`,
+            marginTop: orientation === `horizontal` ? `var(--blox-slider-mark-label-spacing, ${STYLES.Slider.mark.label.spacing})` : 0,
+            marginLeft: orientation === `vertical` ? `var(--blox-slider-mark-label-spacing, ${STYLES.Slider.mark.label.spacing})` : 0,
           }}>
           {children}
         </div>

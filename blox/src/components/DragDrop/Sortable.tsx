@@ -4,6 +4,7 @@ import { SortableProps, SortableItemProps, SortableItemRenderProps } from "./typ
 import { useDragDrop } from "./DragDropContext";
 import { DraggableWithContext } from "./Draggable";
 import { Droppable } from "./Droppable";
+import { STYLES } from "@/styles/STYLES";
 
 // Sortable List Component
 export const Sortable: React.FC<SortableProps> = ({ items, keyExtractor, onReorder, direction = "vertical", children, style, className = "", ...props }) => {
@@ -150,11 +151,11 @@ const SortableItem: React.FC<SortableItemProps> = ({ item, itemId, index, isDrag
         data={item}
         className="blox-sortable-item"
         style={{
-          opacity: isDragging ? 0.5 : 1,
+          opacity: isDragging ? `var(--blox-dragdrop-sortable-opacity, ${STYLES.DragDrop.sortable.opacity})` : 1,
           cursor: "grab",
           transition: "all 0.2s ease",
-          backgroundColor: isDragging ? "rgba(0, 0, 0, 0.05)" : "transparent",
-          borderRadius: "4px",
+          backgroundColor: isDragging ? `var(--blox-dragdrop-sortable-bg-color, ${STYLES.DragDrop.sortable.backgroundColor})` : "transparent",
+          borderRadius: `var(--blox-dragdrop-sortable-border-radius, ${STYLES.DragDrop.sortable.borderRadius})`,
         }}>
         {children(renderProps)}
       </DraggableWithContext>

@@ -1,6 +1,6 @@
 // RadioExample.tsx
 import React, { useState } from "react";
-import { Radio } from "../components/Radio";
+import { Radio, RadioProps } from "../components/Radio";
 
 export const RadioExample: React.FC = () => {
   // For controlled radio button example
@@ -13,7 +13,7 @@ export const RadioExample: React.FC = () => {
 
       <div className="example-section">
         <h3>Basic Radio Buttons</h3>
-        <div>
+        <div className="space-y-4">
           <Radio
             name="basic-example"
             value="option1"
@@ -39,27 +39,35 @@ export const RadioExample: React.FC = () => {
           <div className="current-selection">
             Selected fruit: <strong>{selectedFruit}</strong>
           </div>
-          <Radio
-            name="fruit"
-            value="apple"
-            label="Apple"
-            checked={selectedFruit === "apple"}
-            onChange={(value) => setSelectedFruit(value)}
-          />
-          <Radio
-            name="fruit"
-            value="banana"
-            label="Banana"
-            checked={selectedFruit === "banana"}
-            onChange={(value) => setSelectedFruit(value)}
-          />
-          <Radio
-            name="fruit"
-            value="orange"
-            label="Orange"
-            checked={selectedFruit === "orange"}
-            onChange={(value) => setSelectedFruit(value)}
-          />
+          <div className="space-y-4">
+            <Radio
+              name="fruit"
+              value="apple"
+              label="Apple"
+              checked={selectedFruit === "apple"}
+              className="flex items-center gap-2"
+              inputClassName="size-6 accent-green-100"
+              onChange={(value) => setSelectedFruit(value)}
+            />
+            <Radio
+              name="fruit"
+              value="banana"
+              label="Banana"
+              checked={selectedFruit === "banana"}
+              className="flex items-center gap-2"
+              inputClassName="size-6 accent-green-100"
+              onChange={(value) => setSelectedFruit(value)}
+            />
+            <Radio
+              name="fruit"
+              value="orange"
+              label="Orange"
+              checked={selectedFruit === "orange"}
+              className="flex items-center gap-2"
+              inputClassName="size-6 accent-green-100"
+              onChange={(value) => setSelectedFruit(value)}
+            />
+          </div>
           <div className="control-buttons">
             <button onClick={() => setSelectedFruit("apple")}>Select Apple</button>
             <button onClick={() => setSelectedFruit("banana")}>Select Banana</button>

@@ -10,7 +10,6 @@ export {
   // Context and Provider
   DragDropProvider,
   useDragDrop,
-
   // Core Components
   Draggable,
   DraggableWithContext,

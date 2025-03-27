@@ -1,7 +1,8 @@
 // Modal.tsx
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, Children } from "react";
 import { createPortal } from "react-dom";
 import { ModalProps, ModalComposition } from "./types";
+import { STYLES } from "@/styles/STYLES";
 
 // Sub-components
 const ModalContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = "", ...props }) => (
@@ -14,6 +15,7 @@ const ModalContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children
 
 const ModalHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = "", ...props }) => (
   <header
+    data-blox-modal-header=""
     className={`blox-modal-header ${className}`}
     {...props}>
     {children}
@@ -22,6 +24,7 @@ const ModalHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children,
 
 const ModalBody: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = "", ...props }) => (
   <div
+    data-blox-modal-body=""
     className={`blox-modal-body ${className}`}
     {...props}>
     {children}
@@ -30,6 +33,7 @@ const ModalBody: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, c
 
 const ModalFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = "", ...props }) => (
   <footer
+    data-blox-modal-footer=""
     className={`blox-modal-footer ${className}`}
     {...props}>
     {children}
@@ -39,35 +43,17 @@ const ModalFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children,
 const ModalCloseButton: React.FC<{
   onClose?: () => void;
   className?: string;
+  children?: React.ReactNode;
   [key: string]: any;
-}> = ({ onClose, className = "", ...props }) => (
+}> = ({ onClose, className = "", children, ...props }) => (
   <button
+    data-blox-modal-close-button=""
     type="button"
     className={`blox-modal-close-button ${className}`}
     onClick={onClose}
     aria-label="Close"
     {...props}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round">
-      <line
-        x1="18"
-        y1="6"
-        x2="6"
-        y2="18"></line>
-      <line
-        x1="6"
-        y1="6"
-        x2="18"
-        y2="18"></line>
-    </svg>
+    {children || "×"}
   </button>
 );
 
@@ -164,16 +150,16 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
   // Size styles based on size prop
   const getSizeStyle = () => {
     switch (size) {
-      case "small":
-        return { width: "var(--blox-modal-width-small, 400px)" };
-      case "medium":
-        return { width: "var(--blox-modal-width-medium, 600px)" };
-      case "large":
-        return { width: "var(--blox-modal-width-large, 800px)" };
-      case "full":
-        return { width: "var(--blox-modal-width-full, calc(100% - 32px))" };
+      case `small`:
+        return { width: `var(--blox-modal-width-small, ${STYLES.Modal.width.small})` };
+      case `medium`:
+        return { width: `var(--blox-modal-width-medium, ${STYLES.Modal.width.medium})` };
+      case `large`:
+        return { width: `var(--blox-modal-width-large, ${STYLES.Modal.width.large})` };
+      case `full`:
+        return { width: `var(--blox-modal-width-full, ${STYLES.Modal.width.full})` };
       default:
-        return { width: "var(--blox-modal-width-medium, 600px)" };
+        return { width: `var(--blox-modal-width-medium, ${STYLES.Modal.width.medium})` };
     }
   };
 
@@ -185,6 +171,7 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
   // Create the modal element
   const modalElement = (
     <div
+      data-blox-modal-overlay=""
       className={`blox-modal-overlay ${getAnimationClass()} ${overlayClassName}`}
       style={{
         position: "fixed",
@@ -195,9 +182,9 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
         display: "flex",
         alignItems: isCentered ? "center" : "flex-start",
         justifyContent: "center",
-        backgroundColor: "var(--blox-modal-overlay-bg, rgba(0, 0, 0, 0.5))",
+        backgroundColor: `var(--blox-modal-overlay-bg, ${STYLES.Modal.overlay.bgColor})`,
         zIndex: zIndex,
-        padding: "var(--blox-modal-overlay-padding, 16px)",
+        padding: `var(--blox-modal-overlay-padding, ${STYLES.Modal.overlay.padding})`,
         overflow: "auto",
       }}
       onClick={handleOverlayClick}
@@ -211,11 +198,11 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
         className={`blox-modal ${getAnimationClass()} ${contentClassName}`}
         style={{
           position: "relative",
-          backgroundColor: "var(--blox-modal-bg, white)",
-          borderRadius: "var(--blox-modal-border-radius, 4px)",
-          boxShadow: "var(--blox-modal-box-shadow, 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08))",
+          backgroundColor: `var(--blox-modal-bg, ${STYLES.Modal.bgColor})`,
+          borderRadius: `var(--blox-modal-border-radius, ${STYLES.Modal.borderRadius})`,
+          boxShadow: `var(--blox-modal-box-shadow, ${STYLES.Modal.boxShadow})`,
           maxWidth: "100%",
-          maxHeight: "var(--blox-modal-max-height, calc(100vh - 32px))",
+          maxHeight: `var(--blox-modal-max-height, ${STYLES.Modal.maxHeight})`,
           overflow: "auto",
           outline: "none",
           ...getSizeStyle(),
@@ -226,8 +213,8 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
           <div
             className="blox-modal-header"
             style={{
-              padding: "var(--blox-modal-header-padding, 16px)",
-              borderBottom: title ? "var(--blox-modal-header-border, 1px solid #e0e0e0)" : "none",
+              padding: `var(--blox-modal-header-padding, ${STYLES.Modal.header.padding})`,
+              borderBottom: title ? `var(--blox-modal-header-border, ${STYLES.Modal.header.border})` : "none",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -239,9 +226,9 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
                 className="blox-modal-title"
                 style={{
                   margin: 0,
-                  fontSize: "var(--blox-modal-title-font-size, 1.25rem)",
-                  fontWeight: "var(--blox-modal-title-font-weight, 500)",
-                  color: "var(--blox-modal-title-color, inherit)",
+                  fontSize: `var(--blox-modal-title-font-size, ${STYLES.Modal.title.fontSize})`,
+                  fontWeight: `var(--blox-modal-title-font-weight, ${STYLES.Modal.title.fontWeight})`,
+                  color: `var(--blox-modal-title-color, ${STYLES.Modal.title.color})`,
                 }}>
                 {title}
               </h3>
@@ -250,15 +237,15 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
               <ModalCloseButton
                 onClose={onClose}
                 style={{
-                  position: title ? "relative" : "absolute",
-                  right: title ? "0" : "var(--blox-modal-close-button-right, 16px)",
-                  top: title ? "0" : "var(--blox-modal-close-button-top, 16px)",
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "var(--blox-modal-close-button-padding, 4px)",
-                  color: "var(--blox-modal-close-button-color, #666)",
-                  borderRadius: "var(--blox-modal-close-button-border-radius, 50%)",
+                  position: title ? `relative` : `absolute`,
+                  right: title ? "0" : `var(--blox-modal-close-button-right, ${STYLES.Modal.close.right})`,
+                  top: title ? `0` : `var(--blox-modal-close-button-top,  ${STYLES.Modal.close.top})`,
+                  background: `transparent`,
+                  border: `none`,
+                  cursor: `pointer`,
+                  padding: `var(--blox-modal-close-button-padding,  ${STYLES.Modal.close.padding})`,
+                  color: `var(--blox-modal-close-button-color,  ${STYLES.Modal.close.color})`,
+                  borderRadius: `var(--blox-modal-close-button-border-radius,  ${STYLES.Modal.close.borderRadius})`,
                 }}
               />
             )}
@@ -269,7 +256,7 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
         <div
           className="blox-modal-body"
           style={{
-            padding: "var(--blox-modal-body-padding, 16px)",
+            padding: `var(--blox-modal-body-padding,  ${STYLES.Modal.body.padding})`,
           }}>
           {children}
         </div>
@@ -279,11 +266,11 @@ const Modal: React.FC<ModalProps> & ModalComposition = ({ children, isOpen, onCl
           <div
             className="blox-modal-footer"
             style={{
-              padding: "var(--blox-modal-footer-padding, 16px)",
-              borderTop: "var(--blox-modal-footer-border, 1px solid #e0e0e0)",
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "var(--blox-modal-footer-gap, 8px)",
+              padding: `var(--blox-modal-footer-padding, ${STYLES.Modal.footer.padding})`,
+              borderTop: `var(--blox-modal-footer-border, ${STYLES.Modal.footer.border})`,
+              display: `flex`,
+              justifyContent: `flex-end`,
+              gap: `var(--blox-modal-footer-gap, ${STYLES.Modal.footer.gap})`,
             }}>
             {footer}
           </div>

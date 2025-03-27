@@ -11,3 +11,4 @@ export { Tooltip } from './Tooltip';
 export { SegmentedControl } from './SegmentedControl';
 export { DragDrop } from './DragDrop';
 export { Switch } from './Switch';
+export { Slider } from './Slider';

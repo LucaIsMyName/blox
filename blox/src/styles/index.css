@@ -1,24 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Minimal required styles for the component library */
-/* Only include styles that are absolutely necessary for functionality */
 
-/* For example, hidden elements like visually-hidden for a11y */
-.blox-visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
+/* * {
+  outline: 1px solid red;
+} */
 
-/* Any critical default styling for proper functionality */
-/* For example, if you need some positioning for accessibility */
-[data-blox-focus-trap] {
-  outline: none;
+body {
+  overflow-x: hidden;
 }
