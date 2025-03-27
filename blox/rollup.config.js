@@ -46,17 +46,17 @@ export default [
     plugins: [dts()],
     external: [/\.css$/],
   },
-  {
-    input: 'src/styles/index.css', // Create this file with minimal styles
-    output: [{ file: 'dist/styles.css' }],
-    plugins: [
-      postcss({
-        extract: true,
-        minimize: true,
-        config: {
-          path: './postcss.config.js',
-        },
-      }),
-    ],
-  },
+  // {
+  //   input: 'src/styles/index.css', // Create this file with minimal styles
+  //   output: [{ file: 'dist/styles.css' }],
+  //   plugins: [
+  //     postcss({
+  //       extract: true,
+  //       minimize: true,
+  //       config: {
+  //         path: './postcss.config.js',
+  //       },
+  //     }),
+  //   ],
+  // },
 ];

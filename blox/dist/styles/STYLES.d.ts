@@ -1,16 +1,13 @@
-export declare let colors: {
-    primary: string;
-    secondary: string;
-    success: string;
-    danger: string;
-    warning: string;
-    info: string;
-    light: string;
-    dark: string;
-    white: string;
-    black: string;
-};
 export declare let STYLES: {
+    Radio: {
+        error: {
+            color: string;
+        };
+        label: {
+            color: string;
+        };
+        size: string;
+    };
     Slider: {
         thickness: string;
         borderRadius: string;
@@ -80,6 +77,11 @@ export declare let STYLES: {
         droppable: {
             bgColor: string;
             outline: string;
+        };
+        sortable: {
+            opacity: number;
+            backgroundColor: string;
+            borderRadius: string;
         };
     };
     Drawer: {
