@@ -13,6 +13,9 @@ import { TableExample } from "./examples/TableExample";
 import { TabsExample } from "./examples/TabsExample";
 import { MarqueeExample } from "./examples/MarqueeExample";
 import { SegmentedControlExample } from "./examples/SegmentedControlExample";
+import { SwitchExample } from "./examples/SwitchExample";
+import { ContextMenuExample } from "./examples/ContextMenuExample";
+import { DragDropExample } from "./examples/DragDropExample";
 
 function App() {
   return (
@@ -39,7 +42,7 @@ function App() {
       <BlockLayout title="Dropdowns">
         <DropdownExample />
       </BlockLayout>
-      <BlockLayout title="Dropdowns">
+      <BlockLayout title="Table">
         <TableExample />
       </BlockLayout>
       <BlockLayout title="Tabs">
@@ -48,8 +51,17 @@ function App() {
       <BlockLayout title="Marquees">
         <MarqueeExample />
       </BlockLayout>
-      <BlockLayout title="Marquees">
+      <BlockLayout title="Segmented Control">
         <SegmentedControlExample />
+      </BlockLayout>
+      <BlockLayout title="Switches">
+        <SwitchExample />
+      </BlockLayout>
+      <BlockLayout title="Context Menus">
+        <ContextMenuExample />
+      </BlockLayout>
+      <BlockLayout title="Drag & Drop">
+        <DragDropExample />
       </BlockLayout>
     </div>
   );

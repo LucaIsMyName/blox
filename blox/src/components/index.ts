@@ -1,4 +1,3 @@
-// Re-export all components
 export { Accordion } from './Accordion';
 export { Checkbox } from './Checkbox';
 export { Drawer } from './Drawer';
@@ -10,3 +9,5 @@ export { Table } from './Table';
 export { Tabs } from './Tabs';
 export { Tooltip } from './Tooltip';
 export { SegmentedControl } from './SegmentedControl';
+export { DragDrop } from './DragDrop';
+export { Switch } from './Switch';

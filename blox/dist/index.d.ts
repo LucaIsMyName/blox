@@ -1,4 +1,5 @@
-import React$1, { HTMLAttributes, ReactNode, InputHTMLAttributes, ThHTMLAttributes, TdHTMLAttributes, TableHTMLAttributes } from 'react';
+import * as React$1 from 'react';
+import React__default, { HTMLAttributes, ReactNode, InputHTMLAttributes, ThHTMLAttributes, TdHTMLAttributes, TableHTMLAttributes, RefObject } from 'react';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
 interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
@@ -58,7 +59,7 @@ interface AccordionComposition {
     Panel: React.FC<AccordionPanelProps>;
 }
 
-declare const Accordion: React$1.FC<AccordionProps> & AccordionComposition;
+declare const Accordion: React__default.FC<AccordionProps> & AccordionComposition;
 
 interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
     /**
@@ -132,7 +133,7 @@ interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onC
     hasError?: boolean;
 }
 
-declare const Checkbox: React$1.FC<CheckboxProps>;
+declare const Checkbox: React__default.FC<CheckboxProps>;
 
 type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
@@ -268,7 +269,7 @@ interface DrawerCloseButtonProps extends HTMLAttributes<HTMLButtonElement> {
     onClose?: () => void;
 }
 
-declare const Drawer: React$1.FC<DrawerProps> & DrawerComposition;
+declare const Drawer: React__default.FC<DrawerProps> & DrawerComposition;
 
 interface DropdownOption {
     /**
@@ -381,7 +382,7 @@ interface DropdownComposition {
     Item: React.FC<DropdownItemProps>;
 }
 
-declare const Dropdown: React$1.FC<DropdownProps> & DropdownComposition;
+declare const Dropdown: React__default.FC<DropdownProps> & DropdownComposition;
 
 type MarqueeDirection = "left" | "right" | "up" | "down";
 type MarqueeSpeed = "slow" | "normal" | "fast";
@@ -442,7 +443,7 @@ interface MarqueeProps extends HTMLAttributes<HTMLDivElement> {
     delay?: number;
 }
 
-declare const Marquee: React$1.FC<MarqueeProps>;
+declare const Marquee: React__default.FC<MarqueeProps>;
 
 type ModalSize = 'small' | 'medium' | 'large' | 'full';
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
@@ -541,7 +542,7 @@ interface ModalCloseButtonProps extends HTMLAttributes<HTMLButtonElement> {
     onClose?: () => void;
 }
 
-declare const Modal: React$1.FC<ModalProps> & ModalComposition;
+declare const Modal: React__default.FC<ModalProps> & ModalComposition;
 
 interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
     /**
@@ -676,7 +677,7 @@ interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'on
     hasError?: boolean;
 }
 
-declare const Radio: React$1.FC<RadioProps>;
+declare const Radio: React__default.FC<RadioProps>;
 
 type SortDirection = 'asc' | 'desc' | 'none';
 interface TableColumn<T = any> {
@@ -864,17 +865,17 @@ interface TableLoadingStateProps extends HTMLAttributes<HTMLTableRowElement> {
 
 declare const Table: {
     <T extends Record<string, any> = any>({ data, columns, sortColumn, sortDirection, onSort, autoGenerateRowKey, getRowKey, getRowClassName, children, className, ...props }: TableProps<T> & {
-        children?: React$1.ReactNode;
+        children?: React__default.ReactNode;
     }): react_jsx_runtime.JSX.Element;
-    Container: React$1.FC<TableContainerProps>;
-    Caption: React$1.FC<TableCaptionProps>;
-    Header: React$1.FC<TableHeaderProps>;
-    Body: React$1.FC<TableBodyProps>;
-    Row: React$1.FC<TableRowProps>;
-    HeaderCell: React$1.FC<TableHeaderCellProps>;
-    Cell: React$1.FC<TableCellProps>;
-    Empty: React$1.FC<TableEmptyStateProps>;
-    Loading: React$1.FC<TableLoadingStateProps>;
+    Container: React__default.FC<TableContainerProps>;
+    Caption: React__default.FC<TableCaptionProps>;
+    Header: React__default.FC<TableHeaderProps>;
+    Body: React__default.FC<TableBodyProps>;
+    Row: React__default.FC<TableRowProps>;
+    HeaderCell: React__default.FC<TableHeaderCellProps>;
+    Cell: React__default.FC<TableCellProps>;
+    Empty: React__default.FC<TableEmptyStateProps>;
+    Loading: React__default.FC<TableLoadingStateProps>;
 };
 
 type TabOrientation = 'horizontal' | 'vertical';
@@ -955,7 +956,7 @@ interface TabsComposition {
     Panel: React.FC<TabPanelProps>;
 }
 
-declare const Tabs: React$1.FC<TabsProps> & TabsComposition;
+declare const Tabs: React__default.FC<TabsProps> & TabsComposition;
 
 type TooltipPlacement = 'top' | 'top-start' | 'top-end' | 'right' | 'right-start' | 'right-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end';
 interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
@@ -1039,7 +1040,7 @@ interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
     tooltipClassName?: string;
 }
 
-declare const Tooltip: React$1.FC<TooltipProps>;
+declare const Tooltip: React__default.FC<TooltipProps>;
 
 interface SegmentedControlProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
     /**
@@ -1088,6 +1089,341 @@ interface SegmentedControlComposition {
     Item: React.FC<SegmentItemProps>;
 }
 
-declare const SegmentedControl: React$1.FC<SegmentedControlProps> & SegmentedControlComposition;
+declare const SegmentedControl: React__default.FC<SegmentedControlProps> & SegmentedControlComposition;
 
-export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, Drawer, DrawerPlacement, DrawerProps, Dropdown, DropdownOption, DropdownProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentedControl, SegmentedControlProps, SortDirection, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, Tooltip, TooltipPlacement, TooltipProps };
+interface Coordinates {
+    x: number;
+    y: number;
+}
+interface DragItem {
+    id: string;
+    type: string;
+    data?: any;
+}
+interface DragStartEvent {
+    item: DragItem;
+    coordinates: Coordinates;
+    target: HTMLElement;
+    nativeEvent: MouseEvent | TouchEvent;
+}
+interface DragMoveEvent {
+    item: DragItem;
+    coordinates: Coordinates;
+    delta: Coordinates;
+    nativeEvent: MouseEvent | TouchEvent;
+    over?: DropTargetInfo | null;
+}
+interface DragEndEvent {
+    item: DragItem;
+    coordinates: Coordinates;
+    delta: Coordinates;
+    over?: DropTargetInfo | null;
+    nativeEvent: MouseEvent | TouchEvent;
+}
+interface DropTargetInfo {
+    id: string;
+    type: string;
+    data?: any;
+    rect: DOMRect;
+}
+interface SortableItemInfo {
+    id: string;
+    index: number;
+    rect: DOMRect;
+}
+interface DragContextValue {
+    draggingItem: DragItem | null;
+    dragPosition: Coordinates | null;
+    dropTargets: Map<string, DropTargetInfo>;
+    sortableItems: Map<string, SortableItemInfo>;
+    registerDropTarget: (target: DropTargetInfo) => void;
+    unregisterDropTarget: (id: string) => void;
+    registerSortableItem: (item: SortableItemInfo) => void;
+    unregisterSortableItem: (id: string) => void;
+    startDrag: (item: DragItem, event: MouseEvent | TouchEvent) => void;
+    endDrag: () => void;
+    getDragOverTarget: () => DropTargetInfo | null;
+}
+interface DragDropProviderProps {
+    children: ReactNode;
+    onDragStart?: (event: DragStartEvent) => void;
+    onDragMove?: (event: DragMoveEvent) => void;
+    onDragEnd?: (event: DragEndEvent) => void;
+    onDragCancel?: () => void;
+}
+interface DraggableProps extends HTMLAttributes<HTMLDivElement> {
+    id: string;
+    type?: string;
+    data?: any;
+    disabled?: boolean;
+    handle?: boolean;
+    preview?: ReactNode | ((props: {
+        isDragging: boolean;
+    }) => ReactNode);
+    children: ReactNode | ((props: DraggableRenderProps) => ReactNode);
+    ref?: RefObject<HTMLDivElement>;
+}
+interface DraggableRenderProps {
+    isDragging: boolean;
+    dragHandleProps: {
+        onMouseDown: (e: React.MouseEvent) => void;
+        onTouchStart: (e: React.TouchEvent) => void;
+    };
+}
+interface DragHandleProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+interface DroppableProps extends HTMLAttributes<HTMLDivElement> {
+    id: string;
+    type?: string | string[];
+    data?: any;
+    disabled?: boolean;
+    accept?: string | string[] | ((item: DragItem) => boolean);
+    onDrop?: () => void;
+    children: ReactNode | ((props: DroppableRenderProps) => ReactNode);
+}
+interface DroppableRenderProps {
+    isOver: boolean;
+    canDrop: boolean;
+}
+interface DragOverlayProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode | ((props: {
+        item: DragItem;
+    }) => ReactNode);
+}
+interface SortableProps extends HTMLAttributes<HTMLDivElement> {
+    items: any[];
+    keyExtractor: (item: any) => string;
+    onReorder: (newItems: any[]) => void;
+    direction?: "horizontal" | "vertical";
+    children: (item: any, renderProps: SortableItemRenderProps) => ReactNode;
+}
+interface SortableItemProps {
+    item: any;
+    itemId: string;
+    index: number;
+    isDragging: boolean;
+    onDrop: (itemId: string, targetIndex: number) => void;
+    direction: "horizontal" | "vertical";
+    children: (renderProps: SortableItemRenderProps) => ReactNode;
+}
+interface SortableItemRenderProps {
+    isDragging: boolean;
+    dragHandleProps: {
+        draggableId: string;
+        role: string;
+        tabIndex: number;
+        'aria-pressed': boolean;
+        'aria-label': string;
+    };
+}
+
+declare const DragDrop: {
+    Provider: React$1.FC<DragDropProviderProps>;
+    Draggable: React$1.FC<DraggableProps>;
+    DraggableWithContext: React$1.FC<DraggableProps>;
+    DragHandle: React$1.FC<{
+        children: React.ReactNode;
+        className?: string;
+    }>;
+    Droppable: React$1.FC<DroppableProps>;
+    DragOverlay: React$1.FC<DragOverlayProps>;
+    Sortable: React$1.FC<SortableProps>;
+    useDragDrop: () => DragContextValue;
+};
+
+interface SwitchProps extends Omit<HTMLAttributes<HTMLLabelElement>, "onChange"> {
+    /**
+     * Whether the switch is checked
+     */
+    checked?: boolean;
+    /**
+     * Default checked state for uncontrolled usage
+     */
+    defaultChecked?: boolean;
+    /**
+     * Callback when the switch is toggled
+     */
+    onChange?: (checked: boolean) => void;
+    /**
+     * Whether the switch is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Whether the switch is required
+     * @default false
+     */
+    required?: boolean;
+    /**
+     * ID for the switch input
+     */
+    id?: string;
+    /**
+     * Name attribute for the switch input
+     */
+    name?: string;
+    /**
+     * Value attribute for the switch input
+     */
+    value?: string;
+    /**
+     * Label for the switch
+     */
+    label?: ReactNode;
+    /**
+     * Position of the label relative to the switch
+     * @default 'right'
+     */
+    labelPosition?: "left" | "right";
+    /**
+     * Custom class name for the switch container
+     */
+    className?: string;
+    /**
+     * Custom class name for the switch thumb
+     */
+    thumbClassName?: string;
+    /**
+     * Custom class name for the switch track
+     */
+    trackClassName?: string;
+    /**
+     * Custom class name for the switch label
+     */
+    labelClassName?: string;
+    /**
+     * Helper text to display below the switch
+     */
+    helperText?: ReactNode;
+    /**
+     * Error message to display below the switch
+     */
+    errorMessage?: ReactNode;
+    /**
+     * Whether the switch is in an error state
+     * @default false
+     */
+    hasError?: boolean;
+    /**
+     * Additional props for the hidden input element
+     */
+    inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "checked" | "defaultChecked" | "onChange" | "disabled" | "required">;
+}
+
+declare const Switch: React__default.FC<SwitchProps>;
+
+interface ContextMenuProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Children elements that will trigger the context menu on right-click
+     */
+    children: ReactNode;
+    /**
+     * Custom function to open the context menu (useful for custom triggers)
+     */
+    onOpen?: (event: React.MouseEvent | React.KeyboardEvent) => void;
+    /**
+     * Custom function to close the context menu
+     */
+    onClose?: () => void;
+    /**
+     * Whether the context menu is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Whether to enable keyboard shortcuts to open context menu
+     * @default true
+     */
+    enableKeyboard?: boolean;
+}
+interface ContextMenuTriggerProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Children elements that will trigger the context menu on right-click
+     */
+    children: ReactNode;
+    /**
+     * Whether the trigger is disabled
+     */
+    disabled?: boolean;
+}
+interface ContextMenuContentProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Children of the context menu content
+     */
+    children: ReactNode;
+    /**
+     * Whether to close the menu when clicking outside
+     * @default true
+     */
+    closeOnOutsideClick?: boolean;
+    /**
+     * Whether to close the menu when pressing Escape key
+     * @default true
+     */
+    closeOnEscape?: boolean;
+    /**
+     * Additional offset from the cursor position (x, y) in pixels
+     * @default [0, 0]
+     */
+    offset?: [number, number];
+    /**
+     * Width of the context menu
+     */
+    width?: number | string;
+    /**
+     * Maximum height of the context menu before scrolling
+     */
+    maxHeight?: number | string;
+}
+interface ContextMenuItemProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Content of the menu item
+     */
+    children: ReactNode;
+    /**
+     * Whether the item is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Function to execute when item is clicked
+     */
+    onSelect?: () => void;
+    /**
+     * Whether to close the menu after selection
+     * @default true
+     */
+    closeOnSelect?: boolean;
+    /**
+     * Icon or element to display before the item text
+     */
+    icon?: ReactNode;
+    /**
+     * Keyboard shortcut to display
+     */
+    shortcut?: string;
+}
+interface ContextMenuGroupProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Children of the group
+     */
+    children: ReactNode;
+    /**
+     * Label for the group
+     */
+    label?: string;
+}
+interface ContextMenuSeparatorProps extends HTMLAttributes<HTMLDivElement> {
+}
+interface ContextMenuComposition {
+    Trigger: React.FC<ContextMenuTriggerProps>;
+    Content: React.FC<ContextMenuContentProps>;
+    Item: React.FC<ContextMenuItemProps>;
+    Group: React.FC<ContextMenuGroupProps>;
+    Separator: React.FC<ContextMenuSeparatorProps>;
+}
+
+declare const ContextMenu: React__default.FC<ContextMenuProps> & ContextMenuComposition;
+
+export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, ContextMenu, ContextMenuProps, Coordinates, DragContextValue, DragDrop, DragDropProviderProps, DragEndEvent, DragHandleProps, DragItem, DragMoveEvent, DragOverlayProps, DragStartEvent, DraggableProps, DraggableRenderProps, Drawer, DrawerPlacement, DrawerProps, DropTargetInfo, Dropdown, DropdownOption, DropdownProps, DroppableProps, DroppableRenderProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentedControl, SegmentedControlProps, SortDirection, SortableItemInfo, SortableItemProps, SortableItemRenderProps, SortableProps, Switch, SwitchProps, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, Tooltip, TooltipPlacement, TooltipProps };
