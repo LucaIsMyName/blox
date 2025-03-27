@@ -1,7 +1,7 @@
 // Example usage in App.tsx
 import {scan} from "react-scan"
 import React, { useState } from "react";
-import { BlockLayout } from "./app/BlockLayout";
+import { BloxLayout } from "./app/BloxLayout";
 
 import { TooltipExample } from "./examples/TooltipExample";
 import { ModalExample } from "./examples/ModalExample";
@@ -32,56 +32,56 @@ function App() {
   return (
     <div className="app p-4">
       <h1 className="border-b mb-4 pb-4">Blox UI Components</h1>
-      <BlockLayout title="Tooltips">
+      <BloxLayout title="Tooltips">
         <TooltipExample />
-      </BlockLayout>
-      <BlockLayout title="Modals">
+      </BloxLayout>
+      <BloxLayout title="Modals">
         <ModalExample />
-      </BlockLayout>
-      <BlockLayout title="Drawers">
+      </BloxLayout>
+      <BloxLayout title="Drawers">
         <DrawerExample />
-      </BlockLayout>
-      <BlockLayout title="Accordions">
+      </BloxLayout>
+      <BloxLayout title="Accordions">
         <AccordionExample />
-      </BlockLayout>
-      <BlockLayout title="Checkboxes">
+      </BloxLayout>
+      <BloxLayout title="Checkboxes">
         <CheckboxExample />
-      </BlockLayout>
-      <BlockLayout title="Radio Buttons">
+      </BloxLayout>
+      <BloxLayout title="Radio Buttons">
         <RadioExample />
-      </BlockLayout>
-      <BlockLayout title="Dropdowns">
+      </BloxLayout>
+      <BloxLayout title="Dropdowns">
         <DropdownExample />
-      </BlockLayout>
-      <BlockLayout title="Table">
+      </BloxLayout>
+      <BloxLayout title="Table">
         <TableExample />
-      </BlockLayout>
-      <BlockLayout title="Tabs">
+      </BloxLayout>
+      <BloxLayout title="Tabs">
         <TabsExample />
-      </BlockLayout>
-      <BlockLayout title="Marquees">
+      </BloxLayout>
+      <BloxLayout title="Marquees">
         <MarqueeExample />
-      </BlockLayout>
-      <BlockLayout title="Segmented Controls">
+      </BloxLayout>
+      <BloxLayout title="Segmented Controls">
         <SegmentedControlExample />
-      </BlockLayout>
-      <BlockLayout title="Switches">
+      </BloxLayout>
+      <BloxLayout title="Switches">
         <SwitchExample />
-      </BlockLayout>
-      <BlockLayout title="Context Menus">
+      </BloxLayout>
+      <BloxLayout title="Context Menus">
         <ContextMenuExample />
-      </BlockLayout>
-      <BlockLayout
+      </BloxLayout>
+      <BloxLayout
         title="Drag & Drop"
         subtitle="Work in Progress">
         <DragDropExample />
-      </BlockLayout>
-      <BlockLayout title="Toggles">
+      </BloxLayout>
+      <BloxLayout title="Toggles">
         <ToggleExample />
-      </BlockLayout>
-      <BlockLayout title="Sliders">
+      </BloxLayout>
+      <BloxLayout title="Sliders">
         <SliderExample />
-      </BlockLayout>
+      </BloxLayout>
     </div>
   );
 }

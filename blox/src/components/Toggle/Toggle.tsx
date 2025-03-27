@@ -1,5 +1,5 @@
 // Toggle.tsx
-import React, { useRef, useState, useContext, createContext, useEffect } from "react";
+import React, { memo, useRef, useState, useContext, createContext, useEffect } from "react";
 import { ToggleProps, ToggleGroupProps, ToggleGroupContextValue, ToggleComposition } from "./types";
 
 // Create context for the toggle group
@@ -67,7 +67,7 @@ const Toggle: React.FC<ToggleProps> & ToggleComposition = ({ pressed, defaultPre
 };
 
 // Toggle Group component
-const ToggleGroup: React.FC<ToggleGroupProps> = ({ children, type = "single", value, defaultValue, onChange, allowDeselect = false, disabled = false, className = "", orientation = "horizontal", spacing = "normal" }) => {
+const ToggleGroup: React.FC<ToggleGroupProps> = memo(({ children, type = "single", value, defaultValue, onChange, allowDeselect = false, disabled = false, className = "", orientation = "horizontal", spacing = "normal" }) => {
   // Store the internal value for uncontrolled usage
   const [internalValue, setInternalValue] = useState<string | string[]>(defaultValue ?? (type === "single" ? "" : []));
 
@@ -126,7 +126,7 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({ children, type = "single", va
       </div>
     </ToggleGroupContext.Provider>
   );
-};
+});
 
 // Attach Group component to Toggle
 Toggle.Group = ToggleGroup;

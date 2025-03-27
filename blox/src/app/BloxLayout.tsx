@@ -1,12 +1,12 @@
 import React from "react";
 
-interface BlockLayoutProps {
+interface BloxLayoutProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
 }
 
-export const BlockLayout: React.FC<BlockLayoutProps> = ({ children, title = "Block Title", subtitle }) => {
+export const BloxLayout: React.FC<BloxLayoutProps> = ({ children, title = "Block Title", subtitle }) => {
   return (
     <div className="md:flex md:gap-4 pb-6 border-b mb-6">
       <section className="w-full md:max-w-96 md:min-w-96 mb-4 md:mb-0">
