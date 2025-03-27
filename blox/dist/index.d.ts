@@ -1751,4 +1751,107 @@ interface SliderComposition {
  */
 declare const Slider: React__default.FC<SliderProps> & SliderComposition;
 
-export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, ContextMenu, ContextMenuProps, Coordinates, DragContextValue, DragDrop, DragDropProviderProps, DragEndEvent, DragHandleProps, DragItem, DragMoveEvent, DragOverlayProps, DragStartEvent, DraggableProps, DraggableRenderProps, Drawer, DrawerPlacement, DrawerProps, DropTargetInfo, Dropdown, DropdownOption, DropdownProps, DroppableProps, DroppableRenderProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, SegmentItemProps, SegmentedControl, SegmentedControlComposition, SegmentedControlContextType, SegmentedControlProps, Slider, SliderComposition, SliderContextValue, SliderMarkProps, SliderProps, SliderRange, SliderRangeProps, SliderTrackProps, SortDirection, SortableItemInfo, SortableItemProps, SortableItemRenderProps, SortableProps, Switch, SwitchProps, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, ThumbPosition, Toggle, ToggleProps, Tooltip, TooltipPlacement, TooltipProps };
+interface STYLE_TYPES {
+    Radio: {
+        error: {
+            color: string;
+        };
+        label: {
+            color: string;
+        };
+        size: string;
+    };
+    Slider: {
+        thickness: string;
+        borderRadius: string;
+        track: {
+            color: string;
+        };
+        range: {
+            color: string;
+        };
+        thumb: {
+            color: string;
+            size: string;
+            radius: string;
+            shadow: string;
+        };
+        mark: {
+            color: string;
+            spacing: string;
+            radius: string;
+            fontSize: string;
+            label: {
+                spacing: string;
+            };
+        };
+    };
+    Modal: {
+        bgColor: string;
+        borderRadius: string;
+        boxShadow: string;
+        maxHeight: string;
+        body: {
+            padding: string;
+        };
+        close: {
+            right: string;
+            top: string;
+            color: string;
+            padding: string;
+            borderRadius: string;
+        };
+        header: {
+            border: string;
+            padding: string;
+        };
+        footer: {
+            border: string;
+            padding: string;
+            gap: string;
+        };
+        title: {
+            fontSize: string;
+            fontWeight: string;
+            color: string;
+        };
+        overlay: {
+            padding: string;
+            bgColor: string;
+        };
+        width: {
+            small: string;
+            medium: string;
+            large: string;
+            full: string;
+        };
+    };
+    DragDrop: {
+        droppable: {
+            bgColor: string;
+            outline: string;
+        };
+        sortable: {
+            opacity: number;
+            backgroundColor: string;
+            borderRadius: string;
+        };
+    };
+    Drawer: {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+        minWidth: string;
+        maxWidth: string;
+        height: string;
+        backdropColor: string;
+        backdropBlur: string;
+        contentBgColor: string;
+    };
+    Tooltip: {
+        offset: string;
+    };
+}
+
+export { Accordion, AccordionItemProps, AccordionProps, Checkbox, CheckboxProps, ContextMenu, ContextMenuProps, Coordinates, DragContextValue, DragDrop, DragDropProviderProps, DragEndEvent, DragHandleProps, DragItem, DragMoveEvent, DragOverlayProps, DragStartEvent, DraggableProps, DraggableRenderProps, Drawer, DrawerPlacement, DrawerProps, DropTargetInfo, Dropdown, DropdownOption, DropdownProps, DroppableProps, DroppableRenderProps, Marquee, MarqueeBehavior, MarqueeDirection, MarqueeProps, MarqueeSpeed, Modal, ModalProps, ModalSize, Radio, RadioGroupProps, RadioProps, STYLE_TYPES, SegmentItemProps, SegmentedControl, SegmentedControlComposition, SegmentedControlContextType, SegmentedControlProps, Slider, SliderComposition, SliderContextValue, SliderMarkProps, SliderProps, SliderRange, SliderRangeProps, SliderTrackProps, SortDirection, SortableItemInfo, SortableItemProps, SortableItemRenderProps, SortableProps, Switch, SwitchProps, TabOrientation, TabVariantStyle, Table, TableColumn, TableProps, Tabs, TabsProps, ThumbPosition, Toggle, ToggleProps, Tooltip, TooltipPlacement, TooltipProps };

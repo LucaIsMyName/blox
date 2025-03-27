@@ -1,4 +1,13 @@
-export let STYLES = {
+import { STYLE_TYPES } from "./types";
+/**
+ * @param {Object} STYLES
+ * @description
+ * if the component needs Styling to be functional or has
+ * props that need to be passed to the component
+ * then the default style settings are here
+ */
+
+export let STYLES: STYLE_TYPES = {
   Radio: {
     error: {
       color: "#dc3545",

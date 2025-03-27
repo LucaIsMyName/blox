@@ -33,3 +33,5 @@ export type { SwitchProps } from "./components/Switch/types";
 export type { ContextMenuProps } from "./components/ContextMenu/types";
 export type { SliderProps, SliderRange, ThumbPosition, SliderTrackProps, SliderRangeProps, SliderMarkProps, SliderContextValue, SliderComposition } from "./components/Slider/types";
 export type { ToggleProps } from "./components/Toggle/types";
+
+export type { STYLE_TYPES } from "./styles/types";
