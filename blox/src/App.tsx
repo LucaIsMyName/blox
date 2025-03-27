@@ -1,4 +1,5 @@
 // Example usage in App.tsx
+import {scan} from "react-scan"
 import React, { useState } from "react";
 import { BlockLayout } from "./app/BlockLayout";
 
@@ -18,6 +19,14 @@ import { ContextMenuExample } from "./examples/ContextMenuExample";
 import { DragDropExample } from "./examples/DragDropExample";
 import { ToggleExample } from "./examples/ToggleExample";
 import { SliderExample } from "./examples/SliderExample";
+
+
+// use react scan
+
+
+scan({
+  enabled: true,
+});
 
 function App() {
   return (

@@ -65,5 +65,8 @@
     "library",
     "headless",
     "unstyled"
-  ]
+  ],
+  "dependencies": {
+    "react-scan": "^0.3.3"
+  }
 }
