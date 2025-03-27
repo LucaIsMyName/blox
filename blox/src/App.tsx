@@ -16,11 +16,13 @@ import { SegmentedControlExample } from "./examples/SegmentedControlExample";
 import { SwitchExample } from "./examples/SwitchExample";
 import { ContextMenuExample } from "./examples/ContextMenuExample";
 import { DragDropExample } from "./examples/DragDropExample";
+import { ToggleExample } from "./examples/ToggleExample";
+import { SliderExample } from "./examples/SliderExample";
 
 function App() {
   return (
     <div className="app p-4">
-      <h1>Blox UI Components</h1>
+      <h1 className="border-b mb-4 pb-4">Blox UI Components</h1>
       <BlockLayout title="Tooltips">
         <TooltipExample />
       </BlockLayout>
@@ -51,7 +53,7 @@ function App() {
       <BlockLayout title="Marquees">
         <MarqueeExample />
       </BlockLayout>
-      <BlockLayout title="Segmented Control">
+      <BlockLayout title="Segmented Controls">
         <SegmentedControlExample />
       </BlockLayout>
       <BlockLayout title="Switches">
@@ -60,8 +62,16 @@ function App() {
       <BlockLayout title="Context Menus">
         <ContextMenuExample />
       </BlockLayout>
-      <BlockLayout title="Drag & Drop">
+      <BlockLayout
+        title="Drag & Drop"
+        subtitle="Work in Progress">
         <DragDropExample />
+      </BlockLayout>
+      <BlockLayout title="Toggles">
+        <ToggleExample />
+      </BlockLayout>
+      <BlockLayout title="Sliders">
+        <SliderExample />
       </BlockLayout>
     </div>
   );

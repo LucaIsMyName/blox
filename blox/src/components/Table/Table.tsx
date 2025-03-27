@@ -10,7 +10,7 @@ const TableContext = createContext<TableContextValue<any>>({
 });
 
 // Hook to use table context
-const useTable = () => {
+export const useTable = () => {
   const context = useContext(TableContext);
   if (!context) {
     throw new Error("useTable must be used within a Table component");
