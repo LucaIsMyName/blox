@@ -1,6 +1,7 @@
 // Switch.tsx
 import React, { useRef, useState, useCallback } from "react";
 import { SwitchProps } from "./types";
+import { STYLES } from "@/styles/STYLES";
 
 const Switch: React.FC<SwitchProps> = ({ checked, defaultChecked = false, onChange, disabled = false, required = false, id, name, value = "on", label, labelPosition = "right", className = "", thumbClassName = "", trackClassName = "", labelClassName = "", helperText, errorMessage, hasError = false, inputProps = {}, ...props }) => {
   // Generate a unique ID if one is not provided
@@ -82,6 +83,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, defaultChecked = false, onChan
             position: "absolute",
             whiteSpace: "nowrap",
             width: "1px",
+            backgroundColor: `var(--blox-switch-input-bg-color, ${STYLES.Switch.input.bgColor}))`,
           }}
           {...inputProps}
         />
@@ -104,6 +106,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, defaultChecked = false, onChan
             width: "36px",
             height: "20px",
             borderRadius: "10px",
+            backgroundColor: `var(--blox-switch-track-bg-color, ${STYLES.Switch.track.bgColor}))`,
           }}>
           <div
             className={`blox-switch-thumb ${thumbClassName}`}
@@ -121,6 +124,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, defaultChecked = false, onChan
               width: "16px",
               height: "16px",
               borderRadius: "8px",
+              backgroundColor: `var(--blox-switch-thumb-bg-color, ${STYLES.Switch.thumb.bgColor}))`,
             }}
           />
         </div>
@@ -131,8 +135,8 @@ const Switch: React.FC<SwitchProps> = ({ checked, defaultChecked = false, onChan
             className={`blox-switch-label ${labelClassName}`}
             data-blox-switch-label=""
             style={{
-              marginLeft: labelPosition === "right" ? "8px" : "0",
-              marginRight: labelPosition === "left" ? "8px" : "0",
+              marginLeft: labelPosition === "right" ? `var(--blox-switch-label-spacing, ${STYLES.Switch.label.spacing})` : `0`,
+              marginRight: labelPosition === `left` ? `var(--blox-switch-label-spacing, ${STYLES.Switch.label.spacing})` : `0`,
             }}>
             {label}
           </span>

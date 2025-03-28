@@ -8,6 +8,20 @@ import { STYLE_TYPES } from "./types";
  */
 
 export let STYLES: STYLE_TYPES = {
+  Switch: {
+    input: {
+      bgColor: "#007bff",
+    },
+    thumb: {
+      bgColor: "#ffffff",
+    },
+    track: {
+      bgColor: "#e9ecef",
+    },
+    label: {
+      spacing: "8px",
+    }
+  },
   Radio: {
     error: {
       color: "#dc3545",

@@ -55,6 +55,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ children, className = "", .
       data-blox-dropdown-menu=""
       data-state={isOpen ? "open" : "closed"}
       role="menu"
+      style={{
+        position: "absolute",
+      }}
       {...props}>
       {children}
     </div>

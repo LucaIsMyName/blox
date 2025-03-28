@@ -1752,6 +1752,20 @@ interface SliderComposition {
 declare const Slider: React__default.FC<SliderProps> & SliderComposition;
 
 interface STYLE_TYPES {
+    Switch: {
+        input: {
+            bgColor: string;
+        };
+        thumb: {
+            bgColor: string;
+        };
+        track: {
+            bgColor: string;
+        };
+        label: {
+            spacing: string;
+        };
+    };
     Radio: {
         error: {
             color: string;

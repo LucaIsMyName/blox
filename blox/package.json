@@ -1,6 +1,6 @@
 {
   "name": "blox-ui-react",
-  "version": "0.2.3",
+  "version": "0.2.6",
   "description": "A headless UI library for React",
   "author": "LucaIsMyName",
   "homepage": "https://github.com/LucaIsMyName/blox/blox/README.md",
@@ -67,6 +67,7 @@
     "unstyled"
   ],
   "dependencies": {
+    "blox-ui-react": "^0.2.5",
     "react-scan": "^0.3.3"
   }
 }
