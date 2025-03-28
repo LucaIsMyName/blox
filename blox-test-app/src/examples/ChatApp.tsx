@@ -289,6 +289,7 @@ function ChatApp() {
 
       {/* Settings Modal */}
       <Modal
+        showCloseButton={false}
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         className={darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"}>
@@ -296,7 +297,7 @@ function ChatApp() {
           <h3 className="text-lg font-semibold">Settings</h3>
           <Modal.CloseButton
             onClose={() => setShowSettings(false)}
-            className={`absolute top-4 right-4 ${darkMode ? "text-gray-400 hover:text-white" : "text-gray-400 hover:text-gray-900"}`}>
+            className={`absolute top-7 right-7 ${darkMode ? "text-gray-400 hover:text-white" : "text-gray-400 hover:text-gray-900"}`}>
             ×
           </Modal.CloseButton>
         </Modal.Header>
