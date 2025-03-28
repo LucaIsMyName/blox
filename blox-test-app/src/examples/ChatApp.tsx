@@ -218,10 +218,10 @@ function ChatApp() {
                   <Dropdown.Trigger className={`p-2 rounded-full ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>•••</Dropdown.Trigger>
 
                   <Dropdown.Menu className={`w-48 rounded-md shadow-lg py-1 ${darkMode ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"}`}>
-                    <Dropdown.Item className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>View Profile</Dropdown.Item>
-                    <Dropdown.Item className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Search in Conversation</Dropdown.Item>
-                    <Dropdown.Item className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Mute Notifications</Dropdown.Item>
-                    <Dropdown.Item className={`px-4 py-2 text-sm text-red-600 ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Block Contact</Dropdown.Item>
+                    <Dropdown.Item value="" className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>View Profile</Dropdown.Item>
+                    <Dropdown.Item value="" className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Search in Conversation</Dropdown.Item>
+                    <Dropdown.Item value="" className={`px-4 py-2 text-sm ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Mute Notifications</Dropdown.Item>
+                    <Dropdown.Item value="" className={`px-4 py-2 text-sm text-red-600 ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>Block Contact</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
