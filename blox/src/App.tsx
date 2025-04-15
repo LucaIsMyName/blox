@@ -2,7 +2,7 @@
  * This the internal Test App
  * we are testing the `./examples/*` folder
  */
-import {scan} from "react-scan"
+import { scan } from "react-scan";
 import { BloxLayout } from "./app/BloxLayout";
 import { TooltipExample } from "./examples/TooltipExample";
 import { ModalExample } from "./examples/ModalExample";
@@ -21,9 +21,7 @@ import { DragDropExample } from "./examples/DragDropExample";
 import { ToggleExample } from "./examples/ToggleExample";
 import { SliderExample } from "./examples/SliderExample";
 
-
 // use react scan
-
 
 scan({
   enabled: true,
