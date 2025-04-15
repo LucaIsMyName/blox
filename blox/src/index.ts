@@ -1,4 +1,7 @@
-// Export individual components
+/**
+ * Export all components and types from the Blox 
+ * library to make them available for use in the library.
+ */
 export { Accordion } from "./components/Accordion";
 export { Checkbox } from "./components/Checkbox";
 export { Drawer } from "./components/Drawer";

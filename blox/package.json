@@ -1,13 +1,13 @@
 {
   "name": "blox-ui-react",
-  "version": "0.2.7",
+  "version": "0.3.93",
   "description": "A headless UI library for React",
   "author": "LucaIsMyName",
   "type": "module",
-  "homepage": "https://github.com/LucaIsMyName/blox/blox/README.md",
+  "homepage": "https://github.com/LucaIsMyName/blox/blob/main/blox/README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LucaIsMyName/blox.git",
+    "url": "git+https://github.com/LucaIsMyName/blox/blob/main/",
     "directory": "blox"
   },
   "license": "MIT",
@@ -53,6 +53,7 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "eslint-plugin-react-refresh": "^0.4.0",
     "postcss": "^8.5.3",
+    "react-scan": "^0.3.3",
     "rollup": "^3.0.0",
     "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-peer-deps-external": "^2.0.0",
@@ -68,9 +69,5 @@
     "library",
     "headless",
     "unstyled"
-  ],
-  "dependencies": {
-    "blox-ui-react": "^0.2.5",
-    "react-scan": "^0.3.3"
-  }
+  ]
 }

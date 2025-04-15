@@ -1,5 +1,5 @@
 // Tabs.tsx
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, memo } from "react";
 import { TabsProps, TabListProps, TabProps, TabPanelsProps, TabPanelProps, TabsContextType, TabsComposition } from "./types";
 
 // Create context for tabs state
@@ -68,7 +68,7 @@ const Tab: React.FC<TabProps> = ({ id, children, disabled = false, className = "
 };
 
 // TabPanels Component
-const TabPanels: React.FC<TabPanelsProps> = ({ children, className = "", ...props }) => {
+const TabPanels: React.FC<TabPanelsProps> = memo(({ children, className = "", ...props }) => {
   return (
     <div
       className={`blox-tab-panels ${className}`}
@@ -77,7 +77,7 @@ const TabPanels: React.FC<TabPanelsProps> = ({ children, className = "", ...prop
       {children}
     </div>
   );
-};
+});
 
 // TabPanel Component
 const TabPanel: React.FC<TabPanelProps> = ({ tabId, children, className = "", ...props }) => {

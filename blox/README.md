@@ -34,6 +34,7 @@ Expandable panels for showing and hiding content.
 
 ```jsx
 import { Accordion } from 'blox-ui-react';
+import { AccordionProps } from 'blox-ui-react/components/Accordion';
 
 function AccordionExample() {
   return (
