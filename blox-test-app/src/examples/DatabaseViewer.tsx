@@ -14,15 +14,15 @@ const USERS = [
 ];
 
 function DatabaseViewer() {
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [sortColumn, setSortColumn] = useState("name");
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [filterRole, setFilterRole] = useState("all");
-  const [showInactive, setShowInactive] = useState(false);
+  const [selectedUser, setSelectedUser]: any[] = useState(null);
+  const [drawerOpen, setDrawerOpen]: any[] = useState(false);
+  const [sortColumn, setSortColumn]: any[] = useState("name");
+  const [sortDirection, setSortDirection]: any[] = useState("asc");
+  const [filterRole, setFilterRole]: any[] = useState("all");
+  const [showInactive, setShowInactive]: any[] = useState(false);
 
   // Handle sorting
-  const handleSort = (columnId) => {
+  const handleSort = (columnId: number) => {
     if (sortColumn === columnId) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -36,7 +36,7 @@ function DatabaseViewer() {
     if (filterRole !== "all" && user.role !== filterRole) return false;
     if (!showInactive && user.status === "Inactive") return false;
     return true;
-  }).sort((a, b) => {
+  }).sort((a: any, b: any) => {
     const factor = sortDirection === "asc" ? 1 : -1;
     if (a[sortColumn] < b[sortColumn]) return -1 * factor;
     if (a[sortColumn] > b[sortColumn]) return 1 * factor;
@@ -54,7 +54,7 @@ function DatabaseViewer() {
   ];
 
   // Handle row click
-  const handleRowClick = (user) => {
+  const handleRowClick = (user: any) => {
     setSelectedUser(user);
     setDrawerOpen(true);
   };
@@ -105,7 +105,7 @@ function DatabaseViewer() {
           <Table.Caption className="sr-only">Users Database</Table.Caption>
           <Table.Header>
             <Table.Row className="bg-gray-50">
-              {columns.map((column) => (
+              {columns.map((column: any) => (
                 <Table.HeaderCell
                   key={column.id}
                   onClick={() => column.sortable && handleSort(column.id)}
@@ -119,7 +119,7 @@ function DatabaseViewer() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {filteredData.map((user) => (
+            {filteredData.map((user: any) => (
               <Table.Row
                 key={user.id}
                 onClick={() => handleRowClick(user)}
